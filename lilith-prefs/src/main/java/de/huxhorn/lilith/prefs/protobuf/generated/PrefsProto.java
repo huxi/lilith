@@ -52,6 +52,8 @@ public final class PrefsProto {
     }
 
     /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -59,6 +61,10 @@ public final class PrefsProto {
       return forNumber(value);
     }
 
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     */
     public static SourceFiltering forNumber(int value) {
       switch (value) {
         case 0: return NONE;
@@ -119,10 +125,12 @@ public final class PrefsProto {
 
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_conditions = 1;</code>
+     * @return Whether the groovyConditions field is set.
      */
     boolean hasGroovyConditions();
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_conditions = 1;</code>
+     * @return The groovyConditions.
      */
     de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getGroovyConditions();
     /**
@@ -132,10 +140,12 @@ public final class PrefsProto {
 
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent details_view = 2;</code>
+     * @return Whether the detailsView field is set.
      */
     boolean hasDetailsView();
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent details_view = 2;</code>
+     * @return The detailsView.
      */
     de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getDetailsView();
     /**
@@ -145,10 +155,12 @@ public final class PrefsProto {
 
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent root_files = 3;</code>
+     * @return Whether the rootFiles field is set.
      */
     boolean hasRootFiles();
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent root_files = 3;</code>
+     * @return The rootFiles.
      */
     de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getRootFiles();
     /**
@@ -158,246 +170,300 @@ public final class PrefsProto {
 
     /**
      * <code>optional string blacklist_name = 4;</code>
+     * @return Whether the blacklistName field is set.
      */
     boolean hasBlacklistName();
     /**
      * <code>optional string blacklist_name = 4;</code>
+     * @return The blacklistName.
      */
     java.lang.String getBlacklistName();
     /**
      * <code>optional string blacklist_name = 4;</code>
+     * @return The bytes for blacklistName.
      */
     com.google.protobuf.ByteString
         getBlacklistNameBytes();
 
     /**
      * <code>optional string whitelist_name = 5;</code>
+     * @return Whether the whitelistName field is set.
      */
     boolean hasWhitelistName();
     /**
      * <code>optional string whitelist_name = 5;</code>
+     * @return The whitelistName.
      */
     java.lang.String getWhitelistName();
     /**
      * <code>optional string whitelist_name = 5;</code>
+     * @return The bytes for whitelistName.
      */
     com.google.protobuf.ByteString
         getWhitelistNameBytes();
 
     /**
      * <code>optional string look_and_feel = 6;</code>
+     * @return Whether the lookAndFeel field is set.
      */
     boolean hasLookAndFeel();
     /**
      * <code>optional string look_and_feel = 6;</code>
+     * @return The lookAndFeel.
      */
     java.lang.String getLookAndFeel();
     /**
      * <code>optional string look_and_feel = 6;</code>
+     * @return The bytes for lookAndFeel.
      */
     com.google.protobuf.ByteString
         getLookAndFeelBytes();
 
     /**
      * <code>optional bool asking_before_quit = 7;</code>
+     * @return Whether the askingBeforeQuit field is set.
      */
     boolean hasAskingBeforeQuit();
     /**
      * <code>optional bool asking_before_quit = 7;</code>
+     * @return The askingBeforeQuit.
      */
     boolean getAskingBeforeQuit();
 
     /**
      * <code>optional bool auto_closing = 8;</code>
+     * @return Whether the autoClosing field is set.
      */
     boolean hasAutoClosing();
     /**
      * <code>optional bool auto_closing = 8;</code>
+     * @return The autoClosing.
      */
     boolean getAutoClosing();
 
     /**
      * <code>optional bool auto_focusing_window = 9;</code>
+     * @return Whether the autoFocusingWindow field is set.
      */
     boolean hasAutoFocusingWindow();
     /**
      * <code>optional bool auto_focusing_window = 9;</code>
+     * @return The autoFocusingWindow.
      */
     boolean getAutoFocusingWindow();
 
     /**
      * <code>optional bool auto_opening = 10;</code>
+     * @return Whether the autoOpening field is set.
      */
     boolean hasAutoOpening();
     /**
      * <code>optional bool auto_opening = 10;</code>
+     * @return The autoOpening.
      */
     boolean getAutoOpening();
 
     /**
      * <code>optional bool checking_for_update = 11;</code>
+     * @return Whether the checkingForUpdate field is set.
      */
     boolean hasCheckingForUpdate();
     /**
      * <code>optional bool checking_for_update = 11;</code>
+     * @return The checkingForUpdate.
      */
     boolean getCheckingForUpdate();
 
     /**
      * <code>optional bool cleaning_logs_on_exit = 12;</code>
+     * @return Whether the cleaningLogsOnExit field is set.
      */
     boolean hasCleaningLogsOnExit();
     /**
      * <code>optional bool cleaning_logs_on_exit = 12;</code>
+     * @return The cleaningLogsOnExit.
      */
     boolean getCleaningLogsOnExit();
 
     /**
      * <code>optional bool coloring_whole_row = 13;</code>
+     * @return Whether the coloringWholeRow field is set.
      */
     boolean hasColoringWholeRow();
     /**
      * <code>optional bool coloring_whole_row = 13;</code>
+     * @return The coloringWholeRow.
      */
     boolean getColoringWholeRow();
 
     /**
      * <code>optional bool global_logging_enabled = 14;</code>
+     * @return Whether the globalLoggingEnabled field is set.
      */
     boolean hasGlobalLoggingEnabled();
     /**
      * <code>optional bool global_logging_enabled = 14;</code>
+     * @return The globalLoggingEnabled.
      */
     boolean getGlobalLoggingEnabled();
 
     /**
      * <code>optional bool maximizing_internal_frames = 17;</code>
+     * @return Whether the maximizingInternalFrames field is set.
      */
     boolean hasMaximizingInternalFrames();
     /**
      * <code>optional bool maximizing_internal_frames = 17;</code>
+     * @return The maximizingInternalFrames.
      */
     boolean getMaximizingInternalFrames();
 
     /**
      * <code>optional bool mute = 18;</code>
+     * @return Whether the mute field is set.
      */
     boolean hasMute();
     /**
      * <code>optional bool mute = 18;</code>
+     * @return The mute.
      */
     boolean getMute();
 
     /**
      * <code>optional bool scrolling_to_bottom = 19;</code>
+     * @return Whether the scrollingToBottom field is set.
      */
     boolean hasScrollingToBottom();
     /**
      * <code>optional bool scrolling_to_bottom = 19;</code>
+     * @return The scrollingToBottom.
      */
     boolean getScrollingToBottom();
 
     /**
      * <code>optional bool showing_full_call_stack = 20;</code>
+     * @return Whether the showingFullCallStack field is set.
      */
     boolean hasShowingFullCallStack();
     /**
      * <code>optional bool showing_full_call_stack = 20;</code>
+     * @return The showingFullCallStack.
      */
     boolean getShowingFullCallStack();
 
     /**
      * <code>optional bool showing_status_bar = 22;</code>
+     * @return Whether the showingStatusBar field is set.
      */
     boolean hasShowingStatusBar();
     /**
      * <code>optional bool showing_status_bar = 22;</code>
+     * @return The showingStatusBar.
      */
     boolean getShowingStatusBar();
 
     /**
      * <code>optional bool showing_stacktrace = 23;</code>
+     * @return Whether the showingStacktrace field is set.
      */
     boolean hasShowingStacktrace();
     /**
      * <code>optional bool showing_stacktrace = 23;</code>
+     * @return The showingStacktrace.
      */
     boolean getShowingStacktrace();
 
     /**
      * <code>optional bool showing_tip_of_the_day = 24;</code>
+     * @return Whether the showingTipOfTheDay field is set.
      */
     boolean hasShowingTipOfTheDay();
     /**
      * <code>optional bool showing_tip_of_the_day = 24;</code>
+     * @return The showingTipOfTheDay.
      */
     boolean getShowingTipOfTheDay();
 
     /**
      * <code>optional bool showing_toolbar = 25;</code>
+     * @return Whether the showingToolbar field is set.
      */
     boolean hasShowingToolbar();
     /**
      * <code>optional bool showing_toolbar = 25;</code>
+     * @return The showingToolbar.
      */
     boolean getShowingToolbar();
 
     /**
      * <code>optional bool splash_screen_disabled = 26;</code>
+     * @return Whether the splashScreenDisabled field is set.
      */
     boolean hasSplashScreenDisabled();
     /**
      * <code>optional bool splash_screen_disabled = 26;</code>
+     * @return The splashScreenDisabled.
      */
     boolean getSplashScreenDisabled();
 
     /**
      * <code>optional bool using_internal_frames = 27;</code>
+     * @return Whether the usingInternalFrames field is set.
      */
     boolean hasUsingInternalFrames();
     /**
      * <code>optional bool using_internal_frames = 27;</code>
+     * @return The usingInternalFrames.
      */
     boolean getUsingInternalFrames();
 
     /**
      * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
+     * @return Whether the sourceFiltering field is set.
      */
     boolean hasSourceFiltering();
     /**
      * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
+     * @return The sourceFiltering.
      */
     de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering getSourceFiltering();
 
     /**
      * <code>optional string default_condition_name = 29;</code>
+     * @return Whether the defaultConditionName field is set.
      */
     boolean hasDefaultConditionName();
     /**
      * <code>optional string default_condition_name = 29;</code>
+     * @return The defaultConditionName.
      */
     java.lang.String getDefaultConditionName();
     /**
      * <code>optional string default_condition_name = 29;</code>
+     * @return The bytes for defaultConditionName.
      */
     com.google.protobuf.ByteString
         getDefaultConditionNameBytes();
 
     /**
      * <code>optional bool checking_for_snapshot = 30;</code>
+     * @return Whether the checkingForSnapshot field is set.
      */
     boolean hasCheckingForSnapshot();
     /**
      * <code>optional bool checking_for_snapshot = 30;</code>
+     * @return The checkingForSnapshot.
      */
     boolean getCheckingForSnapshot();
 
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;</code>
+     * @return Whether the groovyClipboardFormatters field is set.
      */
     boolean hasGroovyClipboardFormatters();
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;</code>
+     * @return The groovyClipboardFormatters.
      */
     de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getGroovyClipboardFormatters();
     /**
@@ -407,64 +473,78 @@ public final class PrefsProto {
 
     /**
      * <code>optional bool tray_active = 32;</code>
+     * @return Whether the trayActive field is set.
      */
     boolean hasTrayActive();
     /**
      * <code>optional bool tray_active = 32;</code>
+     * @return The trayActive.
      */
     boolean getTrayActive();
 
     /**
      * <code>optional bool showing_full_recent_path = 33;</code>
+     * @return Whether the showingFullRecentPath field is set.
      */
     boolean hasShowingFullRecentPath();
     /**
      * <code>optional bool showing_full_recent_path = 33;</code>
+     * @return The showingFullRecentPath.
      */
     boolean getShowingFullRecentPath();
 
     /**
      * <code>optional bool hiding_on_close = 34;</code>
+     * @return Whether the hidingOnClose field is set.
      */
     boolean hasHidingOnClose();
     /**
      * <code>optional bool hiding_on_close = 34;</code>
+     * @return The hidingOnClose.
      */
     boolean getHidingOnClose();
 
     /**
      * <code>optional bool using_wrapped_exception_style = 35;</code>
+     * @return Whether the usingWrappedExceptionStyle field is set.
      */
     boolean hasUsingWrappedExceptionStyle();
     /**
      * <code>optional bool using_wrapped_exception_style = 35;</code>
+     * @return The usingWrappedExceptionStyle.
      */
     boolean getUsingWrappedExceptionStyle();
 
     /**
      * <code>optional bool showing_primary_identifier = 36;</code>
+     * @return Whether the showingPrimaryIdentifier field is set.
      */
     boolean hasShowingPrimaryIdentifier();
     /**
      * <code>optional bool showing_primary_identifier = 36;</code>
+     * @return The showingPrimaryIdentifier.
      */
     boolean getShowingPrimaryIdentifier();
 
     /**
      * <code>optional bool showing_secondary_identifier = 37;</code>
+     * @return Whether the showingSecondaryIdentifier field is set.
      */
     boolean hasShowingSecondaryIdentifier();
     /**
      * <code>optional bool showing_secondary_identifier = 37;</code>
+     * @return The showingSecondaryIdentifier.
      */
     boolean getShowingSecondaryIdentifier();
 
     /**
      * <code>optional bool scrolling_smoothly = 38;</code>
+     * @return Whether the scrollingSmoothly field is set.
      */
     boolean hasScrollingSmoothly();
     /**
      * <code>optional bool scrolling_smoothly = 38;</code>
+     * @return The scrollingSmoothly.
      */
     boolean getScrollingSmoothly();
   }
@@ -776,12 +856,14 @@ public final class PrefsProto {
     private de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent groovyConditions_;
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_conditions = 1;</code>
+     * @return Whether the groovyConditions field is set.
      */
     public boolean hasGroovyConditions() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_conditions = 1;</code>
+     * @return The groovyConditions.
      */
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getGroovyConditions() {
       return groovyConditions_ == null ? de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance() : groovyConditions_;
@@ -797,12 +879,14 @@ public final class PrefsProto {
     private de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent detailsView_;
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent details_view = 2;</code>
+     * @return Whether the detailsView field is set.
      */
     public boolean hasDetailsView() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent details_view = 2;</code>
+     * @return The detailsView.
      */
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getDetailsView() {
       return detailsView_ == null ? de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance() : detailsView_;
@@ -818,12 +902,14 @@ public final class PrefsProto {
     private de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent rootFiles_;
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent root_files = 3;</code>
+     * @return Whether the rootFiles field is set.
      */
     public boolean hasRootFiles() {
       return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent root_files = 3;</code>
+     * @return The rootFiles.
      */
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getRootFiles() {
       return rootFiles_ == null ? de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance() : rootFiles_;
@@ -839,12 +925,14 @@ public final class PrefsProto {
     private volatile java.lang.Object blacklistName_;
     /**
      * <code>optional string blacklist_name = 4;</code>
+     * @return Whether the blacklistName field is set.
      */
     public boolean hasBlacklistName() {
       return ((bitField0_ & 0x00000008) != 0);
     }
     /**
      * <code>optional string blacklist_name = 4;</code>
+     * @return The blacklistName.
      */
     public java.lang.String getBlacklistName() {
       java.lang.Object ref = blacklistName_;
@@ -862,6 +950,7 @@ public final class PrefsProto {
     }
     /**
      * <code>optional string blacklist_name = 4;</code>
+     * @return The bytes for blacklistName.
      */
     public com.google.protobuf.ByteString
         getBlacklistNameBytes() {
@@ -881,12 +970,14 @@ public final class PrefsProto {
     private volatile java.lang.Object whitelistName_;
     /**
      * <code>optional string whitelist_name = 5;</code>
+     * @return Whether the whitelistName field is set.
      */
     public boolean hasWhitelistName() {
       return ((bitField0_ & 0x00000010) != 0);
     }
     /**
      * <code>optional string whitelist_name = 5;</code>
+     * @return The whitelistName.
      */
     public java.lang.String getWhitelistName() {
       java.lang.Object ref = whitelistName_;
@@ -904,6 +995,7 @@ public final class PrefsProto {
     }
     /**
      * <code>optional string whitelist_name = 5;</code>
+     * @return The bytes for whitelistName.
      */
     public com.google.protobuf.ByteString
         getWhitelistNameBytes() {
@@ -923,12 +1015,14 @@ public final class PrefsProto {
     private volatile java.lang.Object lookAndFeel_;
     /**
      * <code>optional string look_and_feel = 6;</code>
+     * @return Whether the lookAndFeel field is set.
      */
     public boolean hasLookAndFeel() {
       return ((bitField0_ & 0x00000020) != 0);
     }
     /**
      * <code>optional string look_and_feel = 6;</code>
+     * @return The lookAndFeel.
      */
     public java.lang.String getLookAndFeel() {
       java.lang.Object ref = lookAndFeel_;
@@ -946,6 +1040,7 @@ public final class PrefsProto {
     }
     /**
      * <code>optional string look_and_feel = 6;</code>
+     * @return The bytes for lookAndFeel.
      */
     public com.google.protobuf.ByteString
         getLookAndFeelBytes() {
@@ -965,12 +1060,14 @@ public final class PrefsProto {
     private boolean askingBeforeQuit_;
     /**
      * <code>optional bool asking_before_quit = 7;</code>
+     * @return Whether the askingBeforeQuit field is set.
      */
     public boolean hasAskingBeforeQuit() {
       return ((bitField0_ & 0x00000040) != 0);
     }
     /**
      * <code>optional bool asking_before_quit = 7;</code>
+     * @return The askingBeforeQuit.
      */
     public boolean getAskingBeforeQuit() {
       return askingBeforeQuit_;
@@ -980,12 +1077,14 @@ public final class PrefsProto {
     private boolean autoClosing_;
     /**
      * <code>optional bool auto_closing = 8;</code>
+     * @return Whether the autoClosing field is set.
      */
     public boolean hasAutoClosing() {
       return ((bitField0_ & 0x00000080) != 0);
     }
     /**
      * <code>optional bool auto_closing = 8;</code>
+     * @return The autoClosing.
      */
     public boolean getAutoClosing() {
       return autoClosing_;
@@ -995,12 +1094,14 @@ public final class PrefsProto {
     private boolean autoFocusingWindow_;
     /**
      * <code>optional bool auto_focusing_window = 9;</code>
+     * @return Whether the autoFocusingWindow field is set.
      */
     public boolean hasAutoFocusingWindow() {
       return ((bitField0_ & 0x00000100) != 0);
     }
     /**
      * <code>optional bool auto_focusing_window = 9;</code>
+     * @return The autoFocusingWindow.
      */
     public boolean getAutoFocusingWindow() {
       return autoFocusingWindow_;
@@ -1010,12 +1111,14 @@ public final class PrefsProto {
     private boolean autoOpening_;
     /**
      * <code>optional bool auto_opening = 10;</code>
+     * @return Whether the autoOpening field is set.
      */
     public boolean hasAutoOpening() {
       return ((bitField0_ & 0x00000200) != 0);
     }
     /**
      * <code>optional bool auto_opening = 10;</code>
+     * @return The autoOpening.
      */
     public boolean getAutoOpening() {
       return autoOpening_;
@@ -1025,12 +1128,14 @@ public final class PrefsProto {
     private boolean checkingForUpdate_;
     /**
      * <code>optional bool checking_for_update = 11;</code>
+     * @return Whether the checkingForUpdate field is set.
      */
     public boolean hasCheckingForUpdate() {
       return ((bitField0_ & 0x00000400) != 0);
     }
     /**
      * <code>optional bool checking_for_update = 11;</code>
+     * @return The checkingForUpdate.
      */
     public boolean getCheckingForUpdate() {
       return checkingForUpdate_;
@@ -1040,12 +1145,14 @@ public final class PrefsProto {
     private boolean cleaningLogsOnExit_;
     /**
      * <code>optional bool cleaning_logs_on_exit = 12;</code>
+     * @return Whether the cleaningLogsOnExit field is set.
      */
     public boolean hasCleaningLogsOnExit() {
       return ((bitField0_ & 0x00000800) != 0);
     }
     /**
      * <code>optional bool cleaning_logs_on_exit = 12;</code>
+     * @return The cleaningLogsOnExit.
      */
     public boolean getCleaningLogsOnExit() {
       return cleaningLogsOnExit_;
@@ -1055,12 +1162,14 @@ public final class PrefsProto {
     private boolean coloringWholeRow_;
     /**
      * <code>optional bool coloring_whole_row = 13;</code>
+     * @return Whether the coloringWholeRow field is set.
      */
     public boolean hasColoringWholeRow() {
       return ((bitField0_ & 0x00001000) != 0);
     }
     /**
      * <code>optional bool coloring_whole_row = 13;</code>
+     * @return The coloringWholeRow.
      */
     public boolean getColoringWholeRow() {
       return coloringWholeRow_;
@@ -1070,12 +1179,14 @@ public final class PrefsProto {
     private boolean globalLoggingEnabled_;
     /**
      * <code>optional bool global_logging_enabled = 14;</code>
+     * @return Whether the globalLoggingEnabled field is set.
      */
     public boolean hasGlobalLoggingEnabled() {
       return ((bitField0_ & 0x00002000) != 0);
     }
     /**
      * <code>optional bool global_logging_enabled = 14;</code>
+     * @return The globalLoggingEnabled.
      */
     public boolean getGlobalLoggingEnabled() {
       return globalLoggingEnabled_;
@@ -1085,12 +1196,14 @@ public final class PrefsProto {
     private boolean maximizingInternalFrames_;
     /**
      * <code>optional bool maximizing_internal_frames = 17;</code>
+     * @return Whether the maximizingInternalFrames field is set.
      */
     public boolean hasMaximizingInternalFrames() {
       return ((bitField0_ & 0x00004000) != 0);
     }
     /**
      * <code>optional bool maximizing_internal_frames = 17;</code>
+     * @return The maximizingInternalFrames.
      */
     public boolean getMaximizingInternalFrames() {
       return maximizingInternalFrames_;
@@ -1100,12 +1213,14 @@ public final class PrefsProto {
     private boolean mute_;
     /**
      * <code>optional bool mute = 18;</code>
+     * @return Whether the mute field is set.
      */
     public boolean hasMute() {
       return ((bitField0_ & 0x00008000) != 0);
     }
     /**
      * <code>optional bool mute = 18;</code>
+     * @return The mute.
      */
     public boolean getMute() {
       return mute_;
@@ -1115,12 +1230,14 @@ public final class PrefsProto {
     private boolean scrollingToBottom_;
     /**
      * <code>optional bool scrolling_to_bottom = 19;</code>
+     * @return Whether the scrollingToBottom field is set.
      */
     public boolean hasScrollingToBottom() {
       return ((bitField0_ & 0x00010000) != 0);
     }
     /**
      * <code>optional bool scrolling_to_bottom = 19;</code>
+     * @return The scrollingToBottom.
      */
     public boolean getScrollingToBottom() {
       return scrollingToBottom_;
@@ -1130,12 +1247,14 @@ public final class PrefsProto {
     private boolean showingFullCallStack_;
     /**
      * <code>optional bool showing_full_call_stack = 20;</code>
+     * @return Whether the showingFullCallStack field is set.
      */
     public boolean hasShowingFullCallStack() {
       return ((bitField0_ & 0x00020000) != 0);
     }
     /**
      * <code>optional bool showing_full_call_stack = 20;</code>
+     * @return The showingFullCallStack.
      */
     public boolean getShowingFullCallStack() {
       return showingFullCallStack_;
@@ -1145,12 +1264,14 @@ public final class PrefsProto {
     private boolean showingStatusBar_;
     /**
      * <code>optional bool showing_status_bar = 22;</code>
+     * @return Whether the showingStatusBar field is set.
      */
     public boolean hasShowingStatusBar() {
       return ((bitField0_ & 0x00040000) != 0);
     }
     /**
      * <code>optional bool showing_status_bar = 22;</code>
+     * @return The showingStatusBar.
      */
     public boolean getShowingStatusBar() {
       return showingStatusBar_;
@@ -1160,12 +1281,14 @@ public final class PrefsProto {
     private boolean showingStacktrace_;
     /**
      * <code>optional bool showing_stacktrace = 23;</code>
+     * @return Whether the showingStacktrace field is set.
      */
     public boolean hasShowingStacktrace() {
       return ((bitField0_ & 0x00080000) != 0);
     }
     /**
      * <code>optional bool showing_stacktrace = 23;</code>
+     * @return The showingStacktrace.
      */
     public boolean getShowingStacktrace() {
       return showingStacktrace_;
@@ -1175,12 +1298,14 @@ public final class PrefsProto {
     private boolean showingTipOfTheDay_;
     /**
      * <code>optional bool showing_tip_of_the_day = 24;</code>
+     * @return Whether the showingTipOfTheDay field is set.
      */
     public boolean hasShowingTipOfTheDay() {
       return ((bitField0_ & 0x00100000) != 0);
     }
     /**
      * <code>optional bool showing_tip_of_the_day = 24;</code>
+     * @return The showingTipOfTheDay.
      */
     public boolean getShowingTipOfTheDay() {
       return showingTipOfTheDay_;
@@ -1190,12 +1315,14 @@ public final class PrefsProto {
     private boolean showingToolbar_;
     /**
      * <code>optional bool showing_toolbar = 25;</code>
+     * @return Whether the showingToolbar field is set.
      */
     public boolean hasShowingToolbar() {
       return ((bitField0_ & 0x00200000) != 0);
     }
     /**
      * <code>optional bool showing_toolbar = 25;</code>
+     * @return The showingToolbar.
      */
     public boolean getShowingToolbar() {
       return showingToolbar_;
@@ -1205,12 +1332,14 @@ public final class PrefsProto {
     private boolean splashScreenDisabled_;
     /**
      * <code>optional bool splash_screen_disabled = 26;</code>
+     * @return Whether the splashScreenDisabled field is set.
      */
     public boolean hasSplashScreenDisabled() {
       return ((bitField0_ & 0x00400000) != 0);
     }
     /**
      * <code>optional bool splash_screen_disabled = 26;</code>
+     * @return The splashScreenDisabled.
      */
     public boolean getSplashScreenDisabled() {
       return splashScreenDisabled_;
@@ -1220,12 +1349,14 @@ public final class PrefsProto {
     private boolean usingInternalFrames_;
     /**
      * <code>optional bool using_internal_frames = 27;</code>
+     * @return Whether the usingInternalFrames field is set.
      */
     public boolean hasUsingInternalFrames() {
       return ((bitField0_ & 0x00800000) != 0);
     }
     /**
      * <code>optional bool using_internal_frames = 27;</code>
+     * @return The usingInternalFrames.
      */
     public boolean getUsingInternalFrames() {
       return usingInternalFrames_;
@@ -1235,12 +1366,14 @@ public final class PrefsProto {
     private int sourceFiltering_;
     /**
      * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
+     * @return Whether the sourceFiltering field is set.
      */
     public boolean hasSourceFiltering() {
       return ((bitField0_ & 0x01000000) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
+     * @return The sourceFiltering.
      */
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering getSourceFiltering() {
       @SuppressWarnings("deprecation")
@@ -1252,12 +1385,14 @@ public final class PrefsProto {
     private volatile java.lang.Object defaultConditionName_;
     /**
      * <code>optional string default_condition_name = 29;</code>
+     * @return Whether the defaultConditionName field is set.
      */
     public boolean hasDefaultConditionName() {
       return ((bitField0_ & 0x02000000) != 0);
     }
     /**
      * <code>optional string default_condition_name = 29;</code>
+     * @return The defaultConditionName.
      */
     public java.lang.String getDefaultConditionName() {
       java.lang.Object ref = defaultConditionName_;
@@ -1275,6 +1410,7 @@ public final class PrefsProto {
     }
     /**
      * <code>optional string default_condition_name = 29;</code>
+     * @return The bytes for defaultConditionName.
      */
     public com.google.protobuf.ByteString
         getDefaultConditionNameBytes() {
@@ -1294,12 +1430,14 @@ public final class PrefsProto {
     private boolean checkingForSnapshot_;
     /**
      * <code>optional bool checking_for_snapshot = 30;</code>
+     * @return Whether the checkingForSnapshot field is set.
      */
     public boolean hasCheckingForSnapshot() {
       return ((bitField0_ & 0x04000000) != 0);
     }
     /**
      * <code>optional bool checking_for_snapshot = 30;</code>
+     * @return The checkingForSnapshot.
      */
     public boolean getCheckingForSnapshot() {
       return checkingForSnapshot_;
@@ -1309,12 +1447,14 @@ public final class PrefsProto {
     private de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent groovyClipboardFormatters_;
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;</code>
+     * @return Whether the groovyClipboardFormatters field is set.
      */
     public boolean hasGroovyClipboardFormatters() {
       return ((bitField0_ & 0x08000000) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;</code>
+     * @return The groovyClipboardFormatters.
      */
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getGroovyClipboardFormatters() {
       return groovyClipboardFormatters_ == null ? de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance() : groovyClipboardFormatters_;
@@ -1330,12 +1470,14 @@ public final class PrefsProto {
     private boolean trayActive_;
     /**
      * <code>optional bool tray_active = 32;</code>
+     * @return Whether the trayActive field is set.
      */
     public boolean hasTrayActive() {
       return ((bitField0_ & 0x10000000) != 0);
     }
     /**
      * <code>optional bool tray_active = 32;</code>
+     * @return The trayActive.
      */
     public boolean getTrayActive() {
       return trayActive_;
@@ -1345,12 +1487,14 @@ public final class PrefsProto {
     private boolean showingFullRecentPath_;
     /**
      * <code>optional bool showing_full_recent_path = 33;</code>
+     * @return Whether the showingFullRecentPath field is set.
      */
     public boolean hasShowingFullRecentPath() {
       return ((bitField0_ & 0x20000000) != 0);
     }
     /**
      * <code>optional bool showing_full_recent_path = 33;</code>
+     * @return The showingFullRecentPath.
      */
     public boolean getShowingFullRecentPath() {
       return showingFullRecentPath_;
@@ -1360,12 +1504,14 @@ public final class PrefsProto {
     private boolean hidingOnClose_;
     /**
      * <code>optional bool hiding_on_close = 34;</code>
+     * @return Whether the hidingOnClose field is set.
      */
     public boolean hasHidingOnClose() {
       return ((bitField0_ & 0x40000000) != 0);
     }
     /**
      * <code>optional bool hiding_on_close = 34;</code>
+     * @return The hidingOnClose.
      */
     public boolean getHidingOnClose() {
       return hidingOnClose_;
@@ -1375,12 +1521,14 @@ public final class PrefsProto {
     private boolean usingWrappedExceptionStyle_;
     /**
      * <code>optional bool using_wrapped_exception_style = 35;</code>
+     * @return Whether the usingWrappedExceptionStyle field is set.
      */
     public boolean hasUsingWrappedExceptionStyle() {
       return ((bitField0_ & 0x80000000) != 0);
     }
     /**
      * <code>optional bool using_wrapped_exception_style = 35;</code>
+     * @return The usingWrappedExceptionStyle.
      */
     public boolean getUsingWrappedExceptionStyle() {
       return usingWrappedExceptionStyle_;
@@ -1390,12 +1538,14 @@ public final class PrefsProto {
     private boolean showingPrimaryIdentifier_;
     /**
      * <code>optional bool showing_primary_identifier = 36;</code>
+     * @return Whether the showingPrimaryIdentifier field is set.
      */
     public boolean hasShowingPrimaryIdentifier() {
       return ((bitField1_ & 0x00000001) != 0);
     }
     /**
      * <code>optional bool showing_primary_identifier = 36;</code>
+     * @return The showingPrimaryIdentifier.
      */
     public boolean getShowingPrimaryIdentifier() {
       return showingPrimaryIdentifier_;
@@ -1405,12 +1555,14 @@ public final class PrefsProto {
     private boolean showingSecondaryIdentifier_;
     /**
      * <code>optional bool showing_secondary_identifier = 37;</code>
+     * @return Whether the showingSecondaryIdentifier field is set.
      */
     public boolean hasShowingSecondaryIdentifier() {
       return ((bitField1_ & 0x00000002) != 0);
     }
     /**
      * <code>optional bool showing_secondary_identifier = 37;</code>
+     * @return The showingSecondaryIdentifier.
      */
     public boolean getShowingSecondaryIdentifier() {
       return showingSecondaryIdentifier_;
@@ -1420,12 +1572,14 @@ public final class PrefsProto {
     private boolean scrollingSmoothly_;
     /**
      * <code>optional bool scrolling_smoothly = 38;</code>
+     * @return Whether the scrollingSmoothly field is set.
      */
     public boolean hasScrollingSmoothly() {
       return ((bitField1_ & 0x00000004) != 0);
     }
     /**
      * <code>optional bool scrolling_smoothly = 38;</code>
+     * @return The scrollingSmoothly.
      */
     public boolean getScrollingSmoothly() {
       return scrollingSmoothly_;
@@ -2713,12 +2867,14 @@ public final class PrefsProto {
           de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder> groovyConditionsBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_conditions = 1;</code>
+       * @return Whether the groovyConditions field is set.
        */
       public boolean hasGroovyConditions() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_conditions = 1;</code>
+       * @return The groovyConditions.
        */
       public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getGroovyConditions() {
         if (groovyConditionsBuilder_ == null) {
@@ -2831,12 +2987,14 @@ public final class PrefsProto {
           de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder> detailsViewBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent details_view = 2;</code>
+       * @return Whether the detailsView field is set.
        */
       public boolean hasDetailsView() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent details_view = 2;</code>
+       * @return The detailsView.
        */
       public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getDetailsView() {
         if (detailsViewBuilder_ == null) {
@@ -2949,12 +3107,14 @@ public final class PrefsProto {
           de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder> rootFilesBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent root_files = 3;</code>
+       * @return Whether the rootFiles field is set.
        */
       public boolean hasRootFiles() {
         return ((bitField0_ & 0x00000004) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent root_files = 3;</code>
+       * @return The rootFiles.
        */
       public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getRootFiles() {
         if (rootFilesBuilder_ == null) {
@@ -3065,12 +3225,14 @@ public final class PrefsProto {
       private java.lang.Object blacklistName_ = "";
       /**
        * <code>optional string blacklist_name = 4;</code>
+       * @return Whether the blacklistName field is set.
        */
       public boolean hasBlacklistName() {
         return ((bitField0_ & 0x00000008) != 0);
       }
       /**
        * <code>optional string blacklist_name = 4;</code>
+       * @return The blacklistName.
        */
       public java.lang.String getBlacklistName() {
         java.lang.Object ref = blacklistName_;
@@ -3088,6 +3250,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string blacklist_name = 4;</code>
+       * @return The bytes for blacklistName.
        */
       public com.google.protobuf.ByteString
           getBlacklistNameBytes() {
@@ -3104,6 +3267,8 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string blacklist_name = 4;</code>
+       * @param value The blacklistName to set.
+       * @return This builder for chaining.
        */
       public Builder setBlacklistName(
           java.lang.String value) {
@@ -3117,6 +3282,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string blacklist_name = 4;</code>
+       * @return This builder for chaining.
        */
       public Builder clearBlacklistName() {
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -3126,6 +3292,8 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string blacklist_name = 4;</code>
+       * @param value The bytes for blacklistName to set.
+       * @return This builder for chaining.
        */
       public Builder setBlacklistNameBytes(
           com.google.protobuf.ByteString value) {
@@ -3141,12 +3309,14 @@ public final class PrefsProto {
       private java.lang.Object whitelistName_ = "";
       /**
        * <code>optional string whitelist_name = 5;</code>
+       * @return Whether the whitelistName field is set.
        */
       public boolean hasWhitelistName() {
         return ((bitField0_ & 0x00000010) != 0);
       }
       /**
        * <code>optional string whitelist_name = 5;</code>
+       * @return The whitelistName.
        */
       public java.lang.String getWhitelistName() {
         java.lang.Object ref = whitelistName_;
@@ -3164,6 +3334,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string whitelist_name = 5;</code>
+       * @return The bytes for whitelistName.
        */
       public com.google.protobuf.ByteString
           getWhitelistNameBytes() {
@@ -3180,6 +3351,8 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string whitelist_name = 5;</code>
+       * @param value The whitelistName to set.
+       * @return This builder for chaining.
        */
       public Builder setWhitelistName(
           java.lang.String value) {
@@ -3193,6 +3366,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string whitelist_name = 5;</code>
+       * @return This builder for chaining.
        */
       public Builder clearWhitelistName() {
         bitField0_ = (bitField0_ & ~0x00000010);
@@ -3202,6 +3376,8 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string whitelist_name = 5;</code>
+       * @param value The bytes for whitelistName to set.
+       * @return This builder for chaining.
        */
       public Builder setWhitelistNameBytes(
           com.google.protobuf.ByteString value) {
@@ -3217,12 +3393,14 @@ public final class PrefsProto {
       private java.lang.Object lookAndFeel_ = "";
       /**
        * <code>optional string look_and_feel = 6;</code>
+       * @return Whether the lookAndFeel field is set.
        */
       public boolean hasLookAndFeel() {
         return ((bitField0_ & 0x00000020) != 0);
       }
       /**
        * <code>optional string look_and_feel = 6;</code>
+       * @return The lookAndFeel.
        */
       public java.lang.String getLookAndFeel() {
         java.lang.Object ref = lookAndFeel_;
@@ -3240,6 +3418,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string look_and_feel = 6;</code>
+       * @return The bytes for lookAndFeel.
        */
       public com.google.protobuf.ByteString
           getLookAndFeelBytes() {
@@ -3256,6 +3435,8 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string look_and_feel = 6;</code>
+       * @param value The lookAndFeel to set.
+       * @return This builder for chaining.
        */
       public Builder setLookAndFeel(
           java.lang.String value) {
@@ -3269,6 +3450,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string look_and_feel = 6;</code>
+       * @return This builder for chaining.
        */
       public Builder clearLookAndFeel() {
         bitField0_ = (bitField0_ & ~0x00000020);
@@ -3278,6 +3460,8 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string look_and_feel = 6;</code>
+       * @param value The bytes for lookAndFeel to set.
+       * @return This builder for chaining.
        */
       public Builder setLookAndFeelBytes(
           com.google.protobuf.ByteString value) {
@@ -3293,18 +3477,22 @@ public final class PrefsProto {
       private boolean askingBeforeQuit_ ;
       /**
        * <code>optional bool asking_before_quit = 7;</code>
+       * @return Whether the askingBeforeQuit field is set.
        */
       public boolean hasAskingBeforeQuit() {
         return ((bitField0_ & 0x00000040) != 0);
       }
       /**
        * <code>optional bool asking_before_quit = 7;</code>
+       * @return The askingBeforeQuit.
        */
       public boolean getAskingBeforeQuit() {
         return askingBeforeQuit_;
       }
       /**
        * <code>optional bool asking_before_quit = 7;</code>
+       * @param value The askingBeforeQuit to set.
+       * @return This builder for chaining.
        */
       public Builder setAskingBeforeQuit(boolean value) {
         bitField0_ |= 0x00000040;
@@ -3314,6 +3502,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool asking_before_quit = 7;</code>
+       * @return This builder for chaining.
        */
       public Builder clearAskingBeforeQuit() {
         bitField0_ = (bitField0_ & ~0x00000040);
@@ -3325,18 +3514,22 @@ public final class PrefsProto {
       private boolean autoClosing_ ;
       /**
        * <code>optional bool auto_closing = 8;</code>
+       * @return Whether the autoClosing field is set.
        */
       public boolean hasAutoClosing() {
         return ((bitField0_ & 0x00000080) != 0);
       }
       /**
        * <code>optional bool auto_closing = 8;</code>
+       * @return The autoClosing.
        */
       public boolean getAutoClosing() {
         return autoClosing_;
       }
       /**
        * <code>optional bool auto_closing = 8;</code>
+       * @param value The autoClosing to set.
+       * @return This builder for chaining.
        */
       public Builder setAutoClosing(boolean value) {
         bitField0_ |= 0x00000080;
@@ -3346,6 +3539,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool auto_closing = 8;</code>
+       * @return This builder for chaining.
        */
       public Builder clearAutoClosing() {
         bitField0_ = (bitField0_ & ~0x00000080);
@@ -3357,18 +3551,22 @@ public final class PrefsProto {
       private boolean autoFocusingWindow_ ;
       /**
        * <code>optional bool auto_focusing_window = 9;</code>
+       * @return Whether the autoFocusingWindow field is set.
        */
       public boolean hasAutoFocusingWindow() {
         return ((bitField0_ & 0x00000100) != 0);
       }
       /**
        * <code>optional bool auto_focusing_window = 9;</code>
+       * @return The autoFocusingWindow.
        */
       public boolean getAutoFocusingWindow() {
         return autoFocusingWindow_;
       }
       /**
        * <code>optional bool auto_focusing_window = 9;</code>
+       * @param value The autoFocusingWindow to set.
+       * @return This builder for chaining.
        */
       public Builder setAutoFocusingWindow(boolean value) {
         bitField0_ |= 0x00000100;
@@ -3378,6 +3576,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool auto_focusing_window = 9;</code>
+       * @return This builder for chaining.
        */
       public Builder clearAutoFocusingWindow() {
         bitField0_ = (bitField0_ & ~0x00000100);
@@ -3389,18 +3588,22 @@ public final class PrefsProto {
       private boolean autoOpening_ ;
       /**
        * <code>optional bool auto_opening = 10;</code>
+       * @return Whether the autoOpening field is set.
        */
       public boolean hasAutoOpening() {
         return ((bitField0_ & 0x00000200) != 0);
       }
       /**
        * <code>optional bool auto_opening = 10;</code>
+       * @return The autoOpening.
        */
       public boolean getAutoOpening() {
         return autoOpening_;
       }
       /**
        * <code>optional bool auto_opening = 10;</code>
+       * @param value The autoOpening to set.
+       * @return This builder for chaining.
        */
       public Builder setAutoOpening(boolean value) {
         bitField0_ |= 0x00000200;
@@ -3410,6 +3613,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool auto_opening = 10;</code>
+       * @return This builder for chaining.
        */
       public Builder clearAutoOpening() {
         bitField0_ = (bitField0_ & ~0x00000200);
@@ -3421,18 +3625,22 @@ public final class PrefsProto {
       private boolean checkingForUpdate_ ;
       /**
        * <code>optional bool checking_for_update = 11;</code>
+       * @return Whether the checkingForUpdate field is set.
        */
       public boolean hasCheckingForUpdate() {
         return ((bitField0_ & 0x00000400) != 0);
       }
       /**
        * <code>optional bool checking_for_update = 11;</code>
+       * @return The checkingForUpdate.
        */
       public boolean getCheckingForUpdate() {
         return checkingForUpdate_;
       }
       /**
        * <code>optional bool checking_for_update = 11;</code>
+       * @param value The checkingForUpdate to set.
+       * @return This builder for chaining.
        */
       public Builder setCheckingForUpdate(boolean value) {
         bitField0_ |= 0x00000400;
@@ -3442,6 +3650,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool checking_for_update = 11;</code>
+       * @return This builder for chaining.
        */
       public Builder clearCheckingForUpdate() {
         bitField0_ = (bitField0_ & ~0x00000400);
@@ -3453,18 +3662,22 @@ public final class PrefsProto {
       private boolean cleaningLogsOnExit_ ;
       /**
        * <code>optional bool cleaning_logs_on_exit = 12;</code>
+       * @return Whether the cleaningLogsOnExit field is set.
        */
       public boolean hasCleaningLogsOnExit() {
         return ((bitField0_ & 0x00000800) != 0);
       }
       /**
        * <code>optional bool cleaning_logs_on_exit = 12;</code>
+       * @return The cleaningLogsOnExit.
        */
       public boolean getCleaningLogsOnExit() {
         return cleaningLogsOnExit_;
       }
       /**
        * <code>optional bool cleaning_logs_on_exit = 12;</code>
+       * @param value The cleaningLogsOnExit to set.
+       * @return This builder for chaining.
        */
       public Builder setCleaningLogsOnExit(boolean value) {
         bitField0_ |= 0x00000800;
@@ -3474,6 +3687,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool cleaning_logs_on_exit = 12;</code>
+       * @return This builder for chaining.
        */
       public Builder clearCleaningLogsOnExit() {
         bitField0_ = (bitField0_ & ~0x00000800);
@@ -3485,18 +3699,22 @@ public final class PrefsProto {
       private boolean coloringWholeRow_ ;
       /**
        * <code>optional bool coloring_whole_row = 13;</code>
+       * @return Whether the coloringWholeRow field is set.
        */
       public boolean hasColoringWholeRow() {
         return ((bitField0_ & 0x00001000) != 0);
       }
       /**
        * <code>optional bool coloring_whole_row = 13;</code>
+       * @return The coloringWholeRow.
        */
       public boolean getColoringWholeRow() {
         return coloringWholeRow_;
       }
       /**
        * <code>optional bool coloring_whole_row = 13;</code>
+       * @param value The coloringWholeRow to set.
+       * @return This builder for chaining.
        */
       public Builder setColoringWholeRow(boolean value) {
         bitField0_ |= 0x00001000;
@@ -3506,6 +3724,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool coloring_whole_row = 13;</code>
+       * @return This builder for chaining.
        */
       public Builder clearColoringWholeRow() {
         bitField0_ = (bitField0_ & ~0x00001000);
@@ -3517,18 +3736,22 @@ public final class PrefsProto {
       private boolean globalLoggingEnabled_ ;
       /**
        * <code>optional bool global_logging_enabled = 14;</code>
+       * @return Whether the globalLoggingEnabled field is set.
        */
       public boolean hasGlobalLoggingEnabled() {
         return ((bitField0_ & 0x00002000) != 0);
       }
       /**
        * <code>optional bool global_logging_enabled = 14;</code>
+       * @return The globalLoggingEnabled.
        */
       public boolean getGlobalLoggingEnabled() {
         return globalLoggingEnabled_;
       }
       /**
        * <code>optional bool global_logging_enabled = 14;</code>
+       * @param value The globalLoggingEnabled to set.
+       * @return This builder for chaining.
        */
       public Builder setGlobalLoggingEnabled(boolean value) {
         bitField0_ |= 0x00002000;
@@ -3538,6 +3761,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool global_logging_enabled = 14;</code>
+       * @return This builder for chaining.
        */
       public Builder clearGlobalLoggingEnabled() {
         bitField0_ = (bitField0_ & ~0x00002000);
@@ -3549,18 +3773,22 @@ public final class PrefsProto {
       private boolean maximizingInternalFrames_ ;
       /**
        * <code>optional bool maximizing_internal_frames = 17;</code>
+       * @return Whether the maximizingInternalFrames field is set.
        */
       public boolean hasMaximizingInternalFrames() {
         return ((bitField0_ & 0x00004000) != 0);
       }
       /**
        * <code>optional bool maximizing_internal_frames = 17;</code>
+       * @return The maximizingInternalFrames.
        */
       public boolean getMaximizingInternalFrames() {
         return maximizingInternalFrames_;
       }
       /**
        * <code>optional bool maximizing_internal_frames = 17;</code>
+       * @param value The maximizingInternalFrames to set.
+       * @return This builder for chaining.
        */
       public Builder setMaximizingInternalFrames(boolean value) {
         bitField0_ |= 0x00004000;
@@ -3570,6 +3798,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool maximizing_internal_frames = 17;</code>
+       * @return This builder for chaining.
        */
       public Builder clearMaximizingInternalFrames() {
         bitField0_ = (bitField0_ & ~0x00004000);
@@ -3581,18 +3810,22 @@ public final class PrefsProto {
       private boolean mute_ ;
       /**
        * <code>optional bool mute = 18;</code>
+       * @return Whether the mute field is set.
        */
       public boolean hasMute() {
         return ((bitField0_ & 0x00008000) != 0);
       }
       /**
        * <code>optional bool mute = 18;</code>
+       * @return The mute.
        */
       public boolean getMute() {
         return mute_;
       }
       /**
        * <code>optional bool mute = 18;</code>
+       * @param value The mute to set.
+       * @return This builder for chaining.
        */
       public Builder setMute(boolean value) {
         bitField0_ |= 0x00008000;
@@ -3602,6 +3835,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool mute = 18;</code>
+       * @return This builder for chaining.
        */
       public Builder clearMute() {
         bitField0_ = (bitField0_ & ~0x00008000);
@@ -3613,18 +3847,22 @@ public final class PrefsProto {
       private boolean scrollingToBottom_ ;
       /**
        * <code>optional bool scrolling_to_bottom = 19;</code>
+       * @return Whether the scrollingToBottom field is set.
        */
       public boolean hasScrollingToBottom() {
         return ((bitField0_ & 0x00010000) != 0);
       }
       /**
        * <code>optional bool scrolling_to_bottom = 19;</code>
+       * @return The scrollingToBottom.
        */
       public boolean getScrollingToBottom() {
         return scrollingToBottom_;
       }
       /**
        * <code>optional bool scrolling_to_bottom = 19;</code>
+       * @param value The scrollingToBottom to set.
+       * @return This builder for chaining.
        */
       public Builder setScrollingToBottom(boolean value) {
         bitField0_ |= 0x00010000;
@@ -3634,6 +3872,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool scrolling_to_bottom = 19;</code>
+       * @return This builder for chaining.
        */
       public Builder clearScrollingToBottom() {
         bitField0_ = (bitField0_ & ~0x00010000);
@@ -3645,18 +3884,22 @@ public final class PrefsProto {
       private boolean showingFullCallStack_ ;
       /**
        * <code>optional bool showing_full_call_stack = 20;</code>
+       * @return Whether the showingFullCallStack field is set.
        */
       public boolean hasShowingFullCallStack() {
         return ((bitField0_ & 0x00020000) != 0);
       }
       /**
        * <code>optional bool showing_full_call_stack = 20;</code>
+       * @return The showingFullCallStack.
        */
       public boolean getShowingFullCallStack() {
         return showingFullCallStack_;
       }
       /**
        * <code>optional bool showing_full_call_stack = 20;</code>
+       * @param value The showingFullCallStack to set.
+       * @return This builder for chaining.
        */
       public Builder setShowingFullCallStack(boolean value) {
         bitField0_ |= 0x00020000;
@@ -3666,6 +3909,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool showing_full_call_stack = 20;</code>
+       * @return This builder for chaining.
        */
       public Builder clearShowingFullCallStack() {
         bitField0_ = (bitField0_ & ~0x00020000);
@@ -3677,18 +3921,22 @@ public final class PrefsProto {
       private boolean showingStatusBar_ ;
       /**
        * <code>optional bool showing_status_bar = 22;</code>
+       * @return Whether the showingStatusBar field is set.
        */
       public boolean hasShowingStatusBar() {
         return ((bitField0_ & 0x00040000) != 0);
       }
       /**
        * <code>optional bool showing_status_bar = 22;</code>
+       * @return The showingStatusBar.
        */
       public boolean getShowingStatusBar() {
         return showingStatusBar_;
       }
       /**
        * <code>optional bool showing_status_bar = 22;</code>
+       * @param value The showingStatusBar to set.
+       * @return This builder for chaining.
        */
       public Builder setShowingStatusBar(boolean value) {
         bitField0_ |= 0x00040000;
@@ -3698,6 +3946,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool showing_status_bar = 22;</code>
+       * @return This builder for chaining.
        */
       public Builder clearShowingStatusBar() {
         bitField0_ = (bitField0_ & ~0x00040000);
@@ -3709,18 +3958,22 @@ public final class PrefsProto {
       private boolean showingStacktrace_ ;
       /**
        * <code>optional bool showing_stacktrace = 23;</code>
+       * @return Whether the showingStacktrace field is set.
        */
       public boolean hasShowingStacktrace() {
         return ((bitField0_ & 0x00080000) != 0);
       }
       /**
        * <code>optional bool showing_stacktrace = 23;</code>
+       * @return The showingStacktrace.
        */
       public boolean getShowingStacktrace() {
         return showingStacktrace_;
       }
       /**
        * <code>optional bool showing_stacktrace = 23;</code>
+       * @param value The showingStacktrace to set.
+       * @return This builder for chaining.
        */
       public Builder setShowingStacktrace(boolean value) {
         bitField0_ |= 0x00080000;
@@ -3730,6 +3983,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool showing_stacktrace = 23;</code>
+       * @return This builder for chaining.
        */
       public Builder clearShowingStacktrace() {
         bitField0_ = (bitField0_ & ~0x00080000);
@@ -3741,18 +3995,22 @@ public final class PrefsProto {
       private boolean showingTipOfTheDay_ ;
       /**
        * <code>optional bool showing_tip_of_the_day = 24;</code>
+       * @return Whether the showingTipOfTheDay field is set.
        */
       public boolean hasShowingTipOfTheDay() {
         return ((bitField0_ & 0x00100000) != 0);
       }
       /**
        * <code>optional bool showing_tip_of_the_day = 24;</code>
+       * @return The showingTipOfTheDay.
        */
       public boolean getShowingTipOfTheDay() {
         return showingTipOfTheDay_;
       }
       /**
        * <code>optional bool showing_tip_of_the_day = 24;</code>
+       * @param value The showingTipOfTheDay to set.
+       * @return This builder for chaining.
        */
       public Builder setShowingTipOfTheDay(boolean value) {
         bitField0_ |= 0x00100000;
@@ -3762,6 +4020,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool showing_tip_of_the_day = 24;</code>
+       * @return This builder for chaining.
        */
       public Builder clearShowingTipOfTheDay() {
         bitField0_ = (bitField0_ & ~0x00100000);
@@ -3773,18 +4032,22 @@ public final class PrefsProto {
       private boolean showingToolbar_ ;
       /**
        * <code>optional bool showing_toolbar = 25;</code>
+       * @return Whether the showingToolbar field is set.
        */
       public boolean hasShowingToolbar() {
         return ((bitField0_ & 0x00200000) != 0);
       }
       /**
        * <code>optional bool showing_toolbar = 25;</code>
+       * @return The showingToolbar.
        */
       public boolean getShowingToolbar() {
         return showingToolbar_;
       }
       /**
        * <code>optional bool showing_toolbar = 25;</code>
+       * @param value The showingToolbar to set.
+       * @return This builder for chaining.
        */
       public Builder setShowingToolbar(boolean value) {
         bitField0_ |= 0x00200000;
@@ -3794,6 +4057,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool showing_toolbar = 25;</code>
+       * @return This builder for chaining.
        */
       public Builder clearShowingToolbar() {
         bitField0_ = (bitField0_ & ~0x00200000);
@@ -3805,18 +4069,22 @@ public final class PrefsProto {
       private boolean splashScreenDisabled_ ;
       /**
        * <code>optional bool splash_screen_disabled = 26;</code>
+       * @return Whether the splashScreenDisabled field is set.
        */
       public boolean hasSplashScreenDisabled() {
         return ((bitField0_ & 0x00400000) != 0);
       }
       /**
        * <code>optional bool splash_screen_disabled = 26;</code>
+       * @return The splashScreenDisabled.
        */
       public boolean getSplashScreenDisabled() {
         return splashScreenDisabled_;
       }
       /**
        * <code>optional bool splash_screen_disabled = 26;</code>
+       * @param value The splashScreenDisabled to set.
+       * @return This builder for chaining.
        */
       public Builder setSplashScreenDisabled(boolean value) {
         bitField0_ |= 0x00400000;
@@ -3826,6 +4094,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool splash_screen_disabled = 26;</code>
+       * @return This builder for chaining.
        */
       public Builder clearSplashScreenDisabled() {
         bitField0_ = (bitField0_ & ~0x00400000);
@@ -3837,18 +4106,22 @@ public final class PrefsProto {
       private boolean usingInternalFrames_ ;
       /**
        * <code>optional bool using_internal_frames = 27;</code>
+       * @return Whether the usingInternalFrames field is set.
        */
       public boolean hasUsingInternalFrames() {
         return ((bitField0_ & 0x00800000) != 0);
       }
       /**
        * <code>optional bool using_internal_frames = 27;</code>
+       * @return The usingInternalFrames.
        */
       public boolean getUsingInternalFrames() {
         return usingInternalFrames_;
       }
       /**
        * <code>optional bool using_internal_frames = 27;</code>
+       * @param value The usingInternalFrames to set.
+       * @return This builder for chaining.
        */
       public Builder setUsingInternalFrames(boolean value) {
         bitField0_ |= 0x00800000;
@@ -3858,6 +4131,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool using_internal_frames = 27;</code>
+       * @return This builder for chaining.
        */
       public Builder clearUsingInternalFrames() {
         bitField0_ = (bitField0_ & ~0x00800000);
@@ -3869,12 +4143,14 @@ public final class PrefsProto {
       private int sourceFiltering_ = 0;
       /**
        * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
+       * @return Whether the sourceFiltering field is set.
        */
       public boolean hasSourceFiltering() {
         return ((bitField0_ & 0x01000000) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
+       * @return The sourceFiltering.
        */
       public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering getSourceFiltering() {
         @SuppressWarnings("deprecation")
@@ -3883,6 +4159,8 @@ public final class PrefsProto {
       }
       /**
        * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
+       * @param value The sourceFiltering to set.
+       * @return This builder for chaining.
        */
       public Builder setSourceFiltering(de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering value) {
         if (value == null) {
@@ -3895,6 +4173,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
+       * @return This builder for chaining.
        */
       public Builder clearSourceFiltering() {
         bitField0_ = (bitField0_ & ~0x01000000);
@@ -3906,12 +4185,14 @@ public final class PrefsProto {
       private java.lang.Object defaultConditionName_ = "";
       /**
        * <code>optional string default_condition_name = 29;</code>
+       * @return Whether the defaultConditionName field is set.
        */
       public boolean hasDefaultConditionName() {
         return ((bitField0_ & 0x02000000) != 0);
       }
       /**
        * <code>optional string default_condition_name = 29;</code>
+       * @return The defaultConditionName.
        */
       public java.lang.String getDefaultConditionName() {
         java.lang.Object ref = defaultConditionName_;
@@ -3929,6 +4210,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string default_condition_name = 29;</code>
+       * @return The bytes for defaultConditionName.
        */
       public com.google.protobuf.ByteString
           getDefaultConditionNameBytes() {
@@ -3945,6 +4227,8 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string default_condition_name = 29;</code>
+       * @param value The defaultConditionName to set.
+       * @return This builder for chaining.
        */
       public Builder setDefaultConditionName(
           java.lang.String value) {
@@ -3958,6 +4242,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string default_condition_name = 29;</code>
+       * @return This builder for chaining.
        */
       public Builder clearDefaultConditionName() {
         bitField0_ = (bitField0_ & ~0x02000000);
@@ -3967,6 +4252,8 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string default_condition_name = 29;</code>
+       * @param value The bytes for defaultConditionName to set.
+       * @return This builder for chaining.
        */
       public Builder setDefaultConditionNameBytes(
           com.google.protobuf.ByteString value) {
@@ -3982,18 +4269,22 @@ public final class PrefsProto {
       private boolean checkingForSnapshot_ ;
       /**
        * <code>optional bool checking_for_snapshot = 30;</code>
+       * @return Whether the checkingForSnapshot field is set.
        */
       public boolean hasCheckingForSnapshot() {
         return ((bitField0_ & 0x04000000) != 0);
       }
       /**
        * <code>optional bool checking_for_snapshot = 30;</code>
+       * @return The checkingForSnapshot.
        */
       public boolean getCheckingForSnapshot() {
         return checkingForSnapshot_;
       }
       /**
        * <code>optional bool checking_for_snapshot = 30;</code>
+       * @param value The checkingForSnapshot to set.
+       * @return This builder for chaining.
        */
       public Builder setCheckingForSnapshot(boolean value) {
         bitField0_ |= 0x04000000;
@@ -4003,6 +4294,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool checking_for_snapshot = 30;</code>
+       * @return This builder for chaining.
        */
       public Builder clearCheckingForSnapshot() {
         bitField0_ = (bitField0_ & ~0x04000000);
@@ -4016,12 +4308,14 @@ public final class PrefsProto {
           de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.Builder, de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder> groovyClipboardFormattersBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;</code>
+       * @return Whether the groovyClipboardFormatters field is set.
        */
       public boolean hasGroovyClipboardFormatters() {
         return ((bitField0_ & 0x08000000) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;</code>
+       * @return The groovyClipboardFormatters.
        */
       public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getGroovyClipboardFormatters() {
         if (groovyClipboardFormattersBuilder_ == null) {
@@ -4132,18 +4426,22 @@ public final class PrefsProto {
       private boolean trayActive_ ;
       /**
        * <code>optional bool tray_active = 32;</code>
+       * @return Whether the trayActive field is set.
        */
       public boolean hasTrayActive() {
         return ((bitField0_ & 0x10000000) != 0);
       }
       /**
        * <code>optional bool tray_active = 32;</code>
+       * @return The trayActive.
        */
       public boolean getTrayActive() {
         return trayActive_;
       }
       /**
        * <code>optional bool tray_active = 32;</code>
+       * @param value The trayActive to set.
+       * @return This builder for chaining.
        */
       public Builder setTrayActive(boolean value) {
         bitField0_ |= 0x10000000;
@@ -4153,6 +4451,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool tray_active = 32;</code>
+       * @return This builder for chaining.
        */
       public Builder clearTrayActive() {
         bitField0_ = (bitField0_ & ~0x10000000);
@@ -4164,18 +4463,22 @@ public final class PrefsProto {
       private boolean showingFullRecentPath_ ;
       /**
        * <code>optional bool showing_full_recent_path = 33;</code>
+       * @return Whether the showingFullRecentPath field is set.
        */
       public boolean hasShowingFullRecentPath() {
         return ((bitField0_ & 0x20000000) != 0);
       }
       /**
        * <code>optional bool showing_full_recent_path = 33;</code>
+       * @return The showingFullRecentPath.
        */
       public boolean getShowingFullRecentPath() {
         return showingFullRecentPath_;
       }
       /**
        * <code>optional bool showing_full_recent_path = 33;</code>
+       * @param value The showingFullRecentPath to set.
+       * @return This builder for chaining.
        */
       public Builder setShowingFullRecentPath(boolean value) {
         bitField0_ |= 0x20000000;
@@ -4185,6 +4488,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool showing_full_recent_path = 33;</code>
+       * @return This builder for chaining.
        */
       public Builder clearShowingFullRecentPath() {
         bitField0_ = (bitField0_ & ~0x20000000);
@@ -4196,18 +4500,22 @@ public final class PrefsProto {
       private boolean hidingOnClose_ ;
       /**
        * <code>optional bool hiding_on_close = 34;</code>
+       * @return Whether the hidingOnClose field is set.
        */
       public boolean hasHidingOnClose() {
         return ((bitField0_ & 0x40000000) != 0);
       }
       /**
        * <code>optional bool hiding_on_close = 34;</code>
+       * @return The hidingOnClose.
        */
       public boolean getHidingOnClose() {
         return hidingOnClose_;
       }
       /**
        * <code>optional bool hiding_on_close = 34;</code>
+       * @param value The hidingOnClose to set.
+       * @return This builder for chaining.
        */
       public Builder setHidingOnClose(boolean value) {
         bitField0_ |= 0x40000000;
@@ -4217,6 +4525,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool hiding_on_close = 34;</code>
+       * @return This builder for chaining.
        */
       public Builder clearHidingOnClose() {
         bitField0_ = (bitField0_ & ~0x40000000);
@@ -4228,18 +4537,22 @@ public final class PrefsProto {
       private boolean usingWrappedExceptionStyle_ ;
       /**
        * <code>optional bool using_wrapped_exception_style = 35;</code>
+       * @return Whether the usingWrappedExceptionStyle field is set.
        */
       public boolean hasUsingWrappedExceptionStyle() {
         return ((bitField0_ & 0x80000000) != 0);
       }
       /**
        * <code>optional bool using_wrapped_exception_style = 35;</code>
+       * @return The usingWrappedExceptionStyle.
        */
       public boolean getUsingWrappedExceptionStyle() {
         return usingWrappedExceptionStyle_;
       }
       /**
        * <code>optional bool using_wrapped_exception_style = 35;</code>
+       * @param value The usingWrappedExceptionStyle to set.
+       * @return This builder for chaining.
        */
       public Builder setUsingWrappedExceptionStyle(boolean value) {
         bitField0_ |= 0x80000000;
@@ -4249,6 +4562,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool using_wrapped_exception_style = 35;</code>
+       * @return This builder for chaining.
        */
       public Builder clearUsingWrappedExceptionStyle() {
         bitField0_ = (bitField0_ & ~0x80000000);
@@ -4260,18 +4574,22 @@ public final class PrefsProto {
       private boolean showingPrimaryIdentifier_ ;
       /**
        * <code>optional bool showing_primary_identifier = 36;</code>
+       * @return Whether the showingPrimaryIdentifier field is set.
        */
       public boolean hasShowingPrimaryIdentifier() {
         return ((bitField1_ & 0x00000001) != 0);
       }
       /**
        * <code>optional bool showing_primary_identifier = 36;</code>
+       * @return The showingPrimaryIdentifier.
        */
       public boolean getShowingPrimaryIdentifier() {
         return showingPrimaryIdentifier_;
       }
       /**
        * <code>optional bool showing_primary_identifier = 36;</code>
+       * @param value The showingPrimaryIdentifier to set.
+       * @return This builder for chaining.
        */
       public Builder setShowingPrimaryIdentifier(boolean value) {
         bitField1_ |= 0x00000001;
@@ -4281,6 +4599,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool showing_primary_identifier = 36;</code>
+       * @return This builder for chaining.
        */
       public Builder clearShowingPrimaryIdentifier() {
         bitField1_ = (bitField1_ & ~0x00000001);
@@ -4292,18 +4611,22 @@ public final class PrefsProto {
       private boolean showingSecondaryIdentifier_ ;
       /**
        * <code>optional bool showing_secondary_identifier = 37;</code>
+       * @return Whether the showingSecondaryIdentifier field is set.
        */
       public boolean hasShowingSecondaryIdentifier() {
         return ((bitField1_ & 0x00000002) != 0);
       }
       /**
        * <code>optional bool showing_secondary_identifier = 37;</code>
+       * @return The showingSecondaryIdentifier.
        */
       public boolean getShowingSecondaryIdentifier() {
         return showingSecondaryIdentifier_;
       }
       /**
        * <code>optional bool showing_secondary_identifier = 37;</code>
+       * @param value The showingSecondaryIdentifier to set.
+       * @return This builder for chaining.
        */
       public Builder setShowingSecondaryIdentifier(boolean value) {
         bitField1_ |= 0x00000002;
@@ -4313,6 +4636,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool showing_secondary_identifier = 37;</code>
+       * @return This builder for chaining.
        */
       public Builder clearShowingSecondaryIdentifier() {
         bitField1_ = (bitField1_ & ~0x00000002);
@@ -4324,18 +4648,22 @@ public final class PrefsProto {
       private boolean scrollingSmoothly_ ;
       /**
        * <code>optional bool scrolling_smoothly = 38;</code>
+       * @return Whether the scrollingSmoothly field is set.
        */
       public boolean hasScrollingSmoothly() {
         return ((bitField1_ & 0x00000004) != 0);
       }
       /**
        * <code>optional bool scrolling_smoothly = 38;</code>
+       * @return The scrollingSmoothly.
        */
       public boolean getScrollingSmoothly() {
         return scrollingSmoothly_;
       }
       /**
        * <code>optional bool scrolling_smoothly = 38;</code>
+       * @param value The scrollingSmoothly to set.
+       * @return This builder for chaining.
        */
       public Builder setScrollingSmoothly(boolean value) {
         bitField1_ |= 0x00000004;
@@ -4345,6 +4673,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bool scrolling_smoothly = 38;</code>
+       * @return This builder for chaining.
        */
       public Builder clearScrollingSmoothly() {
         bitField1_ = (bitField1_ & ~0x00000004);
@@ -4411,14 +4740,17 @@ public final class PrefsProto {
 
     /**
      * <code>optional string name = 1;</code>
+     * @return Whether the name field is set.
      */
     boolean hasName();
     /**
      * <code>optional string name = 1;</code>
+     * @return The name.
      */
     java.lang.String getName();
     /**
      * <code>optional string name = 1;</code>
+     * @return The bytes for name.
      */
     com.google.protobuf.ByteString
         getNameBytes();
@@ -4607,12 +4939,14 @@ public final class PrefsProto {
     private volatile java.lang.Object name_;
     /**
      * <code>optional string name = 1;</code>
+     * @return Whether the name field is set.
      */
     public boolean hasName() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional string name = 1;</code>
+     * @return The name.
      */
     public java.lang.String getName() {
       java.lang.Object ref = name_;
@@ -4630,6 +4964,7 @@ public final class PrefsProto {
     }
     /**
      * <code>optional string name = 1;</code>
+     * @return The bytes for name.
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
@@ -5185,12 +5520,14 @@ public final class PrefsProto {
       private java.lang.Object name_ = "";
       /**
        * <code>optional string name = 1;</code>
+       * @return Whether the name field is set.
        */
       public boolean hasName() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional string name = 1;</code>
+       * @return The name.
        */
       public java.lang.String getName() {
         java.lang.Object ref = name_;
@@ -5208,6 +5545,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string name = 1;</code>
+       * @return The bytes for name.
        */
       public com.google.protobuf.ByteString
           getNameBytes() {
@@ -5224,6 +5562,8 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string name = 1;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
        */
       public Builder setName(
           java.lang.String value) {
@@ -5237,6 +5577,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string name = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearName() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -5246,6 +5587,8 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string name = 1;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
        */
       public Builder setNameBytes(
           com.google.protobuf.ByteString value) {
@@ -5868,24 +6211,29 @@ public final class PrefsProto {
 
     /**
      * <code>required string key = 1;</code>
+     * @return Whether the key field is set.
      */
     boolean hasKey();
     /**
      * <code>required string key = 1;</code>
+     * @return The key.
      */
     java.lang.String getKey();
     /**
      * <code>required string key = 1;</code>
+     * @return The bytes for key.
      */
     com.google.protobuf.ByteString
         getKeyBytes();
 
     /**
      * <code>optional bytes value = 2;</code>
+     * @return Whether the value field is set.
      */
     boolean hasValue();
     /**
      * <code>optional bytes value = 2;</code>
+     * @return The value.
      */
     com.google.protobuf.ByteString getValue();
   }
@@ -5985,12 +6333,14 @@ public final class PrefsProto {
     private volatile java.lang.Object key_;
     /**
      * <code>required string key = 1;</code>
+     * @return Whether the key field is set.
      */
     public boolean hasKey() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>required string key = 1;</code>
+     * @return The key.
      */
     public java.lang.String getKey() {
       java.lang.Object ref = key_;
@@ -6008,6 +6358,7 @@ public final class PrefsProto {
     }
     /**
      * <code>required string key = 1;</code>
+     * @return The bytes for key.
      */
     public com.google.protobuf.ByteString
         getKeyBytes() {
@@ -6027,12 +6378,14 @@ public final class PrefsProto {
     private com.google.protobuf.ByteString value_;
     /**
      * <code>optional bytes value = 2;</code>
+     * @return Whether the value field is set.
      */
     public boolean hasValue() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional bytes value = 2;</code>
+     * @return The value.
      */
     public com.google.protobuf.ByteString getValue() {
       return value_;
@@ -6388,12 +6741,14 @@ public final class PrefsProto {
       private java.lang.Object key_ = "";
       /**
        * <code>required string key = 1;</code>
+       * @return Whether the key field is set.
        */
       public boolean hasKey() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>required string key = 1;</code>
+       * @return The key.
        */
       public java.lang.String getKey() {
         java.lang.Object ref = key_;
@@ -6411,6 +6766,7 @@ public final class PrefsProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @return The bytes for key.
        */
       public com.google.protobuf.ByteString
           getKeyBytes() {
@@ -6427,6 +6783,8 @@ public final class PrefsProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @param value The key to set.
+       * @return This builder for chaining.
        */
       public Builder setKey(
           java.lang.String value) {
@@ -6440,6 +6798,7 @@ public final class PrefsProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearKey() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -6449,6 +6808,8 @@ public final class PrefsProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @param value The bytes for key to set.
+       * @return This builder for chaining.
        */
       public Builder setKeyBytes(
           com.google.protobuf.ByteString value) {
@@ -6464,18 +6825,22 @@ public final class PrefsProto {
       private com.google.protobuf.ByteString value_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes value = 2;</code>
+       * @return Whether the value field is set.
        */
       public boolean hasValue() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional bytes value = 2;</code>
+       * @return The value.
        */
       public com.google.protobuf.ByteString getValue() {
         return value_;
       }
       /**
        * <code>optional bytes value = 2;</code>
+       * @param value The value to set.
+       * @return This builder for chaining.
        */
       public Builder setValue(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -6488,6 +6853,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional bytes value = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearValue() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -7353,28 +7719,34 @@ public final class PrefsProto {
 
     /**
      * <code>required string key = 1;</code>
+     * @return Whether the key field is set.
      */
     boolean hasKey();
     /**
      * <code>required string key = 1;</code>
+     * @return The key.
      */
     java.lang.String getKey();
     /**
      * <code>required string key = 1;</code>
+     * @return The bytes for key.
      */
     com.google.protobuf.ByteString
         getKeyBytes();
 
     /**
      * <code>optional string value = 2;</code>
+     * @return Whether the value field is set.
      */
     boolean hasValue();
     /**
      * <code>optional string value = 2;</code>
+     * @return The value.
      */
     java.lang.String getValue();
     /**
      * <code>optional string value = 2;</code>
+     * @return The bytes for value.
      */
     com.google.protobuf.ByteString
         getValueBytes();
@@ -7476,12 +7848,14 @@ public final class PrefsProto {
     private volatile java.lang.Object key_;
     /**
      * <code>required string key = 1;</code>
+     * @return Whether the key field is set.
      */
     public boolean hasKey() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>required string key = 1;</code>
+     * @return The key.
      */
     public java.lang.String getKey() {
       java.lang.Object ref = key_;
@@ -7499,6 +7873,7 @@ public final class PrefsProto {
     }
     /**
      * <code>required string key = 1;</code>
+     * @return The bytes for key.
      */
     public com.google.protobuf.ByteString
         getKeyBytes() {
@@ -7518,12 +7893,14 @@ public final class PrefsProto {
     private volatile java.lang.Object value_;
     /**
      * <code>optional string value = 2;</code>
+     * @return Whether the value field is set.
      */
     public boolean hasValue() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional string value = 2;</code>
+     * @return The value.
      */
     public java.lang.String getValue() {
       java.lang.Object ref = value_;
@@ -7541,6 +7918,7 @@ public final class PrefsProto {
     }
     /**
      * <code>optional string value = 2;</code>
+     * @return The bytes for value.
      */
     public com.google.protobuf.ByteString
         getValueBytes() {
@@ -7907,12 +8285,14 @@ public final class PrefsProto {
       private java.lang.Object key_ = "";
       /**
        * <code>required string key = 1;</code>
+       * @return Whether the key field is set.
        */
       public boolean hasKey() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>required string key = 1;</code>
+       * @return The key.
        */
       public java.lang.String getKey() {
         java.lang.Object ref = key_;
@@ -7930,6 +8310,7 @@ public final class PrefsProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @return The bytes for key.
        */
       public com.google.protobuf.ByteString
           getKeyBytes() {
@@ -7946,6 +8327,8 @@ public final class PrefsProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @param value The key to set.
+       * @return This builder for chaining.
        */
       public Builder setKey(
           java.lang.String value) {
@@ -7959,6 +8342,7 @@ public final class PrefsProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearKey() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -7968,6 +8352,8 @@ public final class PrefsProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @param value The bytes for key to set.
+       * @return This builder for chaining.
        */
       public Builder setKeyBytes(
           com.google.protobuf.ByteString value) {
@@ -7983,12 +8369,14 @@ public final class PrefsProto {
       private java.lang.Object value_ = "";
       /**
        * <code>optional string value = 2;</code>
+       * @return Whether the value field is set.
        */
       public boolean hasValue() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional string value = 2;</code>
+       * @return The value.
        */
       public java.lang.String getValue() {
         java.lang.Object ref = value_;
@@ -8006,6 +8394,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string value = 2;</code>
+       * @return The bytes for value.
        */
       public com.google.protobuf.ByteString
           getValueBytes() {
@@ -8022,6 +8411,8 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string value = 2;</code>
+       * @param value The value to set.
+       * @return This builder for chaining.
        */
       public Builder setValue(
           java.lang.String value) {
@@ -8035,6 +8426,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string value = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearValue() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -8044,6 +8436,8 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string value = 2;</code>
+       * @param value The bytes for value to set.
+       * @return This builder for chaining.
        */
       public Builder setValueBytes(
           com.google.protobuf.ByteString value) {
@@ -8913,14 +9307,17 @@ public final class PrefsProto {
 
     /**
      * <code>required string key = 1;</code>
+     * @return Whether the key field is set.
      */
     boolean hasKey();
     /**
      * <code>required string key = 1;</code>
+     * @return The key.
      */
     java.lang.String getKey();
     /**
      * <code>required string key = 1;</code>
+     * @return The bytes for key.
      */
     com.google.protobuf.ByteString
         getKeyBytes();
@@ -9052,12 +9449,14 @@ public final class PrefsProto {
     private volatile java.lang.Object key_;
     /**
      * <code>required string key = 1;</code>
+     * @return Whether the key field is set.
      */
     public boolean hasKey() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>required string key = 1;</code>
+     * @return The key.
      */
     public java.lang.String getKey() {
       java.lang.Object ref = key_;
@@ -9075,6 +9474,7 @@ public final class PrefsProto {
     }
     /**
      * <code>required string key = 1;</code>
+     * @return The bytes for key.
      */
     public com.google.protobuf.ByteString
         getKeyBytes() {
@@ -9505,12 +9905,14 @@ public final class PrefsProto {
       private java.lang.Object key_ = "";
       /**
        * <code>required string key = 1;</code>
+       * @return Whether the key field is set.
        */
       public boolean hasKey() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>required string key = 1;</code>
+       * @return The key.
        */
       public java.lang.String getKey() {
         java.lang.Object ref = key_;
@@ -9528,6 +9930,7 @@ public final class PrefsProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @return The bytes for key.
        */
       public com.google.protobuf.ByteString
           getKeyBytes() {
@@ -9544,6 +9947,8 @@ public final class PrefsProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @param value The key to set.
+       * @return This builder for chaining.
        */
       public Builder setKey(
           java.lang.String value) {
@@ -9557,6 +9962,7 @@ public final class PrefsProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearKey() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -9566,6 +9972,8 @@ public final class PrefsProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @param value The bytes for key to set.
+       * @return This builder for chaining.
        */
       public Builder setKeyBytes(
           com.google.protobuf.ByteString value) {
@@ -9876,14 +10284,17 @@ public final class PrefsProto {
 
     /**
      * <code>optional string value = 1;</code>
+     * @return Whether the value field is set.
      */
     boolean hasValue();
     /**
      * <code>optional string value = 1;</code>
+     * @return The value.
      */
     java.lang.String getValue();
     /**
      * <code>optional string value = 1;</code>
+     * @return The bytes for value.
      */
     com.google.protobuf.ByteString
         getValueBytes();
@@ -9982,12 +10393,14 @@ public final class PrefsProto {
     private volatile java.lang.Object value_;
     /**
      * <code>optional string value = 1;</code>
+     * @return Whether the value field is set.
      */
     public boolean hasValue() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional string value = 1;</code>
+     * @return The value.
      */
     public java.lang.String getValue() {
       java.lang.Object ref = value_;
@@ -10005,6 +10418,7 @@ public final class PrefsProto {
     }
     /**
      * <code>optional string value = 1;</code>
+     * @return The bytes for value.
      */
     public com.google.protobuf.ByteString
         getValueBytes() {
@@ -10342,12 +10756,14 @@ public final class PrefsProto {
       private java.lang.Object value_ = "";
       /**
        * <code>optional string value = 1;</code>
+       * @return Whether the value field is set.
        */
       public boolean hasValue() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional string value = 1;</code>
+       * @return The value.
        */
       public java.lang.String getValue() {
         java.lang.Object ref = value_;
@@ -10365,6 +10781,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string value = 1;</code>
+       * @return The bytes for value.
        */
       public com.google.protobuf.ByteString
           getValueBytes() {
@@ -10381,6 +10798,8 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string value = 1;</code>
+       * @param value The value to set.
+       * @return This builder for chaining.
        */
       public Builder setValue(
           java.lang.String value) {
@@ -10394,6 +10813,7 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string value = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearValue() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -10403,6 +10823,8 @@ public final class PrefsProto {
       }
       /**
        * <code>optional string value = 1;</code>
+       * @param value The bytes for value to set.
+       * @return This builder for chaining.
        */
       public Builder setValueBytes(
           com.google.protobuf.ByteString value) {

@@ -68,6 +68,8 @@ public final class LoggingProto {
     }
 
     /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
      * @deprecated Use {@link #forNumber(int)} instead.
      */
     @java.lang.Deprecated
@@ -75,6 +77,10 @@ public final class LoggingProto {
       return forNumber(value);
     }
 
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     */
     public static Level forNumber(int value) {
       switch (value) {
         case 1: return TRACE;
@@ -137,10 +143,12 @@ public final class LoggingProto {
 
     /**
      * <code>optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;</code>
+     * @return Whether the eventIdentifier field is set.
      */
     boolean hasEventIdentifier();
     /**
      * <code>optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;</code>
+     * @return The eventIdentifier.
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier getEventIdentifier();
     /**
@@ -150,10 +158,12 @@ public final class LoggingProto {
 
     /**
      * <code>optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;</code>
+     * @return Whether the event field is set.
      */
     boolean hasEvent();
     /**
      * <code>optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;</code>
+     * @return The event.
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent getEvent();
     /**
@@ -270,12 +280,14 @@ public final class LoggingProto {
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier eventIdentifier_;
     /**
      * <code>optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;</code>
+     * @return Whether the eventIdentifier field is set.
      */
     public boolean hasEventIdentifier() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;</code>
+     * @return The eventIdentifier.
      */
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier getEventIdentifier() {
       return eventIdentifier_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance() : eventIdentifier_;
@@ -291,12 +303,14 @@ public final class LoggingProto {
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent event_;
     /**
      * <code>optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;</code>
+     * @return Whether the event field is set.
      */
     public boolean hasEvent() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;</code>
+     * @return The event.
      */
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent getEvent() {
       return event_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance() : event_;
@@ -681,12 +695,14 @@ public final class LoggingProto {
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifierOrBuilder> eventIdentifierBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;</code>
+       * @return Whether the eventIdentifier field is set.
        */
       public boolean hasEventIdentifier() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;</code>
+       * @return The eventIdentifier.
        */
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier getEventIdentifier() {
         if (eventIdentifierBuilder_ == null) {
@@ -799,12 +815,14 @@ public final class LoggingProto {
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEventOrBuilder> eventBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;</code>
+       * @return Whether the event field is set.
        */
       public boolean hasEvent() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;</code>
+       * @return The event.
        */
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent getEvent() {
         if (eventBuilder_ == null) {
@@ -970,19 +988,23 @@ public final class LoggingProto {
 
     /**
      * <code>optional int64 local_id = 1;</code>
+     * @return Whether the localId field is set.
      */
     boolean hasLocalId();
     /**
      * <code>optional int64 local_id = 1;</code>
+     * @return The localId.
      */
     long getLocalId();
 
     /**
      * <code>optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;</code>
+     * @return Whether the sourceIdentifier field is set.
      */
     boolean hasSourceIdentifier();
     /**
      * <code>optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;</code>
+     * @return The sourceIdentifier.
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier getSourceIdentifier();
     /**
@@ -1091,12 +1113,14 @@ public final class LoggingProto {
     private long localId_;
     /**
      * <code>optional int64 local_id = 1;</code>
+     * @return Whether the localId field is set.
      */
     public boolean hasLocalId() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional int64 local_id = 1;</code>
+     * @return The localId.
      */
     public long getLocalId() {
       return localId_;
@@ -1106,12 +1130,14 @@ public final class LoggingProto {
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier sourceIdentifier_;
     /**
      * <code>optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;</code>
+     * @return Whether the sourceIdentifier field is set.
      */
     public boolean hasSourceIdentifier() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;</code>
+     * @return The sourceIdentifier.
      */
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier getSourceIdentifier() {
       return sourceIdentifier_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance() : sourceIdentifier_;
@@ -1475,18 +1501,22 @@ public final class LoggingProto {
       private long localId_ ;
       /**
        * <code>optional int64 local_id = 1;</code>
+       * @return Whether the localId field is set.
        */
       public boolean hasLocalId() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional int64 local_id = 1;</code>
+       * @return The localId.
        */
       public long getLocalId() {
         return localId_;
       }
       /**
        * <code>optional int64 local_id = 1;</code>
+       * @param value The localId to set.
+       * @return This builder for chaining.
        */
       public Builder setLocalId(long value) {
         bitField0_ |= 0x00000001;
@@ -1496,6 +1526,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional int64 local_id = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearLocalId() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -1509,12 +1540,14 @@ public final class LoggingProto {
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifierOrBuilder> sourceIdentifierBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;</code>
+       * @return Whether the sourceIdentifier field is set.
        */
       public boolean hasSourceIdentifier() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;</code>
+       * @return The sourceIdentifier.
        */
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier getSourceIdentifier() {
         if (sourceIdentifierBuilder_ == null) {
@@ -1680,28 +1713,34 @@ public final class LoggingProto {
 
     /**
      * <code>optional string identifier = 1;</code>
+     * @return Whether the identifier field is set.
      */
     boolean hasIdentifier();
     /**
      * <code>optional string identifier = 1;</code>
+     * @return The identifier.
      */
     java.lang.String getIdentifier();
     /**
      * <code>optional string identifier = 1;</code>
+     * @return The bytes for identifier.
      */
     com.google.protobuf.ByteString
         getIdentifierBytes();
 
     /**
      * <code>optional string secondary_identifier = 2;</code>
+     * @return Whether the secondaryIdentifier field is set.
      */
     boolean hasSecondaryIdentifier();
     /**
      * <code>optional string secondary_identifier = 2;</code>
+     * @return The secondaryIdentifier.
      */
     java.lang.String getSecondaryIdentifier();
     /**
      * <code>optional string secondary_identifier = 2;</code>
+     * @return The bytes for secondaryIdentifier.
      */
     com.google.protobuf.ByteString
         getSecondaryIdentifierBytes();
@@ -1803,12 +1842,14 @@ public final class LoggingProto {
     private volatile java.lang.Object identifier_;
     /**
      * <code>optional string identifier = 1;</code>
+     * @return Whether the identifier field is set.
      */
     public boolean hasIdentifier() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional string identifier = 1;</code>
+     * @return The identifier.
      */
     public java.lang.String getIdentifier() {
       java.lang.Object ref = identifier_;
@@ -1826,6 +1867,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string identifier = 1;</code>
+     * @return The bytes for identifier.
      */
     public com.google.protobuf.ByteString
         getIdentifierBytes() {
@@ -1845,12 +1887,14 @@ public final class LoggingProto {
     private volatile java.lang.Object secondaryIdentifier_;
     /**
      * <code>optional string secondary_identifier = 2;</code>
+     * @return Whether the secondaryIdentifier field is set.
      */
     public boolean hasSecondaryIdentifier() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional string secondary_identifier = 2;</code>
+     * @return The secondaryIdentifier.
      */
     public java.lang.String getSecondaryIdentifier() {
       java.lang.Object ref = secondaryIdentifier_;
@@ -1868,6 +1912,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string secondary_identifier = 2;</code>
+     * @return The bytes for secondaryIdentifier.
      */
     public com.google.protobuf.ByteString
         getSecondaryIdentifierBytes() {
@@ -2227,12 +2272,14 @@ public final class LoggingProto {
       private java.lang.Object identifier_ = "";
       /**
        * <code>optional string identifier = 1;</code>
+       * @return Whether the identifier field is set.
        */
       public boolean hasIdentifier() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional string identifier = 1;</code>
+       * @return The identifier.
        */
       public java.lang.String getIdentifier() {
         java.lang.Object ref = identifier_;
@@ -2250,6 +2297,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string identifier = 1;</code>
+       * @return The bytes for identifier.
        */
       public com.google.protobuf.ByteString
           getIdentifierBytes() {
@@ -2266,6 +2314,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string identifier = 1;</code>
+       * @param value The identifier to set.
+       * @return This builder for chaining.
        */
       public Builder setIdentifier(
           java.lang.String value) {
@@ -2279,6 +2329,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string identifier = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearIdentifier() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -2288,6 +2339,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string identifier = 1;</code>
+       * @param value The bytes for identifier to set.
+       * @return This builder for chaining.
        */
       public Builder setIdentifierBytes(
           com.google.protobuf.ByteString value) {
@@ -2303,12 +2356,14 @@ public final class LoggingProto {
       private java.lang.Object secondaryIdentifier_ = "";
       /**
        * <code>optional string secondary_identifier = 2;</code>
+       * @return Whether the secondaryIdentifier field is set.
        */
       public boolean hasSecondaryIdentifier() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional string secondary_identifier = 2;</code>
+       * @return The secondaryIdentifier.
        */
       public java.lang.String getSecondaryIdentifier() {
         java.lang.Object ref = secondaryIdentifier_;
@@ -2326,6 +2381,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string secondary_identifier = 2;</code>
+       * @return The bytes for secondaryIdentifier.
        */
       public com.google.protobuf.ByteString
           getSecondaryIdentifierBytes() {
@@ -2342,6 +2398,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string secondary_identifier = 2;</code>
+       * @param value The secondaryIdentifier to set.
+       * @return This builder for chaining.
        */
       public Builder setSecondaryIdentifier(
           java.lang.String value) {
@@ -2355,6 +2413,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string secondary_identifier = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearSecondaryIdentifier() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -2364,6 +2423,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string secondary_identifier = 2;</code>
+       * @param value The bytes for secondaryIdentifier to set.
+       * @return This builder for chaining.
        */
       public Builder setSecondaryIdentifierBytes(
           com.google.protobuf.ByteString value) {
@@ -2434,42 +2495,51 @@ public final class LoggingProto {
 
     /**
      * <code>optional int64 time_stamp = 1;</code>
+     * @return Whether the timeStamp field is set.
      */
     boolean hasTimeStamp();
     /**
      * <code>optional int64 time_stamp = 1;</code>
+     * @return The timeStamp.
      */
     long getTimeStamp();
 
     /**
      * <code>optional string logger_name = 2;</code>
+     * @return Whether the loggerName field is set.
      */
     boolean hasLoggerName();
     /**
      * <code>optional string logger_name = 2;</code>
+     * @return The loggerName.
      */
     java.lang.String getLoggerName();
     /**
      * <code>optional string logger_name = 2;</code>
+     * @return The bytes for loggerName.
      */
     com.google.protobuf.ByteString
         getLoggerNameBytes();
 
     /**
      * <code>optional .de.huxhorn.lilith.logging.Level level = 3;</code>
+     * @return Whether the level field is set.
      */
     boolean hasLevel();
     /**
      * <code>optional .de.huxhorn.lilith.logging.Level level = 3;</code>
+     * @return The level.
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel();
 
     /**
      * <code>optional .de.huxhorn.lilith.logging.Message message = 4;</code>
+     * @return Whether the message field is set.
      */
     boolean hasMessage();
     /**
      * <code>optional .de.huxhorn.lilith.logging.Message message = 4;</code>
+     * @return The message.
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getMessage();
     /**
@@ -2479,10 +2549,12 @@ public final class LoggingProto {
 
     /**
      * <code>optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;</code>
+     * @return Whether the threadInfo field is set.
      */
     boolean hasThreadInfo();
     /**
      * <code>optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;</code>
+     * @return The threadInfo.
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo getThreadInfo();
     /**
@@ -2516,10 +2588,12 @@ public final class LoggingProto {
 
     /**
      * <code>optional .de.huxhorn.lilith.logging.Throwable throwable = 7;</code>
+     * @return Whether the throwable field is set.
      */
     boolean hasThrowable();
     /**
      * <code>optional .de.huxhorn.lilith.logging.Throwable throwable = 7;</code>
+     * @return The throwable.
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getThrowable();
     /**
@@ -2529,10 +2603,12 @@ public final class LoggingProto {
 
     /**
      * <code>optional .de.huxhorn.lilith.logging.LoggerContext logger_context = 8;</code>
+     * @return Whether the loggerContext field is set.
      */
     boolean hasLoggerContext();
     /**
      * <code>optional .de.huxhorn.lilith.logging.LoggerContext logger_context = 8;</code>
+     * @return The loggerContext.
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext getLoggerContext();
     /**
@@ -2542,10 +2618,12 @@ public final class LoggingProto {
 
     /**
      * <code>optional .de.huxhorn.lilith.logging.StringMap mapped_diagnostic_context = 9;</code>
+     * @return Whether the mappedDiagnosticContext field is set.
      */
     boolean hasMappedDiagnosticContext();
     /**
      * <code>optional .de.huxhorn.lilith.logging.StringMap mapped_diagnostic_context = 9;</code>
+     * @return The mappedDiagnosticContext.
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getMappedDiagnosticContext();
     /**
@@ -2555,10 +2633,12 @@ public final class LoggingProto {
 
     /**
      * <code>optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;</code>
+     * @return Whether the nestedDiagnosticContext field is set.
      */
     boolean hasNestedDiagnosticContext();
     /**
      * <code>optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;</code>
+     * @return The nestedDiagnosticContext.
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext getNestedDiagnosticContext();
     /**
@@ -2568,10 +2648,12 @@ public final class LoggingProto {
 
     /**
      * <code>optional .de.huxhorn.lilith.logging.Marker marker = 11;</code>
+     * @return Whether the marker field is set.
      */
     boolean hasMarker();
     /**
      * <code>optional .de.huxhorn.lilith.logging.Marker marker = 11;</code>
+     * @return The marker.
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getMarker();
     /**
@@ -2581,10 +2663,12 @@ public final class LoggingProto {
 
     /**
      * <code>optional int64 sequence_number = 12;</code>
+     * @return Whether the sequenceNumber field is set.
      */
     boolean hasSequenceNumber();
     /**
      * <code>optional int64 sequence_number = 12;</code>
+     * @return The sequenceNumber.
      */
     long getSequenceNumber();
   }
@@ -2805,12 +2889,14 @@ public final class LoggingProto {
     private long timeStamp_;
     /**
      * <code>optional int64 time_stamp = 1;</code>
+     * @return Whether the timeStamp field is set.
      */
     public boolean hasTimeStamp() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional int64 time_stamp = 1;</code>
+     * @return The timeStamp.
      */
     public long getTimeStamp() {
       return timeStamp_;
@@ -2820,12 +2906,14 @@ public final class LoggingProto {
     private volatile java.lang.Object loggerName_;
     /**
      * <code>optional string logger_name = 2;</code>
+     * @return Whether the loggerName field is set.
      */
     public boolean hasLoggerName() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional string logger_name = 2;</code>
+     * @return The loggerName.
      */
     public java.lang.String getLoggerName() {
       java.lang.Object ref = loggerName_;
@@ -2843,6 +2931,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string logger_name = 2;</code>
+     * @return The bytes for loggerName.
      */
     public com.google.protobuf.ByteString
         getLoggerNameBytes() {
@@ -2862,12 +2951,14 @@ public final class LoggingProto {
     private int level_;
     /**
      * <code>optional .de.huxhorn.lilith.logging.Level level = 3;</code>
+     * @return Whether the level field is set.
      */
     public boolean hasLevel() {
       return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.Level level = 3;</code>
+     * @return The level.
      */
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel() {
       @SuppressWarnings("deprecation")
@@ -2879,12 +2970,14 @@ public final class LoggingProto {
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message message_;
     /**
      * <code>optional .de.huxhorn.lilith.logging.Message message = 4;</code>
+     * @return Whether the message field is set.
      */
     public boolean hasMessage() {
       return ((bitField0_ & 0x00000008) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.Message message = 4;</code>
+     * @return The message.
      */
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getMessage() {
       return message_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance() : message_;
@@ -2900,12 +2993,14 @@ public final class LoggingProto {
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo threadInfo_;
     /**
      * <code>optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;</code>
+     * @return Whether the threadInfo field is set.
      */
     public boolean hasThreadInfo() {
       return ((bitField0_ & 0x00000010) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;</code>
+     * @return The threadInfo.
      */
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo getThreadInfo() {
       return threadInfo_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.getDefaultInstance() : threadInfo_;
@@ -2956,12 +3051,14 @@ public final class LoggingProto {
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable throwable_;
     /**
      * <code>optional .de.huxhorn.lilith.logging.Throwable throwable = 7;</code>
+     * @return Whether the throwable field is set.
      */
     public boolean hasThrowable() {
       return ((bitField0_ & 0x00000020) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.Throwable throwable = 7;</code>
+     * @return The throwable.
      */
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getThrowable() {
       return throwable_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance() : throwable_;
@@ -2977,12 +3074,14 @@ public final class LoggingProto {
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext loggerContext_;
     /**
      * <code>optional .de.huxhorn.lilith.logging.LoggerContext logger_context = 8;</code>
+     * @return Whether the loggerContext field is set.
      */
     public boolean hasLoggerContext() {
       return ((bitField0_ & 0x00000040) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.LoggerContext logger_context = 8;</code>
+     * @return The loggerContext.
      */
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext getLoggerContext() {
       return loggerContext_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.getDefaultInstance() : loggerContext_;
@@ -2998,12 +3097,14 @@ public final class LoggingProto {
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap mappedDiagnosticContext_;
     /**
      * <code>optional .de.huxhorn.lilith.logging.StringMap mapped_diagnostic_context = 9;</code>
+     * @return Whether the mappedDiagnosticContext field is set.
      */
     public boolean hasMappedDiagnosticContext() {
       return ((bitField0_ & 0x00000080) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.StringMap mapped_diagnostic_context = 9;</code>
+     * @return The mappedDiagnosticContext.
      */
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getMappedDiagnosticContext() {
       return mappedDiagnosticContext_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance() : mappedDiagnosticContext_;
@@ -3019,12 +3120,14 @@ public final class LoggingProto {
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext nestedDiagnosticContext_;
     /**
      * <code>optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;</code>
+     * @return Whether the nestedDiagnosticContext field is set.
      */
     public boolean hasNestedDiagnosticContext() {
       return ((bitField0_ & 0x00000100) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;</code>
+     * @return The nestedDiagnosticContext.
      */
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext getNestedDiagnosticContext() {
       return nestedDiagnosticContext_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance() : nestedDiagnosticContext_;
@@ -3040,12 +3143,14 @@ public final class LoggingProto {
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker marker_;
     /**
      * <code>optional .de.huxhorn.lilith.logging.Marker marker = 11;</code>
+     * @return Whether the marker field is set.
      */
     public boolean hasMarker() {
       return ((bitField0_ & 0x00000200) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.Marker marker = 11;</code>
+     * @return The marker.
      */
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getMarker() {
       return marker_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance() : marker_;
@@ -3061,12 +3166,14 @@ public final class LoggingProto {
     private long sequenceNumber_;
     /**
      * <code>optional int64 sequence_number = 12;</code>
+     * @return Whether the sequenceNumber field is set.
      */
     public boolean hasSequenceNumber() {
       return ((bitField0_ & 0x00000400) != 0);
     }
     /**
      * <code>optional int64 sequence_number = 12;</code>
+     * @return The sequenceNumber.
      */
     public long getSequenceNumber() {
       return sequenceNumber_;
@@ -3792,18 +3899,22 @@ public final class LoggingProto {
       private long timeStamp_ ;
       /**
        * <code>optional int64 time_stamp = 1;</code>
+       * @return Whether the timeStamp field is set.
        */
       public boolean hasTimeStamp() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional int64 time_stamp = 1;</code>
+       * @return The timeStamp.
        */
       public long getTimeStamp() {
         return timeStamp_;
       }
       /**
        * <code>optional int64 time_stamp = 1;</code>
+       * @param value The timeStamp to set.
+       * @return This builder for chaining.
        */
       public Builder setTimeStamp(long value) {
         bitField0_ |= 0x00000001;
@@ -3813,6 +3924,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional int64 time_stamp = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearTimeStamp() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -3824,12 +3936,14 @@ public final class LoggingProto {
       private java.lang.Object loggerName_ = "";
       /**
        * <code>optional string logger_name = 2;</code>
+       * @return Whether the loggerName field is set.
        */
       public boolean hasLoggerName() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional string logger_name = 2;</code>
+       * @return The loggerName.
        */
       public java.lang.String getLoggerName() {
         java.lang.Object ref = loggerName_;
@@ -3847,6 +3961,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string logger_name = 2;</code>
+       * @return The bytes for loggerName.
        */
       public com.google.protobuf.ByteString
           getLoggerNameBytes() {
@@ -3863,6 +3978,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string logger_name = 2;</code>
+       * @param value The loggerName to set.
+       * @return This builder for chaining.
        */
       public Builder setLoggerName(
           java.lang.String value) {
@@ -3876,6 +3993,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string logger_name = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearLoggerName() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -3885,6 +4003,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string logger_name = 2;</code>
+       * @param value The bytes for loggerName to set.
+       * @return This builder for chaining.
        */
       public Builder setLoggerNameBytes(
           com.google.protobuf.ByteString value) {
@@ -3900,12 +4020,14 @@ public final class LoggingProto {
       private int level_ = 1;
       /**
        * <code>optional .de.huxhorn.lilith.logging.Level level = 3;</code>
+       * @return Whether the level field is set.
        */
       public boolean hasLevel() {
         return ((bitField0_ & 0x00000004) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.logging.Level level = 3;</code>
+       * @return The level.
        */
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel() {
         @SuppressWarnings("deprecation")
@@ -3914,6 +4036,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional .de.huxhorn.lilith.logging.Level level = 3;</code>
+       * @param value The level to set.
+       * @return This builder for chaining.
        */
       public Builder setLevel(de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level value) {
         if (value == null) {
@@ -3926,6 +4050,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional .de.huxhorn.lilith.logging.Level level = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearLevel() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -3939,12 +4064,14 @@ public final class LoggingProto {
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder> messageBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.logging.Message message = 4;</code>
+       * @return Whether the message field is set.
        */
       public boolean hasMessage() {
         return ((bitField0_ & 0x00000008) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.logging.Message message = 4;</code>
+       * @return The message.
        */
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getMessage() {
         if (messageBuilder_ == null) {
@@ -4057,12 +4184,14 @@ public final class LoggingProto {
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfoOrBuilder> threadInfoBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;</code>
+       * @return Whether the threadInfo field is set.
        */
       public boolean hasThreadInfo() {
         return ((bitField0_ & 0x00000010) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;</code>
+       * @return The threadInfo.
        */
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo getThreadInfo() {
         if (threadInfoBuilder_ == null) {
@@ -4415,12 +4544,14 @@ public final class LoggingProto {
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder> throwableBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.logging.Throwable throwable = 7;</code>
+       * @return Whether the throwable field is set.
        */
       public boolean hasThrowable() {
         return ((bitField0_ & 0x00000040) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.logging.Throwable throwable = 7;</code>
+       * @return The throwable.
        */
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getThrowable() {
         if (throwableBuilder_ == null) {
@@ -4533,12 +4664,14 @@ public final class LoggingProto {
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContextOrBuilder> loggerContextBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.logging.LoggerContext logger_context = 8;</code>
+       * @return Whether the loggerContext field is set.
        */
       public boolean hasLoggerContext() {
         return ((bitField0_ & 0x00000080) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.logging.LoggerContext logger_context = 8;</code>
+       * @return The loggerContext.
        */
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext getLoggerContext() {
         if (loggerContextBuilder_ == null) {
@@ -4651,12 +4784,14 @@ public final class LoggingProto {
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder> mappedDiagnosticContextBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.logging.StringMap mapped_diagnostic_context = 9;</code>
+       * @return Whether the mappedDiagnosticContext field is set.
        */
       public boolean hasMappedDiagnosticContext() {
         return ((bitField0_ & 0x00000100) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.logging.StringMap mapped_diagnostic_context = 9;</code>
+       * @return The mappedDiagnosticContext.
        */
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getMappedDiagnosticContext() {
         if (mappedDiagnosticContextBuilder_ == null) {
@@ -4769,12 +4904,14 @@ public final class LoggingProto {
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContextOrBuilder> nestedDiagnosticContextBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;</code>
+       * @return Whether the nestedDiagnosticContext field is set.
        */
       public boolean hasNestedDiagnosticContext() {
         return ((bitField0_ & 0x00000200) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;</code>
+       * @return The nestedDiagnosticContext.
        */
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext getNestedDiagnosticContext() {
         if (nestedDiagnosticContextBuilder_ == null) {
@@ -4887,12 +5024,14 @@ public final class LoggingProto {
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder> markerBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.logging.Marker marker = 11;</code>
+       * @return Whether the marker field is set.
        */
       public boolean hasMarker() {
         return ((bitField0_ & 0x00000400) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.logging.Marker marker = 11;</code>
+       * @return The marker.
        */
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getMarker() {
         if (markerBuilder_ == null) {
@@ -5003,18 +5142,22 @@ public final class LoggingProto {
       private long sequenceNumber_ ;
       /**
        * <code>optional int64 sequence_number = 12;</code>
+       * @return Whether the sequenceNumber field is set.
        */
       public boolean hasSequenceNumber() {
         return ((bitField0_ & 0x00000800) != 0);
       }
       /**
        * <code>optional int64 sequence_number = 12;</code>
+       * @return The sequenceNumber.
        */
       public long getSequenceNumber() {
         return sequenceNumber_;
       }
       /**
        * <code>optional int64 sequence_number = 12;</code>
+       * @param value The sequenceNumber to set.
+       * @return This builder for chaining.
        */
       public Builder setSequenceNumber(long value) {
         bitField0_ |= 0x00000800;
@@ -5024,6 +5167,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional int64 sequence_number = 12;</code>
+       * @return This builder for chaining.
        */
       public Builder clearSequenceNumber() {
         bitField0_ = (bitField0_ & ~0x00000800);
@@ -5090,33 +5234,40 @@ public final class LoggingProto {
 
     /**
      * <code>optional int64 birth_time = 1;</code>
+     * @return Whether the birthTime field is set.
      */
     boolean hasBirthTime();
     /**
      * <code>optional int64 birth_time = 1;</code>
+     * @return The birthTime.
      */
     long getBirthTime();
 
     /**
      * <code>optional string name = 2;</code>
+     * @return Whether the name field is set.
      */
     boolean hasName();
     /**
      * <code>optional string name = 2;</code>
+     * @return The name.
      */
     java.lang.String getName();
     /**
      * <code>optional string name = 2;</code>
+     * @return The bytes for name.
      */
     com.google.protobuf.ByteString
         getNameBytes();
 
     /**
      * <code>optional .de.huxhorn.lilith.logging.StringMap properties = 3;</code>
+     * @return Whether the properties field is set.
      */
     boolean hasProperties();
     /**
      * <code>optional .de.huxhorn.lilith.logging.StringMap properties = 3;</code>
+     * @return The properties.
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getProperties();
     /**
@@ -5232,12 +5383,14 @@ public final class LoggingProto {
     private long birthTime_;
     /**
      * <code>optional int64 birth_time = 1;</code>
+     * @return Whether the birthTime field is set.
      */
     public boolean hasBirthTime() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional int64 birth_time = 1;</code>
+     * @return The birthTime.
      */
     public long getBirthTime() {
       return birthTime_;
@@ -5247,12 +5400,14 @@ public final class LoggingProto {
     private volatile java.lang.Object name_;
     /**
      * <code>optional string name = 2;</code>
+     * @return Whether the name field is set.
      */
     public boolean hasName() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional string name = 2;</code>
+     * @return The name.
      */
     public java.lang.String getName() {
       java.lang.Object ref = name_;
@@ -5270,6 +5425,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string name = 2;</code>
+     * @return The bytes for name.
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
@@ -5289,12 +5445,14 @@ public final class LoggingProto {
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap properties_;
     /**
      * <code>optional .de.huxhorn.lilith.logging.StringMap properties = 3;</code>
+     * @return Whether the properties field is set.
      */
     public boolean hasProperties() {
       return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.StringMap properties = 3;</code>
+     * @return The properties.
      */
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getProperties() {
       return properties_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance() : properties_;
@@ -5695,18 +5853,22 @@ public final class LoggingProto {
       private long birthTime_ ;
       /**
        * <code>optional int64 birth_time = 1;</code>
+       * @return Whether the birthTime field is set.
        */
       public boolean hasBirthTime() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional int64 birth_time = 1;</code>
+       * @return The birthTime.
        */
       public long getBirthTime() {
         return birthTime_;
       }
       /**
        * <code>optional int64 birth_time = 1;</code>
+       * @param value The birthTime to set.
+       * @return This builder for chaining.
        */
       public Builder setBirthTime(long value) {
         bitField0_ |= 0x00000001;
@@ -5716,6 +5878,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional int64 birth_time = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearBirthTime() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -5727,12 +5890,14 @@ public final class LoggingProto {
       private java.lang.Object name_ = "";
       /**
        * <code>optional string name = 2;</code>
+       * @return Whether the name field is set.
        */
       public boolean hasName() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional string name = 2;</code>
+       * @return The name.
        */
       public java.lang.String getName() {
         java.lang.Object ref = name_;
@@ -5750,6 +5915,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string name = 2;</code>
+       * @return The bytes for name.
        */
       public com.google.protobuf.ByteString
           getNameBytes() {
@@ -5766,6 +5932,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string name = 2;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
        */
       public Builder setName(
           java.lang.String value) {
@@ -5779,6 +5947,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string name = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearName() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -5788,6 +5957,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string name = 2;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
        */
       public Builder setNameBytes(
           com.google.protobuf.ByteString value) {
@@ -5805,12 +5976,14 @@ public final class LoggingProto {
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder> propertiesBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.logging.StringMap properties = 3;</code>
+       * @return Whether the properties field is set.
        */
       public boolean hasProperties() {
         return ((bitField0_ & 0x00000004) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.logging.StringMap properties = 3;</code>
+       * @return The properties.
        */
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getProperties() {
         if (propertiesBuilder_ == null) {
@@ -5976,56 +6149,68 @@ public final class LoggingProto {
 
     /**
      * <code>optional int64 id = 1;</code>
+     * @return Whether the id field is set.
      */
     boolean hasId();
     /**
      * <code>optional int64 id = 1;</code>
+     * @return The id.
      */
     long getId();
 
     /**
      * <code>optional string name = 2;</code>
+     * @return Whether the name field is set.
      */
     boolean hasName();
     /**
      * <code>optional string name = 2;</code>
+     * @return The name.
      */
     java.lang.String getName();
     /**
      * <code>optional string name = 2;</code>
+     * @return The bytes for name.
      */
     com.google.protobuf.ByteString
         getNameBytes();
 
     /**
      * <code>optional int64 group_id = 3;</code>
+     * @return Whether the groupId field is set.
      */
     boolean hasGroupId();
     /**
      * <code>optional int64 group_id = 3;</code>
+     * @return The groupId.
      */
     long getGroupId();
 
     /**
      * <code>optional string group_name = 4;</code>
+     * @return Whether the groupName field is set.
      */
     boolean hasGroupName();
     /**
      * <code>optional string group_name = 4;</code>
+     * @return The groupName.
      */
     java.lang.String getGroupName();
     /**
      * <code>optional string group_name = 4;</code>
+     * @return The bytes for groupName.
      */
     com.google.protobuf.ByteString
         getGroupNameBytes();
 
     /**
      * <code>optional int32 priority = 5;</code>
+     * @return Whether the priority field is set.
      */
     boolean hasPriority();
     /**
      * <code>optional int32 priority = 5;</code>
+     * @return The priority.
      */
     int getPriority();
   }
@@ -6141,12 +6326,14 @@ public final class LoggingProto {
     private long id_;
     /**
      * <code>optional int64 id = 1;</code>
+     * @return Whether the id field is set.
      */
     public boolean hasId() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional int64 id = 1;</code>
+     * @return The id.
      */
     public long getId() {
       return id_;
@@ -6156,12 +6343,14 @@ public final class LoggingProto {
     private volatile java.lang.Object name_;
     /**
      * <code>optional string name = 2;</code>
+     * @return Whether the name field is set.
      */
     public boolean hasName() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional string name = 2;</code>
+     * @return The name.
      */
     public java.lang.String getName() {
       java.lang.Object ref = name_;
@@ -6179,6 +6368,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string name = 2;</code>
+     * @return The bytes for name.
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
@@ -6198,12 +6388,14 @@ public final class LoggingProto {
     private long groupId_;
     /**
      * <code>optional int64 group_id = 3;</code>
+     * @return Whether the groupId field is set.
      */
     public boolean hasGroupId() {
       return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      * <code>optional int64 group_id = 3;</code>
+     * @return The groupId.
      */
     public long getGroupId() {
       return groupId_;
@@ -6213,12 +6405,14 @@ public final class LoggingProto {
     private volatile java.lang.Object groupName_;
     /**
      * <code>optional string group_name = 4;</code>
+     * @return Whether the groupName field is set.
      */
     public boolean hasGroupName() {
       return ((bitField0_ & 0x00000008) != 0);
     }
     /**
      * <code>optional string group_name = 4;</code>
+     * @return The groupName.
      */
     public java.lang.String getGroupName() {
       java.lang.Object ref = groupName_;
@@ -6236,6 +6430,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string group_name = 4;</code>
+     * @return The bytes for groupName.
      */
     public com.google.protobuf.ByteString
         getGroupNameBytes() {
@@ -6255,12 +6450,14 @@ public final class LoggingProto {
     private int priority_;
     /**
      * <code>optional int32 priority = 5;</code>
+     * @return Whether the priority field is set.
      */
     public boolean hasPriority() {
       return ((bitField0_ & 0x00000010) != 0);
     }
     /**
      * <code>optional int32 priority = 5;</code>
+     * @return The priority.
      */
     public int getPriority() {
       return priority_;
@@ -6687,18 +6884,22 @@ public final class LoggingProto {
       private long id_ ;
       /**
        * <code>optional int64 id = 1;</code>
+       * @return Whether the id field is set.
        */
       public boolean hasId() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional int64 id = 1;</code>
+       * @return The id.
        */
       public long getId() {
         return id_;
       }
       /**
        * <code>optional int64 id = 1;</code>
+       * @param value The id to set.
+       * @return This builder for chaining.
        */
       public Builder setId(long value) {
         bitField0_ |= 0x00000001;
@@ -6708,6 +6909,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional int64 id = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearId() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -6719,12 +6921,14 @@ public final class LoggingProto {
       private java.lang.Object name_ = "";
       /**
        * <code>optional string name = 2;</code>
+       * @return Whether the name field is set.
        */
       public boolean hasName() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional string name = 2;</code>
+       * @return The name.
        */
       public java.lang.String getName() {
         java.lang.Object ref = name_;
@@ -6742,6 +6946,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string name = 2;</code>
+       * @return The bytes for name.
        */
       public com.google.protobuf.ByteString
           getNameBytes() {
@@ -6758,6 +6963,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string name = 2;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
        */
       public Builder setName(
           java.lang.String value) {
@@ -6771,6 +6978,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string name = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearName() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -6780,6 +6988,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string name = 2;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
        */
       public Builder setNameBytes(
           com.google.protobuf.ByteString value) {
@@ -6795,18 +7005,22 @@ public final class LoggingProto {
       private long groupId_ ;
       /**
        * <code>optional int64 group_id = 3;</code>
+       * @return Whether the groupId field is set.
        */
       public boolean hasGroupId() {
         return ((bitField0_ & 0x00000004) != 0);
       }
       /**
        * <code>optional int64 group_id = 3;</code>
+       * @return The groupId.
        */
       public long getGroupId() {
         return groupId_;
       }
       /**
        * <code>optional int64 group_id = 3;</code>
+       * @param value The groupId to set.
+       * @return This builder for chaining.
        */
       public Builder setGroupId(long value) {
         bitField0_ |= 0x00000004;
@@ -6816,6 +7030,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional int64 group_id = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearGroupId() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -6827,12 +7042,14 @@ public final class LoggingProto {
       private java.lang.Object groupName_ = "";
       /**
        * <code>optional string group_name = 4;</code>
+       * @return Whether the groupName field is set.
        */
       public boolean hasGroupName() {
         return ((bitField0_ & 0x00000008) != 0);
       }
       /**
        * <code>optional string group_name = 4;</code>
+       * @return The groupName.
        */
       public java.lang.String getGroupName() {
         java.lang.Object ref = groupName_;
@@ -6850,6 +7067,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string group_name = 4;</code>
+       * @return The bytes for groupName.
        */
       public com.google.protobuf.ByteString
           getGroupNameBytes() {
@@ -6866,6 +7084,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string group_name = 4;</code>
+       * @param value The groupName to set.
+       * @return This builder for chaining.
        */
       public Builder setGroupName(
           java.lang.String value) {
@@ -6879,6 +7099,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string group_name = 4;</code>
+       * @return This builder for chaining.
        */
       public Builder clearGroupName() {
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -6888,6 +7109,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string group_name = 4;</code>
+       * @param value The bytes for groupName to set.
+       * @return This builder for chaining.
        */
       public Builder setGroupNameBytes(
           com.google.protobuf.ByteString value) {
@@ -6903,18 +7126,22 @@ public final class LoggingProto {
       private int priority_ ;
       /**
        * <code>optional int32 priority = 5;</code>
+       * @return Whether the priority field is set.
        */
       public boolean hasPriority() {
         return ((bitField0_ & 0x00000010) != 0);
       }
       /**
        * <code>optional int32 priority = 5;</code>
+       * @return The priority.
        */
       public int getPriority() {
         return priority_;
       }
       /**
        * <code>optional int32 priority = 5;</code>
+       * @param value The priority to set.
+       * @return This builder for chaining.
        */
       public Builder setPriority(int value) {
         bitField0_ |= 0x00000010;
@@ -6924,6 +7151,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional int32 priority = 5;</code>
+       * @return This builder for chaining.
        */
       public Builder clearPriority() {
         bitField0_ = (bitField0_ & ~0x00000010);
@@ -6990,14 +7218,17 @@ public final class LoggingProto {
 
     /**
      * <code>optional string message_pattern = 1;</code>
+     * @return Whether the messagePattern field is set.
      */
     boolean hasMessagePattern();
     /**
      * <code>optional string message_pattern = 1;</code>
+     * @return The messagePattern.
      */
     java.lang.String getMessagePattern();
     /**
      * <code>optional string message_pattern = 1;</code>
+     * @return The bytes for messagePattern.
      */
     com.google.protobuf.ByteString
         getMessagePatternBytes();
@@ -7129,12 +7360,14 @@ public final class LoggingProto {
     private volatile java.lang.Object messagePattern_;
     /**
      * <code>optional string message_pattern = 1;</code>
+     * @return Whether the messagePattern field is set.
      */
     public boolean hasMessagePattern() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional string message_pattern = 1;</code>
+     * @return The messagePattern.
      */
     public java.lang.String getMessagePattern() {
       java.lang.Object ref = messagePattern_;
@@ -7152,6 +7385,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string message_pattern = 1;</code>
+     * @return The bytes for messagePattern.
      */
     public com.google.protobuf.ByteString
         getMessagePatternBytes() {
@@ -7575,12 +7809,14 @@ public final class LoggingProto {
       private java.lang.Object messagePattern_ = "";
       /**
        * <code>optional string message_pattern = 1;</code>
+       * @return Whether the messagePattern field is set.
        */
       public boolean hasMessagePattern() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional string message_pattern = 1;</code>
+       * @return The messagePattern.
        */
       public java.lang.String getMessagePattern() {
         java.lang.Object ref = messagePattern_;
@@ -7598,6 +7834,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string message_pattern = 1;</code>
+       * @return The bytes for messagePattern.
        */
       public com.google.protobuf.ByteString
           getMessagePatternBytes() {
@@ -7614,6 +7851,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string message_pattern = 1;</code>
+       * @param value The messagePattern to set.
+       * @return This builder for chaining.
        */
       public Builder setMessagePattern(
           java.lang.String value) {
@@ -7627,6 +7866,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string message_pattern = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearMessagePattern() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -7636,6 +7876,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string message_pattern = 1;</code>
+       * @param value The bytes for messagePattern to set.
+       * @return This builder for chaining.
        */
       public Builder setMessagePatternBytes(
           com.google.protobuf.ByteString value) {
@@ -7946,14 +8188,17 @@ public final class LoggingProto {
 
     /**
      * <code>optional string value = 1;</code>
+     * @return Whether the value field is set.
      */
     boolean hasValue();
     /**
      * <code>optional string value = 1;</code>
+     * @return The value.
      */
     java.lang.String getValue();
     /**
      * <code>optional string value = 1;</code>
+     * @return The bytes for value.
      */
     com.google.protobuf.ByteString
         getValueBytes();
@@ -8052,12 +8297,14 @@ public final class LoggingProto {
     private volatile java.lang.Object value_;
     /**
      * <code>optional string value = 1;</code>
+     * @return Whether the value field is set.
      */
     public boolean hasValue() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional string value = 1;</code>
+     * @return The value.
      */
     public java.lang.String getValue() {
       java.lang.Object ref = value_;
@@ -8075,6 +8322,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string value = 1;</code>
+     * @return The bytes for value.
      */
     public com.google.protobuf.ByteString
         getValueBytes() {
@@ -8412,12 +8660,14 @@ public final class LoggingProto {
       private java.lang.Object value_ = "";
       /**
        * <code>optional string value = 1;</code>
+       * @return Whether the value field is set.
        */
       public boolean hasValue() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional string value = 1;</code>
+       * @return The value.
        */
       public java.lang.String getValue() {
         java.lang.Object ref = value_;
@@ -8435,6 +8685,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string value = 1;</code>
+       * @return The bytes for value.
        */
       public com.google.protobuf.ByteString
           getValueBytes() {
@@ -8451,6 +8702,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string value = 1;</code>
+       * @param value The value to set.
+       * @return This builder for chaining.
        */
       public Builder setValue(
           java.lang.String value) {
@@ -8464,6 +8717,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string value = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearValue() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -8473,6 +8727,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string value = 1;</code>
+       * @param value The bytes for value to set.
+       * @return This builder for chaining.
        */
       public Builder setValueBytes(
           com.google.protobuf.ByteString value) {
@@ -8543,130 +8799,158 @@ public final class LoggingProto {
 
     /**
      * <code>optional string method_name = 1;</code>
+     * @return Whether the methodName field is set.
      */
     boolean hasMethodName();
     /**
      * <code>optional string method_name = 1;</code>
+     * @return The methodName.
      */
     java.lang.String getMethodName();
     /**
      * <code>optional string method_name = 1;</code>
+     * @return The bytes for methodName.
      */
     com.google.protobuf.ByteString
         getMethodNameBytes();
 
     /**
      * <code>optional string class_name = 2;</code>
+     * @return Whether the className field is set.
      */
     boolean hasClassName();
     /**
      * <code>optional string class_name = 2;</code>
+     * @return The className.
      */
     java.lang.String getClassName();
     /**
      * <code>optional string class_name = 2;</code>
+     * @return The bytes for className.
      */
     com.google.protobuf.ByteString
         getClassNameBytes();
 
     /**
      * <code>optional string file_name = 3;</code>
+     * @return Whether the fileName field is set.
      */
     boolean hasFileName();
     /**
      * <code>optional string file_name = 3;</code>
+     * @return The fileName.
      */
     java.lang.String getFileName();
     /**
      * <code>optional string file_name = 3;</code>
+     * @return The bytes for fileName.
      */
     com.google.protobuf.ByteString
         getFileNameBytes();
 
     /**
      * <code>optional int32 line_number = 4;</code>
+     * @return Whether the lineNumber field is set.
      */
     boolean hasLineNumber();
     /**
      * <code>optional int32 line_number = 4;</code>
+     * @return The lineNumber.
      */
     int getLineNumber();
 
     /**
      * <code>optional string code_location = 5;</code>
+     * @return Whether the codeLocation field is set.
      */
     boolean hasCodeLocation();
     /**
      * <code>optional string code_location = 5;</code>
+     * @return The codeLocation.
      */
     java.lang.String getCodeLocation();
     /**
      * <code>optional string code_location = 5;</code>
+     * @return The bytes for codeLocation.
      */
     com.google.protobuf.ByteString
         getCodeLocationBytes();
 
     /**
      * <code>optional string version = 6;</code>
+     * @return Whether the version field is set.
      */
     boolean hasVersion();
     /**
      * <code>optional string version = 6;</code>
+     * @return The version.
      */
     java.lang.String getVersion();
     /**
      * <code>optional string version = 6;</code>
+     * @return The bytes for version.
      */
     com.google.protobuf.ByteString
         getVersionBytes();
 
     /**
      * <code>optional bool exact = 7;</code>
+     * @return Whether the exact field is set.
      */
     boolean hasExact();
     /**
      * <code>optional bool exact = 7;</code>
+     * @return The exact.
      */
     boolean getExact();
 
     /**
      * <code>optional string class_loader_name = 8;</code>
+     * @return Whether the classLoaderName field is set.
      */
     boolean hasClassLoaderName();
     /**
      * <code>optional string class_loader_name = 8;</code>
+     * @return The classLoaderName.
      */
     java.lang.String getClassLoaderName();
     /**
      * <code>optional string class_loader_name = 8;</code>
+     * @return The bytes for classLoaderName.
      */
     com.google.protobuf.ByteString
         getClassLoaderNameBytes();
 
     /**
      * <code>optional string module_name = 9;</code>
+     * @return Whether the moduleName field is set.
      */
     boolean hasModuleName();
     /**
      * <code>optional string module_name = 9;</code>
+     * @return The moduleName.
      */
     java.lang.String getModuleName();
     /**
      * <code>optional string module_name = 9;</code>
+     * @return The bytes for moduleName.
      */
     com.google.protobuf.ByteString
         getModuleNameBytes();
 
     /**
      * <code>optional string module_version = 10;</code>
+     * @return Whether the moduleVersion field is set.
      */
     boolean hasModuleVersion();
     /**
      * <code>optional string module_version = 10;</code>
+     * @return The moduleVersion.
      */
     java.lang.String getModuleVersion();
     /**
      * <code>optional string module_version = 10;</code>
+     * @return The bytes for moduleVersion.
      */
     com.google.protobuf.ByteString
         getModuleVersionBytes();
@@ -8820,12 +9104,14 @@ public final class LoggingProto {
     private volatile java.lang.Object methodName_;
     /**
      * <code>optional string method_name = 1;</code>
+     * @return Whether the methodName field is set.
      */
     public boolean hasMethodName() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional string method_name = 1;</code>
+     * @return The methodName.
      */
     public java.lang.String getMethodName() {
       java.lang.Object ref = methodName_;
@@ -8843,6 +9129,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string method_name = 1;</code>
+     * @return The bytes for methodName.
      */
     public com.google.protobuf.ByteString
         getMethodNameBytes() {
@@ -8862,12 +9149,14 @@ public final class LoggingProto {
     private volatile java.lang.Object className_;
     /**
      * <code>optional string class_name = 2;</code>
+     * @return Whether the className field is set.
      */
     public boolean hasClassName() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional string class_name = 2;</code>
+     * @return The className.
      */
     public java.lang.String getClassName() {
       java.lang.Object ref = className_;
@@ -8885,6 +9174,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string class_name = 2;</code>
+     * @return The bytes for className.
      */
     public com.google.protobuf.ByteString
         getClassNameBytes() {
@@ -8904,12 +9194,14 @@ public final class LoggingProto {
     private volatile java.lang.Object fileName_;
     /**
      * <code>optional string file_name = 3;</code>
+     * @return Whether the fileName field is set.
      */
     public boolean hasFileName() {
       return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      * <code>optional string file_name = 3;</code>
+     * @return The fileName.
      */
     public java.lang.String getFileName() {
       java.lang.Object ref = fileName_;
@@ -8927,6 +9219,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string file_name = 3;</code>
+     * @return The bytes for fileName.
      */
     public com.google.protobuf.ByteString
         getFileNameBytes() {
@@ -8946,12 +9239,14 @@ public final class LoggingProto {
     private int lineNumber_;
     /**
      * <code>optional int32 line_number = 4;</code>
+     * @return Whether the lineNumber field is set.
      */
     public boolean hasLineNumber() {
       return ((bitField0_ & 0x00000008) != 0);
     }
     /**
      * <code>optional int32 line_number = 4;</code>
+     * @return The lineNumber.
      */
     public int getLineNumber() {
       return lineNumber_;
@@ -8961,12 +9256,14 @@ public final class LoggingProto {
     private volatile java.lang.Object codeLocation_;
     /**
      * <code>optional string code_location = 5;</code>
+     * @return Whether the codeLocation field is set.
      */
     public boolean hasCodeLocation() {
       return ((bitField0_ & 0x00000010) != 0);
     }
     /**
      * <code>optional string code_location = 5;</code>
+     * @return The codeLocation.
      */
     public java.lang.String getCodeLocation() {
       java.lang.Object ref = codeLocation_;
@@ -8984,6 +9281,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string code_location = 5;</code>
+     * @return The bytes for codeLocation.
      */
     public com.google.protobuf.ByteString
         getCodeLocationBytes() {
@@ -9003,12 +9301,14 @@ public final class LoggingProto {
     private volatile java.lang.Object version_;
     /**
      * <code>optional string version = 6;</code>
+     * @return Whether the version field is set.
      */
     public boolean hasVersion() {
       return ((bitField0_ & 0x00000020) != 0);
     }
     /**
      * <code>optional string version = 6;</code>
+     * @return The version.
      */
     public java.lang.String getVersion() {
       java.lang.Object ref = version_;
@@ -9026,6 +9326,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string version = 6;</code>
+     * @return The bytes for version.
      */
     public com.google.protobuf.ByteString
         getVersionBytes() {
@@ -9045,12 +9346,14 @@ public final class LoggingProto {
     private boolean exact_;
     /**
      * <code>optional bool exact = 7;</code>
+     * @return Whether the exact field is set.
      */
     public boolean hasExact() {
       return ((bitField0_ & 0x00000040) != 0);
     }
     /**
      * <code>optional bool exact = 7;</code>
+     * @return The exact.
      */
     public boolean getExact() {
       return exact_;
@@ -9060,12 +9363,14 @@ public final class LoggingProto {
     private volatile java.lang.Object classLoaderName_;
     /**
      * <code>optional string class_loader_name = 8;</code>
+     * @return Whether the classLoaderName field is set.
      */
     public boolean hasClassLoaderName() {
       return ((bitField0_ & 0x00000080) != 0);
     }
     /**
      * <code>optional string class_loader_name = 8;</code>
+     * @return The classLoaderName.
      */
     public java.lang.String getClassLoaderName() {
       java.lang.Object ref = classLoaderName_;
@@ -9083,6 +9388,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string class_loader_name = 8;</code>
+     * @return The bytes for classLoaderName.
      */
     public com.google.protobuf.ByteString
         getClassLoaderNameBytes() {
@@ -9102,12 +9408,14 @@ public final class LoggingProto {
     private volatile java.lang.Object moduleName_;
     /**
      * <code>optional string module_name = 9;</code>
+     * @return Whether the moduleName field is set.
      */
     public boolean hasModuleName() {
       return ((bitField0_ & 0x00000100) != 0);
     }
     /**
      * <code>optional string module_name = 9;</code>
+     * @return The moduleName.
      */
     public java.lang.String getModuleName() {
       java.lang.Object ref = moduleName_;
@@ -9125,6 +9433,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string module_name = 9;</code>
+     * @return The bytes for moduleName.
      */
     public com.google.protobuf.ByteString
         getModuleNameBytes() {
@@ -9144,12 +9453,14 @@ public final class LoggingProto {
     private volatile java.lang.Object moduleVersion_;
     /**
      * <code>optional string module_version = 10;</code>
+     * @return Whether the moduleVersion field is set.
      */
     public boolean hasModuleVersion() {
       return ((bitField0_ & 0x00000200) != 0);
     }
     /**
      * <code>optional string module_version = 10;</code>
+     * @return The moduleVersion.
      */
     public java.lang.String getModuleVersion() {
       java.lang.Object ref = moduleVersion_;
@@ -9167,6 +9478,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string module_version = 10;</code>
+     * @return The bytes for moduleVersion.
      */
     public com.google.protobuf.ByteString
         getModuleVersionBytes() {
@@ -9733,12 +10045,14 @@ public final class LoggingProto {
       private java.lang.Object methodName_ = "";
       /**
        * <code>optional string method_name = 1;</code>
+       * @return Whether the methodName field is set.
        */
       public boolean hasMethodName() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional string method_name = 1;</code>
+       * @return The methodName.
        */
       public java.lang.String getMethodName() {
         java.lang.Object ref = methodName_;
@@ -9756,6 +10070,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string method_name = 1;</code>
+       * @return The bytes for methodName.
        */
       public com.google.protobuf.ByteString
           getMethodNameBytes() {
@@ -9772,6 +10087,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string method_name = 1;</code>
+       * @param value The methodName to set.
+       * @return This builder for chaining.
        */
       public Builder setMethodName(
           java.lang.String value) {
@@ -9785,6 +10102,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string method_name = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearMethodName() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -9794,6 +10112,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string method_name = 1;</code>
+       * @param value The bytes for methodName to set.
+       * @return This builder for chaining.
        */
       public Builder setMethodNameBytes(
           com.google.protobuf.ByteString value) {
@@ -9809,12 +10129,14 @@ public final class LoggingProto {
       private java.lang.Object className_ = "";
       /**
        * <code>optional string class_name = 2;</code>
+       * @return Whether the className field is set.
        */
       public boolean hasClassName() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional string class_name = 2;</code>
+       * @return The className.
        */
       public java.lang.String getClassName() {
         java.lang.Object ref = className_;
@@ -9832,6 +10154,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string class_name = 2;</code>
+       * @return The bytes for className.
        */
       public com.google.protobuf.ByteString
           getClassNameBytes() {
@@ -9848,6 +10171,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string class_name = 2;</code>
+       * @param value The className to set.
+       * @return This builder for chaining.
        */
       public Builder setClassName(
           java.lang.String value) {
@@ -9861,6 +10186,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string class_name = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearClassName() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -9870,6 +10196,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string class_name = 2;</code>
+       * @param value The bytes for className to set.
+       * @return This builder for chaining.
        */
       public Builder setClassNameBytes(
           com.google.protobuf.ByteString value) {
@@ -9885,12 +10213,14 @@ public final class LoggingProto {
       private java.lang.Object fileName_ = "";
       /**
        * <code>optional string file_name = 3;</code>
+       * @return Whether the fileName field is set.
        */
       public boolean hasFileName() {
         return ((bitField0_ & 0x00000004) != 0);
       }
       /**
        * <code>optional string file_name = 3;</code>
+       * @return The fileName.
        */
       public java.lang.String getFileName() {
         java.lang.Object ref = fileName_;
@@ -9908,6 +10238,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string file_name = 3;</code>
+       * @return The bytes for fileName.
        */
       public com.google.protobuf.ByteString
           getFileNameBytes() {
@@ -9924,6 +10255,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string file_name = 3;</code>
+       * @param value The fileName to set.
+       * @return This builder for chaining.
        */
       public Builder setFileName(
           java.lang.String value) {
@@ -9937,6 +10270,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string file_name = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearFileName() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -9946,6 +10280,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string file_name = 3;</code>
+       * @param value The bytes for fileName to set.
+       * @return This builder for chaining.
        */
       public Builder setFileNameBytes(
           com.google.protobuf.ByteString value) {
@@ -9961,18 +10297,22 @@ public final class LoggingProto {
       private int lineNumber_ ;
       /**
        * <code>optional int32 line_number = 4;</code>
+       * @return Whether the lineNumber field is set.
        */
       public boolean hasLineNumber() {
         return ((bitField0_ & 0x00000008) != 0);
       }
       /**
        * <code>optional int32 line_number = 4;</code>
+       * @return The lineNumber.
        */
       public int getLineNumber() {
         return lineNumber_;
       }
       /**
        * <code>optional int32 line_number = 4;</code>
+       * @param value The lineNumber to set.
+       * @return This builder for chaining.
        */
       public Builder setLineNumber(int value) {
         bitField0_ |= 0x00000008;
@@ -9982,6 +10322,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional int32 line_number = 4;</code>
+       * @return This builder for chaining.
        */
       public Builder clearLineNumber() {
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -9993,12 +10334,14 @@ public final class LoggingProto {
       private java.lang.Object codeLocation_ = "";
       /**
        * <code>optional string code_location = 5;</code>
+       * @return Whether the codeLocation field is set.
        */
       public boolean hasCodeLocation() {
         return ((bitField0_ & 0x00000010) != 0);
       }
       /**
        * <code>optional string code_location = 5;</code>
+       * @return The codeLocation.
        */
       public java.lang.String getCodeLocation() {
         java.lang.Object ref = codeLocation_;
@@ -10016,6 +10359,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string code_location = 5;</code>
+       * @return The bytes for codeLocation.
        */
       public com.google.protobuf.ByteString
           getCodeLocationBytes() {
@@ -10032,6 +10376,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string code_location = 5;</code>
+       * @param value The codeLocation to set.
+       * @return This builder for chaining.
        */
       public Builder setCodeLocation(
           java.lang.String value) {
@@ -10045,6 +10391,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string code_location = 5;</code>
+       * @return This builder for chaining.
        */
       public Builder clearCodeLocation() {
         bitField0_ = (bitField0_ & ~0x00000010);
@@ -10054,6 +10401,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string code_location = 5;</code>
+       * @param value The bytes for codeLocation to set.
+       * @return This builder for chaining.
        */
       public Builder setCodeLocationBytes(
           com.google.protobuf.ByteString value) {
@@ -10069,12 +10418,14 @@ public final class LoggingProto {
       private java.lang.Object version_ = "";
       /**
        * <code>optional string version = 6;</code>
+       * @return Whether the version field is set.
        */
       public boolean hasVersion() {
         return ((bitField0_ & 0x00000020) != 0);
       }
       /**
        * <code>optional string version = 6;</code>
+       * @return The version.
        */
       public java.lang.String getVersion() {
         java.lang.Object ref = version_;
@@ -10092,6 +10443,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string version = 6;</code>
+       * @return The bytes for version.
        */
       public com.google.protobuf.ByteString
           getVersionBytes() {
@@ -10108,6 +10460,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string version = 6;</code>
+       * @param value The version to set.
+       * @return This builder for chaining.
        */
       public Builder setVersion(
           java.lang.String value) {
@@ -10121,6 +10475,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string version = 6;</code>
+       * @return This builder for chaining.
        */
       public Builder clearVersion() {
         bitField0_ = (bitField0_ & ~0x00000020);
@@ -10130,6 +10485,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string version = 6;</code>
+       * @param value The bytes for version to set.
+       * @return This builder for chaining.
        */
       public Builder setVersionBytes(
           com.google.protobuf.ByteString value) {
@@ -10145,18 +10502,22 @@ public final class LoggingProto {
       private boolean exact_ ;
       /**
        * <code>optional bool exact = 7;</code>
+       * @return Whether the exact field is set.
        */
       public boolean hasExact() {
         return ((bitField0_ & 0x00000040) != 0);
       }
       /**
        * <code>optional bool exact = 7;</code>
+       * @return The exact.
        */
       public boolean getExact() {
         return exact_;
       }
       /**
        * <code>optional bool exact = 7;</code>
+       * @param value The exact to set.
+       * @return This builder for chaining.
        */
       public Builder setExact(boolean value) {
         bitField0_ |= 0x00000040;
@@ -10166,6 +10527,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional bool exact = 7;</code>
+       * @return This builder for chaining.
        */
       public Builder clearExact() {
         bitField0_ = (bitField0_ & ~0x00000040);
@@ -10177,12 +10539,14 @@ public final class LoggingProto {
       private java.lang.Object classLoaderName_ = "";
       /**
        * <code>optional string class_loader_name = 8;</code>
+       * @return Whether the classLoaderName field is set.
        */
       public boolean hasClassLoaderName() {
         return ((bitField0_ & 0x00000080) != 0);
       }
       /**
        * <code>optional string class_loader_name = 8;</code>
+       * @return The classLoaderName.
        */
       public java.lang.String getClassLoaderName() {
         java.lang.Object ref = classLoaderName_;
@@ -10200,6 +10564,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string class_loader_name = 8;</code>
+       * @return The bytes for classLoaderName.
        */
       public com.google.protobuf.ByteString
           getClassLoaderNameBytes() {
@@ -10216,6 +10581,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string class_loader_name = 8;</code>
+       * @param value The classLoaderName to set.
+       * @return This builder for chaining.
        */
       public Builder setClassLoaderName(
           java.lang.String value) {
@@ -10229,6 +10596,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string class_loader_name = 8;</code>
+       * @return This builder for chaining.
        */
       public Builder clearClassLoaderName() {
         bitField0_ = (bitField0_ & ~0x00000080);
@@ -10238,6 +10606,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string class_loader_name = 8;</code>
+       * @param value The bytes for classLoaderName to set.
+       * @return This builder for chaining.
        */
       public Builder setClassLoaderNameBytes(
           com.google.protobuf.ByteString value) {
@@ -10253,12 +10623,14 @@ public final class LoggingProto {
       private java.lang.Object moduleName_ = "";
       /**
        * <code>optional string module_name = 9;</code>
+       * @return Whether the moduleName field is set.
        */
       public boolean hasModuleName() {
         return ((bitField0_ & 0x00000100) != 0);
       }
       /**
        * <code>optional string module_name = 9;</code>
+       * @return The moduleName.
        */
       public java.lang.String getModuleName() {
         java.lang.Object ref = moduleName_;
@@ -10276,6 +10648,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string module_name = 9;</code>
+       * @return The bytes for moduleName.
        */
       public com.google.protobuf.ByteString
           getModuleNameBytes() {
@@ -10292,6 +10665,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string module_name = 9;</code>
+       * @param value The moduleName to set.
+       * @return This builder for chaining.
        */
       public Builder setModuleName(
           java.lang.String value) {
@@ -10305,6 +10680,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string module_name = 9;</code>
+       * @return This builder for chaining.
        */
       public Builder clearModuleName() {
         bitField0_ = (bitField0_ & ~0x00000100);
@@ -10314,6 +10690,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string module_name = 9;</code>
+       * @param value The bytes for moduleName to set.
+       * @return This builder for chaining.
        */
       public Builder setModuleNameBytes(
           com.google.protobuf.ByteString value) {
@@ -10329,12 +10707,14 @@ public final class LoggingProto {
       private java.lang.Object moduleVersion_ = "";
       /**
        * <code>optional string module_version = 10;</code>
+       * @return Whether the moduleVersion field is set.
        */
       public boolean hasModuleVersion() {
         return ((bitField0_ & 0x00000200) != 0);
       }
       /**
        * <code>optional string module_version = 10;</code>
+       * @return The moduleVersion.
        */
       public java.lang.String getModuleVersion() {
         java.lang.Object ref = moduleVersion_;
@@ -10352,6 +10732,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string module_version = 10;</code>
+       * @return The bytes for moduleVersion.
        */
       public com.google.protobuf.ByteString
           getModuleVersionBytes() {
@@ -10368,6 +10749,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string module_version = 10;</code>
+       * @param value The moduleVersion to set.
+       * @return This builder for chaining.
        */
       public Builder setModuleVersion(
           java.lang.String value) {
@@ -10381,6 +10764,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string module_version = 10;</code>
+       * @return This builder for chaining.
        */
       public Builder clearModuleVersion() {
         bitField0_ = (bitField0_ & ~0x00000200);
@@ -10390,6 +10774,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string module_version = 10;</code>
+       * @param value The bytes for moduleVersion to set.
+       * @return This builder for chaining.
        */
       public Builder setModuleVersionBytes(
           com.google.protobuf.ByteString value) {
@@ -10460,28 +10846,34 @@ public final class LoggingProto {
 
     /**
      * <code>optional string throwable_class = 1;</code>
+     * @return Whether the throwableClass field is set.
      */
     boolean hasThrowableClass();
     /**
      * <code>optional string throwable_class = 1;</code>
+     * @return The throwableClass.
      */
     java.lang.String getThrowableClass();
     /**
      * <code>optional string throwable_class = 1;</code>
+     * @return The bytes for throwableClass.
      */
     com.google.protobuf.ByteString
         getThrowableClassBytes();
 
     /**
      * <code>optional string message = 2;</code>
+     * @return Whether the message field is set.
      */
     boolean hasMessage();
     /**
      * <code>optional string message = 2;</code>
+     * @return The message.
      */
     java.lang.String getMessage();
     /**
      * <code>optional string message = 2;</code>
+     * @return The bytes for message.
      */
     com.google.protobuf.ByteString
         getMessageBytes();
@@ -10512,19 +10904,23 @@ public final class LoggingProto {
 
     /**
      * <code>optional int32 omitted_elements = 4;</code>
+     * @return Whether the omittedElements field is set.
      */
     boolean hasOmittedElements();
     /**
      * <code>optional int32 omitted_elements = 4;</code>
+     * @return The omittedElements.
      */
     int getOmittedElements();
 
     /**
      * <code>optional .de.huxhorn.lilith.logging.Throwable cause = 5;</code>
+     * @return Whether the cause field is set.
      */
     boolean hasCause();
     /**
      * <code>optional .de.huxhorn.lilith.logging.Throwable cause = 5;</code>
+     * @return The cause.
      */
     de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getCause();
     /**
@@ -10697,12 +11093,14 @@ public final class LoggingProto {
     private volatile java.lang.Object throwableClass_;
     /**
      * <code>optional string throwable_class = 1;</code>
+     * @return Whether the throwableClass field is set.
      */
     public boolean hasThrowableClass() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional string throwable_class = 1;</code>
+     * @return The throwableClass.
      */
     public java.lang.String getThrowableClass() {
       java.lang.Object ref = throwableClass_;
@@ -10720,6 +11118,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string throwable_class = 1;</code>
+     * @return The bytes for throwableClass.
      */
     public com.google.protobuf.ByteString
         getThrowableClassBytes() {
@@ -10739,12 +11138,14 @@ public final class LoggingProto {
     private volatile java.lang.Object message_;
     /**
      * <code>optional string message = 2;</code>
+     * @return Whether the message field is set.
      */
     public boolean hasMessage() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional string message = 2;</code>
+     * @return The message.
      */
     public java.lang.String getMessage() {
       java.lang.Object ref = message_;
@@ -10762,6 +11163,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string message = 2;</code>
+     * @return The bytes for message.
      */
     public com.google.protobuf.ByteString
         getMessageBytes() {
@@ -10816,12 +11218,14 @@ public final class LoggingProto {
     private int omittedElements_;
     /**
      * <code>optional int32 omitted_elements = 4;</code>
+     * @return Whether the omittedElements field is set.
      */
     public boolean hasOmittedElements() {
       return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      * <code>optional int32 omitted_elements = 4;</code>
+     * @return The omittedElements.
      */
     public int getOmittedElements() {
       return omittedElements_;
@@ -10831,12 +11235,14 @@ public final class LoggingProto {
     private de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable cause_;
     /**
      * <code>optional .de.huxhorn.lilith.logging.Throwable cause = 5;</code>
+     * @return Whether the cause field is set.
      */
     public boolean hasCause() {
       return ((bitField0_ & 0x00000008) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.Throwable cause = 5;</code>
+     * @return The cause.
      */
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getCause() {
       return cause_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance() : cause_;
@@ -11396,12 +11802,14 @@ public final class LoggingProto {
       private java.lang.Object throwableClass_ = "";
       /**
        * <code>optional string throwable_class = 1;</code>
+       * @return Whether the throwableClass field is set.
        */
       public boolean hasThrowableClass() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional string throwable_class = 1;</code>
+       * @return The throwableClass.
        */
       public java.lang.String getThrowableClass() {
         java.lang.Object ref = throwableClass_;
@@ -11419,6 +11827,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string throwable_class = 1;</code>
+       * @return The bytes for throwableClass.
        */
       public com.google.protobuf.ByteString
           getThrowableClassBytes() {
@@ -11435,6 +11844,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string throwable_class = 1;</code>
+       * @param value The throwableClass to set.
+       * @return This builder for chaining.
        */
       public Builder setThrowableClass(
           java.lang.String value) {
@@ -11448,6 +11859,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string throwable_class = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearThrowableClass() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -11457,6 +11869,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string throwable_class = 1;</code>
+       * @param value The bytes for throwableClass to set.
+       * @return This builder for chaining.
        */
       public Builder setThrowableClassBytes(
           com.google.protobuf.ByteString value) {
@@ -11472,12 +11886,14 @@ public final class LoggingProto {
       private java.lang.Object message_ = "";
       /**
        * <code>optional string message = 2;</code>
+       * @return Whether the message field is set.
        */
       public boolean hasMessage() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional string message = 2;</code>
+       * @return The message.
        */
       public java.lang.String getMessage() {
         java.lang.Object ref = message_;
@@ -11495,6 +11911,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string message = 2;</code>
+       * @return The bytes for message.
        */
       public com.google.protobuf.ByteString
           getMessageBytes() {
@@ -11511,6 +11928,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string message = 2;</code>
+       * @param value The message to set.
+       * @return This builder for chaining.
        */
       public Builder setMessage(
           java.lang.String value) {
@@ -11524,6 +11943,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string message = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearMessage() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -11533,6 +11953,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string message = 2;</code>
+       * @param value The bytes for message to set.
+       * @return This builder for chaining.
        */
       public Builder setMessageBytes(
           com.google.protobuf.ByteString value) {
@@ -11788,18 +12210,22 @@ public final class LoggingProto {
       private int omittedElements_ ;
       /**
        * <code>optional int32 omitted_elements = 4;</code>
+       * @return Whether the omittedElements field is set.
        */
       public boolean hasOmittedElements() {
         return ((bitField0_ & 0x00000008) != 0);
       }
       /**
        * <code>optional int32 omitted_elements = 4;</code>
+       * @return The omittedElements.
        */
       public int getOmittedElements() {
         return omittedElements_;
       }
       /**
        * <code>optional int32 omitted_elements = 4;</code>
+       * @param value The omittedElements to set.
+       * @return This builder for chaining.
        */
       public Builder setOmittedElements(int value) {
         bitField0_ |= 0x00000008;
@@ -11809,6 +12235,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional int32 omitted_elements = 4;</code>
+       * @return This builder for chaining.
        */
       public Builder clearOmittedElements() {
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -11822,12 +12249,14 @@ public final class LoggingProto {
           de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.Builder, de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder> causeBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.logging.Throwable cause = 5;</code>
+       * @return Whether the cause field is set.
        */
       public boolean hasCause() {
         return ((bitField0_ & 0x00000010) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.logging.Throwable cause = 5;</code>
+       * @return The cause.
        */
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getCause() {
         if (causeBuilder_ == null) {
@@ -13820,28 +14249,34 @@ public final class LoggingProto {
 
     /**
      * <code>required string key = 1;</code>
+     * @return Whether the key field is set.
      */
     boolean hasKey();
     /**
      * <code>required string key = 1;</code>
+     * @return The key.
      */
     java.lang.String getKey();
     /**
      * <code>required string key = 1;</code>
+     * @return The bytes for key.
      */
     com.google.protobuf.ByteString
         getKeyBytes();
 
     /**
      * <code>optional string value = 2;</code>
+     * @return Whether the value field is set.
      */
     boolean hasValue();
     /**
      * <code>optional string value = 2;</code>
+     * @return The value.
      */
     java.lang.String getValue();
     /**
      * <code>optional string value = 2;</code>
+     * @return The bytes for value.
      */
     com.google.protobuf.ByteString
         getValueBytes();
@@ -13943,12 +14378,14 @@ public final class LoggingProto {
     private volatile java.lang.Object key_;
     /**
      * <code>required string key = 1;</code>
+     * @return Whether the key field is set.
      */
     public boolean hasKey() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>required string key = 1;</code>
+     * @return The key.
      */
     public java.lang.String getKey() {
       java.lang.Object ref = key_;
@@ -13966,6 +14403,7 @@ public final class LoggingProto {
     }
     /**
      * <code>required string key = 1;</code>
+     * @return The bytes for key.
      */
     public com.google.protobuf.ByteString
         getKeyBytes() {
@@ -13985,12 +14423,14 @@ public final class LoggingProto {
     private volatile java.lang.Object value_;
     /**
      * <code>optional string value = 2;</code>
+     * @return Whether the value field is set.
      */
     public boolean hasValue() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional string value = 2;</code>
+     * @return The value.
      */
     public java.lang.String getValue() {
       java.lang.Object ref = value_;
@@ -14008,6 +14448,7 @@ public final class LoggingProto {
     }
     /**
      * <code>optional string value = 2;</code>
+     * @return The bytes for value.
      */
     public com.google.protobuf.ByteString
         getValueBytes() {
@@ -14374,12 +14815,14 @@ public final class LoggingProto {
       private java.lang.Object key_ = "";
       /**
        * <code>required string key = 1;</code>
+       * @return Whether the key field is set.
        */
       public boolean hasKey() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>required string key = 1;</code>
+       * @return The key.
        */
       public java.lang.String getKey() {
         java.lang.Object ref = key_;
@@ -14397,6 +14840,7 @@ public final class LoggingProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @return The bytes for key.
        */
       public com.google.protobuf.ByteString
           getKeyBytes() {
@@ -14413,6 +14857,8 @@ public final class LoggingProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @param value The key to set.
+       * @return This builder for chaining.
        */
       public Builder setKey(
           java.lang.String value) {
@@ -14426,6 +14872,7 @@ public final class LoggingProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearKey() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -14435,6 +14882,8 @@ public final class LoggingProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @param value The bytes for key to set.
+       * @return This builder for chaining.
        */
       public Builder setKeyBytes(
           com.google.protobuf.ByteString value) {
@@ -14450,12 +14899,14 @@ public final class LoggingProto {
       private java.lang.Object value_ = "";
       /**
        * <code>optional string value = 2;</code>
+       * @return Whether the value field is set.
        */
       public boolean hasValue() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional string value = 2;</code>
+       * @return The value.
        */
       public java.lang.String getValue() {
         java.lang.Object ref = value_;
@@ -14473,6 +14924,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string value = 2;</code>
+       * @return The bytes for value.
        */
       public com.google.protobuf.ByteString
           getValueBytes() {
@@ -14489,6 +14941,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string value = 2;</code>
+       * @param value The value to set.
+       * @return This builder for chaining.
        */
       public Builder setValue(
           java.lang.String value) {
@@ -14502,6 +14956,7 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string value = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearValue() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -14511,6 +14966,8 @@ public final class LoggingProto {
       }
       /**
        * <code>optional string value = 2;</code>
+       * @param value The bytes for value to set.
+       * @return This builder for chaining.
        */
       public Builder setValueBytes(
           com.google.protobuf.ByteString value) {
@@ -14581,14 +15038,17 @@ public final class LoggingProto {
 
     /**
      * <code>required string name = 1;</code>
+     * @return Whether the name field is set.
      */
     boolean hasName();
     /**
      * <code>required string name = 1;</code>
+     * @return The name.
      */
     java.lang.String getName();
     /**
      * <code>required string name = 1;</code>
+     * @return The bytes for name.
      */
     com.google.protobuf.ByteString
         getNameBytes();
@@ -14720,12 +15180,14 @@ public final class LoggingProto {
     private volatile java.lang.Object name_;
     /**
      * <code>required string name = 1;</code>
+     * @return Whether the name field is set.
      */
     public boolean hasName() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>required string name = 1;</code>
+     * @return The name.
      */
     public java.lang.String getName() {
       java.lang.Object ref = name_;
@@ -14743,6 +15205,7 @@ public final class LoggingProto {
     }
     /**
      * <code>required string name = 1;</code>
+     * @return The bytes for name.
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
@@ -15184,12 +15647,14 @@ public final class LoggingProto {
       private java.lang.Object name_ = "";
       /**
        * <code>required string name = 1;</code>
+       * @return Whether the name field is set.
        */
       public boolean hasName() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>required string name = 1;</code>
+       * @return The name.
        */
       public java.lang.String getName() {
         java.lang.Object ref = name_;
@@ -15207,6 +15672,7 @@ public final class LoggingProto {
       }
       /**
        * <code>required string name = 1;</code>
+       * @return The bytes for name.
        */
       public com.google.protobuf.ByteString
           getNameBytes() {
@@ -15223,6 +15689,8 @@ public final class LoggingProto {
       }
       /**
        * <code>required string name = 1;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
        */
       public Builder setName(
           java.lang.String value) {
@@ -15236,6 +15704,7 @@ public final class LoggingProto {
       }
       /**
        * <code>required string name = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearName() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -15245,6 +15714,8 @@ public final class LoggingProto {
       }
       /**
        * <code>required string name = 1;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
        */
       public Builder setNameBytes(
           com.google.protobuf.ByteString value) {

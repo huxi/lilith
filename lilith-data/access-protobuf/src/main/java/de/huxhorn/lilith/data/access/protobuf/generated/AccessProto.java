@@ -20,10 +20,12 @@ public final class AccessProto {
 
     /**
      * <code>optional .de.huxhorn.lilith.access.EventIdentifier event_identifier = 1;</code>
+     * @return Whether the eventIdentifier field is set.
      */
     boolean hasEventIdentifier();
     /**
      * <code>optional .de.huxhorn.lilith.access.EventIdentifier event_identifier = 1;</code>
+     * @return The eventIdentifier.
      */
     de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier getEventIdentifier();
     /**
@@ -33,10 +35,12 @@ public final class AccessProto {
 
     /**
      * <code>optional .de.huxhorn.lilith.access.AccessEvent event = 2;</code>
+     * @return Whether the event field is set.
      */
     boolean hasEvent();
     /**
      * <code>optional .de.huxhorn.lilith.access.AccessEvent event = 2;</code>
+     * @return The event.
      */
     de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent getEvent();
     /**
@@ -153,12 +157,14 @@ public final class AccessProto {
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier eventIdentifier_;
     /**
      * <code>optional .de.huxhorn.lilith.access.EventIdentifier event_identifier = 1;</code>
+     * @return Whether the eventIdentifier field is set.
      */
     public boolean hasEventIdentifier() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.access.EventIdentifier event_identifier = 1;</code>
+     * @return The eventIdentifier.
      */
     public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier getEventIdentifier() {
       return eventIdentifier_ == null ? de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.getDefaultInstance() : eventIdentifier_;
@@ -174,12 +180,14 @@ public final class AccessProto {
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent event_;
     /**
      * <code>optional .de.huxhorn.lilith.access.AccessEvent event = 2;</code>
+     * @return Whether the event field is set.
      */
     public boolean hasEvent() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.access.AccessEvent event = 2;</code>
+     * @return The event.
      */
     public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent getEvent() {
       return event_ == null ? de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.getDefaultInstance() : event_;
@@ -564,12 +572,14 @@ public final class AccessProto {
           de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifierOrBuilder> eventIdentifierBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.access.EventIdentifier event_identifier = 1;</code>
+       * @return Whether the eventIdentifier field is set.
        */
       public boolean hasEventIdentifier() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.access.EventIdentifier event_identifier = 1;</code>
+       * @return The eventIdentifier.
        */
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.EventIdentifier getEventIdentifier() {
         if (eventIdentifierBuilder_ == null) {
@@ -682,12 +692,14 @@ public final class AccessProto {
           de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEventOrBuilder> eventBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.access.AccessEvent event = 2;</code>
+       * @return Whether the event field is set.
        */
       public boolean hasEvent() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.access.AccessEvent event = 2;</code>
+       * @return The event.
        */
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.AccessEvent getEvent() {
         if (eventBuilder_ == null) {
@@ -853,19 +865,23 @@ public final class AccessProto {
 
     /**
      * <code>optional int64 local_id = 1;</code>
+     * @return Whether the localId field is set.
      */
     boolean hasLocalId();
     /**
      * <code>optional int64 local_id = 1;</code>
+     * @return The localId.
      */
     long getLocalId();
 
     /**
      * <code>optional .de.huxhorn.lilith.access.SourceIdentifier source_identifier = 2;</code>
+     * @return Whether the sourceIdentifier field is set.
      */
     boolean hasSourceIdentifier();
     /**
      * <code>optional .de.huxhorn.lilith.access.SourceIdentifier source_identifier = 2;</code>
+     * @return The sourceIdentifier.
      */
     de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier getSourceIdentifier();
     /**
@@ -974,12 +990,14 @@ public final class AccessProto {
     private long localId_;
     /**
      * <code>optional int64 local_id = 1;</code>
+     * @return Whether the localId field is set.
      */
     public boolean hasLocalId() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional int64 local_id = 1;</code>
+     * @return The localId.
      */
     public long getLocalId() {
       return localId_;
@@ -989,12 +1007,14 @@ public final class AccessProto {
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier sourceIdentifier_;
     /**
      * <code>optional .de.huxhorn.lilith.access.SourceIdentifier source_identifier = 2;</code>
+     * @return Whether the sourceIdentifier field is set.
      */
     public boolean hasSourceIdentifier() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.access.SourceIdentifier source_identifier = 2;</code>
+     * @return The sourceIdentifier.
      */
     public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier getSourceIdentifier() {
       return sourceIdentifier_ == null ? de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.getDefaultInstance() : sourceIdentifier_;
@@ -1358,18 +1378,22 @@ public final class AccessProto {
       private long localId_ ;
       /**
        * <code>optional int64 local_id = 1;</code>
+       * @return Whether the localId field is set.
        */
       public boolean hasLocalId() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional int64 local_id = 1;</code>
+       * @return The localId.
        */
       public long getLocalId() {
         return localId_;
       }
       /**
        * <code>optional int64 local_id = 1;</code>
+       * @param value The localId to set.
+       * @return This builder for chaining.
        */
       public Builder setLocalId(long value) {
         bitField0_ |= 0x00000001;
@@ -1379,6 +1403,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional int64 local_id = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearLocalId() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -1392,12 +1417,14 @@ public final class AccessProto {
           de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifierOrBuilder> sourceIdentifierBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.access.SourceIdentifier source_identifier = 2;</code>
+       * @return Whether the sourceIdentifier field is set.
        */
       public boolean hasSourceIdentifier() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.access.SourceIdentifier source_identifier = 2;</code>
+       * @return The sourceIdentifier.
        */
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.SourceIdentifier getSourceIdentifier() {
         if (sourceIdentifierBuilder_ == null) {
@@ -1563,28 +1590,34 @@ public final class AccessProto {
 
     /**
      * <code>optional string identifier = 1;</code>
+     * @return Whether the identifier field is set.
      */
     boolean hasIdentifier();
     /**
      * <code>optional string identifier = 1;</code>
+     * @return The identifier.
      */
     java.lang.String getIdentifier();
     /**
      * <code>optional string identifier = 1;</code>
+     * @return The bytes for identifier.
      */
     com.google.protobuf.ByteString
         getIdentifierBytes();
 
     /**
      * <code>optional string secondary_identifier = 2;</code>
+     * @return Whether the secondaryIdentifier field is set.
      */
     boolean hasSecondaryIdentifier();
     /**
      * <code>optional string secondary_identifier = 2;</code>
+     * @return The secondaryIdentifier.
      */
     java.lang.String getSecondaryIdentifier();
     /**
      * <code>optional string secondary_identifier = 2;</code>
+     * @return The bytes for secondaryIdentifier.
      */
     com.google.protobuf.ByteString
         getSecondaryIdentifierBytes();
@@ -1686,12 +1719,14 @@ public final class AccessProto {
     private volatile java.lang.Object identifier_;
     /**
      * <code>optional string identifier = 1;</code>
+     * @return Whether the identifier field is set.
      */
     public boolean hasIdentifier() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional string identifier = 1;</code>
+     * @return The identifier.
      */
     public java.lang.String getIdentifier() {
       java.lang.Object ref = identifier_;
@@ -1709,6 +1744,7 @@ public final class AccessProto {
     }
     /**
      * <code>optional string identifier = 1;</code>
+     * @return The bytes for identifier.
      */
     public com.google.protobuf.ByteString
         getIdentifierBytes() {
@@ -1728,12 +1764,14 @@ public final class AccessProto {
     private volatile java.lang.Object secondaryIdentifier_;
     /**
      * <code>optional string secondary_identifier = 2;</code>
+     * @return Whether the secondaryIdentifier field is set.
      */
     public boolean hasSecondaryIdentifier() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional string secondary_identifier = 2;</code>
+     * @return The secondaryIdentifier.
      */
     public java.lang.String getSecondaryIdentifier() {
       java.lang.Object ref = secondaryIdentifier_;
@@ -1751,6 +1789,7 @@ public final class AccessProto {
     }
     /**
      * <code>optional string secondary_identifier = 2;</code>
+     * @return The bytes for secondaryIdentifier.
      */
     public com.google.protobuf.ByteString
         getSecondaryIdentifierBytes() {
@@ -2110,12 +2149,14 @@ public final class AccessProto {
       private java.lang.Object identifier_ = "";
       /**
        * <code>optional string identifier = 1;</code>
+       * @return Whether the identifier field is set.
        */
       public boolean hasIdentifier() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional string identifier = 1;</code>
+       * @return The identifier.
        */
       public java.lang.String getIdentifier() {
         java.lang.Object ref = identifier_;
@@ -2133,6 +2174,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string identifier = 1;</code>
+       * @return The bytes for identifier.
        */
       public com.google.protobuf.ByteString
           getIdentifierBytes() {
@@ -2149,6 +2191,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string identifier = 1;</code>
+       * @param value The identifier to set.
+       * @return This builder for chaining.
        */
       public Builder setIdentifier(
           java.lang.String value) {
@@ -2162,6 +2206,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string identifier = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearIdentifier() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -2171,6 +2216,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string identifier = 1;</code>
+       * @param value The bytes for identifier to set.
+       * @return This builder for chaining.
        */
       public Builder setIdentifierBytes(
           com.google.protobuf.ByteString value) {
@@ -2186,12 +2233,14 @@ public final class AccessProto {
       private java.lang.Object secondaryIdentifier_ = "";
       /**
        * <code>optional string secondary_identifier = 2;</code>
+       * @return Whether the secondaryIdentifier field is set.
        */
       public boolean hasSecondaryIdentifier() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional string secondary_identifier = 2;</code>
+       * @return The secondaryIdentifier.
        */
       public java.lang.String getSecondaryIdentifier() {
         java.lang.Object ref = secondaryIdentifier_;
@@ -2209,6 +2258,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string secondary_identifier = 2;</code>
+       * @return The bytes for secondaryIdentifier.
        */
       public com.google.protobuf.ByteString
           getSecondaryIdentifierBytes() {
@@ -2225,6 +2275,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string secondary_identifier = 2;</code>
+       * @param value The secondaryIdentifier to set.
+       * @return This builder for chaining.
        */
       public Builder setSecondaryIdentifier(
           java.lang.String value) {
@@ -2238,6 +2290,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string secondary_identifier = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearSecondaryIdentifier() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -2247,6 +2300,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string secondary_identifier = 2;</code>
+       * @param value The bytes for secondaryIdentifier to set.
+       * @return This builder for chaining.
        */
       public Builder setSecondaryIdentifierBytes(
           com.google.protobuf.ByteString value) {
@@ -2317,149 +2372,181 @@ public final class AccessProto {
 
     /**
      * <code>optional string method = 1;</code>
+     * @return Whether the method field is set.
      */
     boolean hasMethod();
     /**
      * <code>optional string method = 1;</code>
+     * @return The method.
      */
     java.lang.String getMethod();
     /**
      * <code>optional string method = 1;</code>
+     * @return The bytes for method.
      */
     com.google.protobuf.ByteString
         getMethodBytes();
 
     /**
      * <code>optional string protocol = 2;</code>
+     * @return Whether the protocol field is set.
      */
     boolean hasProtocol();
     /**
      * <code>optional string protocol = 2;</code>
+     * @return The protocol.
      */
     java.lang.String getProtocol();
     /**
      * <code>optional string protocol = 2;</code>
+     * @return The bytes for protocol.
      */
     com.google.protobuf.ByteString
         getProtocolBytes();
 
     /**
      * <code>optional string remote_address = 3;</code>
+     * @return Whether the remoteAddress field is set.
      */
     boolean hasRemoteAddress();
     /**
      * <code>optional string remote_address = 3;</code>
+     * @return The remoteAddress.
      */
     java.lang.String getRemoteAddress();
     /**
      * <code>optional string remote_address = 3;</code>
+     * @return The bytes for remoteAddress.
      */
     com.google.protobuf.ByteString
         getRemoteAddressBytes();
 
     /**
      * <code>optional string remote_host = 4;</code>
+     * @return Whether the remoteHost field is set.
      */
     boolean hasRemoteHost();
     /**
      * <code>optional string remote_host = 4;</code>
+     * @return The remoteHost.
      */
     java.lang.String getRemoteHost();
     /**
      * <code>optional string remote_host = 4;</code>
+     * @return The bytes for remoteHost.
      */
     com.google.protobuf.ByteString
         getRemoteHostBytes();
 
     /**
      * <code>optional string remote_user = 5;</code>
+     * @return Whether the remoteUser field is set.
      */
     boolean hasRemoteUser();
     /**
      * <code>optional string remote_user = 5;</code>
+     * @return The remoteUser.
      */
     java.lang.String getRemoteUser();
     /**
      * <code>optional string remote_user = 5;</code>
+     * @return The bytes for remoteUser.
      */
     com.google.protobuf.ByteString
         getRemoteUserBytes();
 
     /**
      * <code>optional int64 time_stamp = 6;</code>
+     * @return Whether the timeStamp field is set.
      */
     boolean hasTimeStamp();
     /**
      * <code>optional int64 time_stamp = 6;</code>
+     * @return The timeStamp.
      */
     long getTimeStamp();
 
     /**
      * <code>optional string request_uri = 7;</code>
+     * @return Whether the requestUri field is set.
      */
     boolean hasRequestUri();
     /**
      * <code>optional string request_uri = 7;</code>
+     * @return The requestUri.
      */
     java.lang.String getRequestUri();
     /**
      * <code>optional string request_uri = 7;</code>
+     * @return The bytes for requestUri.
      */
     com.google.protobuf.ByteString
         getRequestUriBytes();
 
     /**
      * <code>optional string request_url = 8;</code>
+     * @return Whether the requestUrl field is set.
      */
     boolean hasRequestUrl();
     /**
      * <code>optional string request_url = 8;</code>
+     * @return The requestUrl.
      */
     java.lang.String getRequestUrl();
     /**
      * <code>optional string request_url = 8;</code>
+     * @return The bytes for requestUrl.
      */
     com.google.protobuf.ByteString
         getRequestUrlBytes();
 
     /**
      * <code>optional int32 status_code = 9;</code>
+     * @return Whether the statusCode field is set.
      */
     boolean hasStatusCode();
     /**
      * <code>optional int32 status_code = 9;</code>
+     * @return The statusCode.
      */
     int getStatusCode();
 
     /**
      * <code>optional int32 local_port = 10;</code>
+     * @return Whether the localPort field is set.
      */
     boolean hasLocalPort();
     /**
      * <code>optional int32 local_port = 10;</code>
+     * @return The localPort.
      */
     int getLocalPort();
 
     /**
      * <code>optional string server_name = 11;</code>
+     * @return Whether the serverName field is set.
      */
     boolean hasServerName();
     /**
      * <code>optional string server_name = 11;</code>
+     * @return The serverName.
      */
     java.lang.String getServerName();
     /**
      * <code>optional string server_name = 11;</code>
+     * @return The bytes for serverName.
      */
     com.google.protobuf.ByteString
         getServerNameBytes();
 
     /**
      * <code>optional .de.huxhorn.lilith.access.StringMap request_headers = 12;</code>
+     * @return Whether the requestHeaders field is set.
      */
     boolean hasRequestHeaders();
     /**
      * <code>optional .de.huxhorn.lilith.access.StringMap request_headers = 12;</code>
+     * @return The requestHeaders.
      */
     de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getRequestHeaders();
     /**
@@ -2469,10 +2556,12 @@ public final class AccessProto {
 
     /**
      * <code>optional .de.huxhorn.lilith.access.StringArrayMap request_parameters = 13;</code>
+     * @return Whether the requestParameters field is set.
      */
     boolean hasRequestParameters();
     /**
      * <code>optional .de.huxhorn.lilith.access.StringArrayMap request_parameters = 13;</code>
+     * @return The requestParameters.
      */
     de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap getRequestParameters();
     /**
@@ -2482,10 +2571,12 @@ public final class AccessProto {
 
     /**
      * <code>optional .de.huxhorn.lilith.access.StringMap response_headers = 14;</code>
+     * @return Whether the responseHeaders field is set.
      */
     boolean hasResponseHeaders();
     /**
      * <code>optional .de.huxhorn.lilith.access.StringMap response_headers = 14;</code>
+     * @return The responseHeaders.
      */
     de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getResponseHeaders();
     /**
@@ -2495,10 +2586,12 @@ public final class AccessProto {
 
     /**
      * <code>optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;</code>
+     * @return Whether the loggerContext field is set.
      */
     boolean hasLoggerContext();
     /**
      * <code>optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;</code>
+     * @return The loggerContext.
      */
     de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext getLoggerContext();
     /**
@@ -2508,10 +2601,12 @@ public final class AccessProto {
 
     /**
      * <code>optional int64 elapsed_time = 16;</code>
+     * @return Whether the elapsedTime field is set.
      */
     boolean hasElapsedTime();
     /**
      * <code>optional int64 elapsed_time = 16;</code>
+     * @return The elapsedTime.
      */
     long getElapsedTime();
   }
@@ -2726,12 +2821,14 @@ public final class AccessProto {
     private volatile java.lang.Object method_;
     /**
      * <code>optional string method = 1;</code>
+     * @return Whether the method field is set.
      */
     public boolean hasMethod() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional string method = 1;</code>
+     * @return The method.
      */
     public java.lang.String getMethod() {
       java.lang.Object ref = method_;
@@ -2749,6 +2846,7 @@ public final class AccessProto {
     }
     /**
      * <code>optional string method = 1;</code>
+     * @return The bytes for method.
      */
     public com.google.protobuf.ByteString
         getMethodBytes() {
@@ -2768,12 +2866,14 @@ public final class AccessProto {
     private volatile java.lang.Object protocol_;
     /**
      * <code>optional string protocol = 2;</code>
+     * @return Whether the protocol field is set.
      */
     public boolean hasProtocol() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional string protocol = 2;</code>
+     * @return The protocol.
      */
     public java.lang.String getProtocol() {
       java.lang.Object ref = protocol_;
@@ -2791,6 +2891,7 @@ public final class AccessProto {
     }
     /**
      * <code>optional string protocol = 2;</code>
+     * @return The bytes for protocol.
      */
     public com.google.protobuf.ByteString
         getProtocolBytes() {
@@ -2810,12 +2911,14 @@ public final class AccessProto {
     private volatile java.lang.Object remoteAddress_;
     /**
      * <code>optional string remote_address = 3;</code>
+     * @return Whether the remoteAddress field is set.
      */
     public boolean hasRemoteAddress() {
       return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      * <code>optional string remote_address = 3;</code>
+     * @return The remoteAddress.
      */
     public java.lang.String getRemoteAddress() {
       java.lang.Object ref = remoteAddress_;
@@ -2833,6 +2936,7 @@ public final class AccessProto {
     }
     /**
      * <code>optional string remote_address = 3;</code>
+     * @return The bytes for remoteAddress.
      */
     public com.google.protobuf.ByteString
         getRemoteAddressBytes() {
@@ -2852,12 +2956,14 @@ public final class AccessProto {
     private volatile java.lang.Object remoteHost_;
     /**
      * <code>optional string remote_host = 4;</code>
+     * @return Whether the remoteHost field is set.
      */
     public boolean hasRemoteHost() {
       return ((bitField0_ & 0x00000008) != 0);
     }
     /**
      * <code>optional string remote_host = 4;</code>
+     * @return The remoteHost.
      */
     public java.lang.String getRemoteHost() {
       java.lang.Object ref = remoteHost_;
@@ -2875,6 +2981,7 @@ public final class AccessProto {
     }
     /**
      * <code>optional string remote_host = 4;</code>
+     * @return The bytes for remoteHost.
      */
     public com.google.protobuf.ByteString
         getRemoteHostBytes() {
@@ -2894,12 +3001,14 @@ public final class AccessProto {
     private volatile java.lang.Object remoteUser_;
     /**
      * <code>optional string remote_user = 5;</code>
+     * @return Whether the remoteUser field is set.
      */
     public boolean hasRemoteUser() {
       return ((bitField0_ & 0x00000010) != 0);
     }
     /**
      * <code>optional string remote_user = 5;</code>
+     * @return The remoteUser.
      */
     public java.lang.String getRemoteUser() {
       java.lang.Object ref = remoteUser_;
@@ -2917,6 +3026,7 @@ public final class AccessProto {
     }
     /**
      * <code>optional string remote_user = 5;</code>
+     * @return The bytes for remoteUser.
      */
     public com.google.protobuf.ByteString
         getRemoteUserBytes() {
@@ -2936,12 +3046,14 @@ public final class AccessProto {
     private long timeStamp_;
     /**
      * <code>optional int64 time_stamp = 6;</code>
+     * @return Whether the timeStamp field is set.
      */
     public boolean hasTimeStamp() {
       return ((bitField0_ & 0x00000020) != 0);
     }
     /**
      * <code>optional int64 time_stamp = 6;</code>
+     * @return The timeStamp.
      */
     public long getTimeStamp() {
       return timeStamp_;
@@ -2951,12 +3063,14 @@ public final class AccessProto {
     private volatile java.lang.Object requestUri_;
     /**
      * <code>optional string request_uri = 7;</code>
+     * @return Whether the requestUri field is set.
      */
     public boolean hasRequestUri() {
       return ((bitField0_ & 0x00000040) != 0);
     }
     /**
      * <code>optional string request_uri = 7;</code>
+     * @return The requestUri.
      */
     public java.lang.String getRequestUri() {
       java.lang.Object ref = requestUri_;
@@ -2974,6 +3088,7 @@ public final class AccessProto {
     }
     /**
      * <code>optional string request_uri = 7;</code>
+     * @return The bytes for requestUri.
      */
     public com.google.protobuf.ByteString
         getRequestUriBytes() {
@@ -2993,12 +3108,14 @@ public final class AccessProto {
     private volatile java.lang.Object requestUrl_;
     /**
      * <code>optional string request_url = 8;</code>
+     * @return Whether the requestUrl field is set.
      */
     public boolean hasRequestUrl() {
       return ((bitField0_ & 0x00000080) != 0);
     }
     /**
      * <code>optional string request_url = 8;</code>
+     * @return The requestUrl.
      */
     public java.lang.String getRequestUrl() {
       java.lang.Object ref = requestUrl_;
@@ -3016,6 +3133,7 @@ public final class AccessProto {
     }
     /**
      * <code>optional string request_url = 8;</code>
+     * @return The bytes for requestUrl.
      */
     public com.google.protobuf.ByteString
         getRequestUrlBytes() {
@@ -3035,12 +3153,14 @@ public final class AccessProto {
     private int statusCode_;
     /**
      * <code>optional int32 status_code = 9;</code>
+     * @return Whether the statusCode field is set.
      */
     public boolean hasStatusCode() {
       return ((bitField0_ & 0x00000100) != 0);
     }
     /**
      * <code>optional int32 status_code = 9;</code>
+     * @return The statusCode.
      */
     public int getStatusCode() {
       return statusCode_;
@@ -3050,12 +3170,14 @@ public final class AccessProto {
     private int localPort_;
     /**
      * <code>optional int32 local_port = 10;</code>
+     * @return Whether the localPort field is set.
      */
     public boolean hasLocalPort() {
       return ((bitField0_ & 0x00000200) != 0);
     }
     /**
      * <code>optional int32 local_port = 10;</code>
+     * @return The localPort.
      */
     public int getLocalPort() {
       return localPort_;
@@ -3065,12 +3187,14 @@ public final class AccessProto {
     private volatile java.lang.Object serverName_;
     /**
      * <code>optional string server_name = 11;</code>
+     * @return Whether the serverName field is set.
      */
     public boolean hasServerName() {
       return ((bitField0_ & 0x00000400) != 0);
     }
     /**
      * <code>optional string server_name = 11;</code>
+     * @return The serverName.
      */
     public java.lang.String getServerName() {
       java.lang.Object ref = serverName_;
@@ -3088,6 +3212,7 @@ public final class AccessProto {
     }
     /**
      * <code>optional string server_name = 11;</code>
+     * @return The bytes for serverName.
      */
     public com.google.protobuf.ByteString
         getServerNameBytes() {
@@ -3107,12 +3232,14 @@ public final class AccessProto {
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap requestHeaders_;
     /**
      * <code>optional .de.huxhorn.lilith.access.StringMap request_headers = 12;</code>
+     * @return Whether the requestHeaders field is set.
      */
     public boolean hasRequestHeaders() {
       return ((bitField0_ & 0x00000800) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.access.StringMap request_headers = 12;</code>
+     * @return The requestHeaders.
      */
     public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getRequestHeaders() {
       return requestHeaders_ == null ? de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance() : requestHeaders_;
@@ -3128,12 +3255,14 @@ public final class AccessProto {
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap requestParameters_;
     /**
      * <code>optional .de.huxhorn.lilith.access.StringArrayMap request_parameters = 13;</code>
+     * @return Whether the requestParameters field is set.
      */
     public boolean hasRequestParameters() {
       return ((bitField0_ & 0x00001000) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.access.StringArrayMap request_parameters = 13;</code>
+     * @return The requestParameters.
      */
     public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap getRequestParameters() {
       return requestParameters_ == null ? de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.getDefaultInstance() : requestParameters_;
@@ -3149,12 +3278,14 @@ public final class AccessProto {
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap responseHeaders_;
     /**
      * <code>optional .de.huxhorn.lilith.access.StringMap response_headers = 14;</code>
+     * @return Whether the responseHeaders field is set.
      */
     public boolean hasResponseHeaders() {
       return ((bitField0_ & 0x00002000) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.access.StringMap response_headers = 14;</code>
+     * @return The responseHeaders.
      */
     public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getResponseHeaders() {
       return responseHeaders_ == null ? de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance() : responseHeaders_;
@@ -3170,12 +3301,14 @@ public final class AccessProto {
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext loggerContext_;
     /**
      * <code>optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;</code>
+     * @return Whether the loggerContext field is set.
      */
     public boolean hasLoggerContext() {
       return ((bitField0_ & 0x00004000) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;</code>
+     * @return The loggerContext.
      */
     public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext getLoggerContext() {
       return loggerContext_ == null ? de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.getDefaultInstance() : loggerContext_;
@@ -3191,12 +3324,14 @@ public final class AccessProto {
     private long elapsedTime_;
     /**
      * <code>optional int64 elapsed_time = 16;</code>
+     * @return Whether the elapsedTime field is set.
      */
     public boolean hasElapsedTime() {
       return ((bitField0_ & 0x00008000) != 0);
     }
     /**
      * <code>optional int64 elapsed_time = 16;</code>
+     * @return The elapsedTime.
      */
     public long getElapsedTime() {
       return elapsedTime_;
@@ -3984,12 +4119,14 @@ public final class AccessProto {
       private java.lang.Object method_ = "";
       /**
        * <code>optional string method = 1;</code>
+       * @return Whether the method field is set.
        */
       public boolean hasMethod() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional string method = 1;</code>
+       * @return The method.
        */
       public java.lang.String getMethod() {
         java.lang.Object ref = method_;
@@ -4007,6 +4144,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string method = 1;</code>
+       * @return The bytes for method.
        */
       public com.google.protobuf.ByteString
           getMethodBytes() {
@@ -4023,6 +4161,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string method = 1;</code>
+       * @param value The method to set.
+       * @return This builder for chaining.
        */
       public Builder setMethod(
           java.lang.String value) {
@@ -4036,6 +4176,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string method = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearMethod() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -4045,6 +4186,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string method = 1;</code>
+       * @param value The bytes for method to set.
+       * @return This builder for chaining.
        */
       public Builder setMethodBytes(
           com.google.protobuf.ByteString value) {
@@ -4060,12 +4203,14 @@ public final class AccessProto {
       private java.lang.Object protocol_ = "";
       /**
        * <code>optional string protocol = 2;</code>
+       * @return Whether the protocol field is set.
        */
       public boolean hasProtocol() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional string protocol = 2;</code>
+       * @return The protocol.
        */
       public java.lang.String getProtocol() {
         java.lang.Object ref = protocol_;
@@ -4083,6 +4228,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string protocol = 2;</code>
+       * @return The bytes for protocol.
        */
       public com.google.protobuf.ByteString
           getProtocolBytes() {
@@ -4099,6 +4245,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string protocol = 2;</code>
+       * @param value The protocol to set.
+       * @return This builder for chaining.
        */
       public Builder setProtocol(
           java.lang.String value) {
@@ -4112,6 +4260,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string protocol = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearProtocol() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -4121,6 +4270,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string protocol = 2;</code>
+       * @param value The bytes for protocol to set.
+       * @return This builder for chaining.
        */
       public Builder setProtocolBytes(
           com.google.protobuf.ByteString value) {
@@ -4136,12 +4287,14 @@ public final class AccessProto {
       private java.lang.Object remoteAddress_ = "";
       /**
        * <code>optional string remote_address = 3;</code>
+       * @return Whether the remoteAddress field is set.
        */
       public boolean hasRemoteAddress() {
         return ((bitField0_ & 0x00000004) != 0);
       }
       /**
        * <code>optional string remote_address = 3;</code>
+       * @return The remoteAddress.
        */
       public java.lang.String getRemoteAddress() {
         java.lang.Object ref = remoteAddress_;
@@ -4159,6 +4312,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string remote_address = 3;</code>
+       * @return The bytes for remoteAddress.
        */
       public com.google.protobuf.ByteString
           getRemoteAddressBytes() {
@@ -4175,6 +4329,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string remote_address = 3;</code>
+       * @param value The remoteAddress to set.
+       * @return This builder for chaining.
        */
       public Builder setRemoteAddress(
           java.lang.String value) {
@@ -4188,6 +4344,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string remote_address = 3;</code>
+       * @return This builder for chaining.
        */
       public Builder clearRemoteAddress() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -4197,6 +4354,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string remote_address = 3;</code>
+       * @param value The bytes for remoteAddress to set.
+       * @return This builder for chaining.
        */
       public Builder setRemoteAddressBytes(
           com.google.protobuf.ByteString value) {
@@ -4212,12 +4371,14 @@ public final class AccessProto {
       private java.lang.Object remoteHost_ = "";
       /**
        * <code>optional string remote_host = 4;</code>
+       * @return Whether the remoteHost field is set.
        */
       public boolean hasRemoteHost() {
         return ((bitField0_ & 0x00000008) != 0);
       }
       /**
        * <code>optional string remote_host = 4;</code>
+       * @return The remoteHost.
        */
       public java.lang.String getRemoteHost() {
         java.lang.Object ref = remoteHost_;
@@ -4235,6 +4396,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string remote_host = 4;</code>
+       * @return The bytes for remoteHost.
        */
       public com.google.protobuf.ByteString
           getRemoteHostBytes() {
@@ -4251,6 +4413,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string remote_host = 4;</code>
+       * @param value The remoteHost to set.
+       * @return This builder for chaining.
        */
       public Builder setRemoteHost(
           java.lang.String value) {
@@ -4264,6 +4428,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string remote_host = 4;</code>
+       * @return This builder for chaining.
        */
       public Builder clearRemoteHost() {
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -4273,6 +4438,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string remote_host = 4;</code>
+       * @param value The bytes for remoteHost to set.
+       * @return This builder for chaining.
        */
       public Builder setRemoteHostBytes(
           com.google.protobuf.ByteString value) {
@@ -4288,12 +4455,14 @@ public final class AccessProto {
       private java.lang.Object remoteUser_ = "";
       /**
        * <code>optional string remote_user = 5;</code>
+       * @return Whether the remoteUser field is set.
        */
       public boolean hasRemoteUser() {
         return ((bitField0_ & 0x00000010) != 0);
       }
       /**
        * <code>optional string remote_user = 5;</code>
+       * @return The remoteUser.
        */
       public java.lang.String getRemoteUser() {
         java.lang.Object ref = remoteUser_;
@@ -4311,6 +4480,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string remote_user = 5;</code>
+       * @return The bytes for remoteUser.
        */
       public com.google.protobuf.ByteString
           getRemoteUserBytes() {
@@ -4327,6 +4497,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string remote_user = 5;</code>
+       * @param value The remoteUser to set.
+       * @return This builder for chaining.
        */
       public Builder setRemoteUser(
           java.lang.String value) {
@@ -4340,6 +4512,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string remote_user = 5;</code>
+       * @return This builder for chaining.
        */
       public Builder clearRemoteUser() {
         bitField0_ = (bitField0_ & ~0x00000010);
@@ -4349,6 +4522,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string remote_user = 5;</code>
+       * @param value The bytes for remoteUser to set.
+       * @return This builder for chaining.
        */
       public Builder setRemoteUserBytes(
           com.google.protobuf.ByteString value) {
@@ -4364,18 +4539,22 @@ public final class AccessProto {
       private long timeStamp_ ;
       /**
        * <code>optional int64 time_stamp = 6;</code>
+       * @return Whether the timeStamp field is set.
        */
       public boolean hasTimeStamp() {
         return ((bitField0_ & 0x00000020) != 0);
       }
       /**
        * <code>optional int64 time_stamp = 6;</code>
+       * @return The timeStamp.
        */
       public long getTimeStamp() {
         return timeStamp_;
       }
       /**
        * <code>optional int64 time_stamp = 6;</code>
+       * @param value The timeStamp to set.
+       * @return This builder for chaining.
        */
       public Builder setTimeStamp(long value) {
         bitField0_ |= 0x00000020;
@@ -4385,6 +4564,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional int64 time_stamp = 6;</code>
+       * @return This builder for chaining.
        */
       public Builder clearTimeStamp() {
         bitField0_ = (bitField0_ & ~0x00000020);
@@ -4396,12 +4576,14 @@ public final class AccessProto {
       private java.lang.Object requestUri_ = "";
       /**
        * <code>optional string request_uri = 7;</code>
+       * @return Whether the requestUri field is set.
        */
       public boolean hasRequestUri() {
         return ((bitField0_ & 0x00000040) != 0);
       }
       /**
        * <code>optional string request_uri = 7;</code>
+       * @return The requestUri.
        */
       public java.lang.String getRequestUri() {
         java.lang.Object ref = requestUri_;
@@ -4419,6 +4601,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string request_uri = 7;</code>
+       * @return The bytes for requestUri.
        */
       public com.google.protobuf.ByteString
           getRequestUriBytes() {
@@ -4435,6 +4618,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string request_uri = 7;</code>
+       * @param value The requestUri to set.
+       * @return This builder for chaining.
        */
       public Builder setRequestUri(
           java.lang.String value) {
@@ -4448,6 +4633,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string request_uri = 7;</code>
+       * @return This builder for chaining.
        */
       public Builder clearRequestUri() {
         bitField0_ = (bitField0_ & ~0x00000040);
@@ -4457,6 +4643,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string request_uri = 7;</code>
+       * @param value The bytes for requestUri to set.
+       * @return This builder for chaining.
        */
       public Builder setRequestUriBytes(
           com.google.protobuf.ByteString value) {
@@ -4472,12 +4660,14 @@ public final class AccessProto {
       private java.lang.Object requestUrl_ = "";
       /**
        * <code>optional string request_url = 8;</code>
+       * @return Whether the requestUrl field is set.
        */
       public boolean hasRequestUrl() {
         return ((bitField0_ & 0x00000080) != 0);
       }
       /**
        * <code>optional string request_url = 8;</code>
+       * @return The requestUrl.
        */
       public java.lang.String getRequestUrl() {
         java.lang.Object ref = requestUrl_;
@@ -4495,6 +4685,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string request_url = 8;</code>
+       * @return The bytes for requestUrl.
        */
       public com.google.protobuf.ByteString
           getRequestUrlBytes() {
@@ -4511,6 +4702,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string request_url = 8;</code>
+       * @param value The requestUrl to set.
+       * @return This builder for chaining.
        */
       public Builder setRequestUrl(
           java.lang.String value) {
@@ -4524,6 +4717,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string request_url = 8;</code>
+       * @return This builder for chaining.
        */
       public Builder clearRequestUrl() {
         bitField0_ = (bitField0_ & ~0x00000080);
@@ -4533,6 +4727,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string request_url = 8;</code>
+       * @param value The bytes for requestUrl to set.
+       * @return This builder for chaining.
        */
       public Builder setRequestUrlBytes(
           com.google.protobuf.ByteString value) {
@@ -4548,18 +4744,22 @@ public final class AccessProto {
       private int statusCode_ ;
       /**
        * <code>optional int32 status_code = 9;</code>
+       * @return Whether the statusCode field is set.
        */
       public boolean hasStatusCode() {
         return ((bitField0_ & 0x00000100) != 0);
       }
       /**
        * <code>optional int32 status_code = 9;</code>
+       * @return The statusCode.
        */
       public int getStatusCode() {
         return statusCode_;
       }
       /**
        * <code>optional int32 status_code = 9;</code>
+       * @param value The statusCode to set.
+       * @return This builder for chaining.
        */
       public Builder setStatusCode(int value) {
         bitField0_ |= 0x00000100;
@@ -4569,6 +4769,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional int32 status_code = 9;</code>
+       * @return This builder for chaining.
        */
       public Builder clearStatusCode() {
         bitField0_ = (bitField0_ & ~0x00000100);
@@ -4580,18 +4781,22 @@ public final class AccessProto {
       private int localPort_ ;
       /**
        * <code>optional int32 local_port = 10;</code>
+       * @return Whether the localPort field is set.
        */
       public boolean hasLocalPort() {
         return ((bitField0_ & 0x00000200) != 0);
       }
       /**
        * <code>optional int32 local_port = 10;</code>
+       * @return The localPort.
        */
       public int getLocalPort() {
         return localPort_;
       }
       /**
        * <code>optional int32 local_port = 10;</code>
+       * @param value The localPort to set.
+       * @return This builder for chaining.
        */
       public Builder setLocalPort(int value) {
         bitField0_ |= 0x00000200;
@@ -4601,6 +4806,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional int32 local_port = 10;</code>
+       * @return This builder for chaining.
        */
       public Builder clearLocalPort() {
         bitField0_ = (bitField0_ & ~0x00000200);
@@ -4612,12 +4818,14 @@ public final class AccessProto {
       private java.lang.Object serverName_ = "";
       /**
        * <code>optional string server_name = 11;</code>
+       * @return Whether the serverName field is set.
        */
       public boolean hasServerName() {
         return ((bitField0_ & 0x00000400) != 0);
       }
       /**
        * <code>optional string server_name = 11;</code>
+       * @return The serverName.
        */
       public java.lang.String getServerName() {
         java.lang.Object ref = serverName_;
@@ -4635,6 +4843,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string server_name = 11;</code>
+       * @return The bytes for serverName.
        */
       public com.google.protobuf.ByteString
           getServerNameBytes() {
@@ -4651,6 +4860,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string server_name = 11;</code>
+       * @param value The serverName to set.
+       * @return This builder for chaining.
        */
       public Builder setServerName(
           java.lang.String value) {
@@ -4664,6 +4875,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string server_name = 11;</code>
+       * @return This builder for chaining.
        */
       public Builder clearServerName() {
         bitField0_ = (bitField0_ & ~0x00000400);
@@ -4673,6 +4885,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string server_name = 11;</code>
+       * @param value The bytes for serverName to set.
+       * @return This builder for chaining.
        */
       public Builder setServerNameBytes(
           com.google.protobuf.ByteString value) {
@@ -4690,12 +4904,14 @@ public final class AccessProto {
           de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder> requestHeadersBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.access.StringMap request_headers = 12;</code>
+       * @return Whether the requestHeaders field is set.
        */
       public boolean hasRequestHeaders() {
         return ((bitField0_ & 0x00000800) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.access.StringMap request_headers = 12;</code>
+       * @return The requestHeaders.
        */
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getRequestHeaders() {
         if (requestHeadersBuilder_ == null) {
@@ -4808,12 +5024,14 @@ public final class AccessProto {
           de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMapOrBuilder> requestParametersBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.access.StringArrayMap request_parameters = 13;</code>
+       * @return Whether the requestParameters field is set.
        */
       public boolean hasRequestParameters() {
         return ((bitField0_ & 0x00001000) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.access.StringArrayMap request_parameters = 13;</code>
+       * @return The requestParameters.
        */
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringArrayMap getRequestParameters() {
         if (requestParametersBuilder_ == null) {
@@ -4926,12 +5144,14 @@ public final class AccessProto {
           de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder> responseHeadersBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.access.StringMap response_headers = 14;</code>
+       * @return Whether the responseHeaders field is set.
        */
       public boolean hasResponseHeaders() {
         return ((bitField0_ & 0x00002000) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.access.StringMap response_headers = 14;</code>
+       * @return The responseHeaders.
        */
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getResponseHeaders() {
         if (responseHeadersBuilder_ == null) {
@@ -5044,12 +5264,14 @@ public final class AccessProto {
           de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContextOrBuilder> loggerContextBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;</code>
+       * @return Whether the loggerContext field is set.
        */
       public boolean hasLoggerContext() {
         return ((bitField0_ & 0x00004000) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.access.LoggerContext logger_context = 15;</code>
+       * @return The loggerContext.
        */
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.LoggerContext getLoggerContext() {
         if (loggerContextBuilder_ == null) {
@@ -5160,18 +5382,22 @@ public final class AccessProto {
       private long elapsedTime_ ;
       /**
        * <code>optional int64 elapsed_time = 16;</code>
+       * @return Whether the elapsedTime field is set.
        */
       public boolean hasElapsedTime() {
         return ((bitField0_ & 0x00008000) != 0);
       }
       /**
        * <code>optional int64 elapsed_time = 16;</code>
+       * @return The elapsedTime.
        */
       public long getElapsedTime() {
         return elapsedTime_;
       }
       /**
        * <code>optional int64 elapsed_time = 16;</code>
+       * @param value The elapsedTime to set.
+       * @return This builder for chaining.
        */
       public Builder setElapsedTime(long value) {
         bitField0_ |= 0x00008000;
@@ -5181,6 +5407,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional int64 elapsed_time = 16;</code>
+       * @return This builder for chaining.
        */
       public Builder clearElapsedTime() {
         bitField0_ = (bitField0_ & ~0x00008000);
@@ -5247,33 +5474,40 @@ public final class AccessProto {
 
     /**
      * <code>optional int64 birth_time = 1;</code>
+     * @return Whether the birthTime field is set.
      */
     boolean hasBirthTime();
     /**
      * <code>optional int64 birth_time = 1;</code>
+     * @return The birthTime.
      */
     long getBirthTime();
 
     /**
      * <code>optional string name = 2;</code>
+     * @return Whether the name field is set.
      */
     boolean hasName();
     /**
      * <code>optional string name = 2;</code>
+     * @return The name.
      */
     java.lang.String getName();
     /**
      * <code>optional string name = 2;</code>
+     * @return The bytes for name.
      */
     com.google.protobuf.ByteString
         getNameBytes();
 
     /**
      * <code>optional .de.huxhorn.lilith.access.StringMap properties = 3;</code>
+     * @return Whether the properties field is set.
      */
     boolean hasProperties();
     /**
      * <code>optional .de.huxhorn.lilith.access.StringMap properties = 3;</code>
+     * @return The properties.
      */
     de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getProperties();
     /**
@@ -5389,12 +5623,14 @@ public final class AccessProto {
     private long birthTime_;
     /**
      * <code>optional int64 birth_time = 1;</code>
+     * @return Whether the birthTime field is set.
      */
     public boolean hasBirthTime() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional int64 birth_time = 1;</code>
+     * @return The birthTime.
      */
     public long getBirthTime() {
       return birthTime_;
@@ -5404,12 +5640,14 @@ public final class AccessProto {
     private volatile java.lang.Object name_;
     /**
      * <code>optional string name = 2;</code>
+     * @return Whether the name field is set.
      */
     public boolean hasName() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional string name = 2;</code>
+     * @return The name.
      */
     public java.lang.String getName() {
       java.lang.Object ref = name_;
@@ -5427,6 +5665,7 @@ public final class AccessProto {
     }
     /**
      * <code>optional string name = 2;</code>
+     * @return The bytes for name.
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
@@ -5446,12 +5685,14 @@ public final class AccessProto {
     private de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap properties_;
     /**
      * <code>optional .de.huxhorn.lilith.access.StringMap properties = 3;</code>
+     * @return Whether the properties field is set.
      */
     public boolean hasProperties() {
       return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.access.StringMap properties = 3;</code>
+     * @return The properties.
      */
     public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getProperties() {
       return properties_ == null ? de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.getDefaultInstance() : properties_;
@@ -5852,18 +6093,22 @@ public final class AccessProto {
       private long birthTime_ ;
       /**
        * <code>optional int64 birth_time = 1;</code>
+       * @return Whether the birthTime field is set.
        */
       public boolean hasBirthTime() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional int64 birth_time = 1;</code>
+       * @return The birthTime.
        */
       public long getBirthTime() {
         return birthTime_;
       }
       /**
        * <code>optional int64 birth_time = 1;</code>
+       * @param value The birthTime to set.
+       * @return This builder for chaining.
        */
       public Builder setBirthTime(long value) {
         bitField0_ |= 0x00000001;
@@ -5873,6 +6118,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional int64 birth_time = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearBirthTime() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -5884,12 +6130,14 @@ public final class AccessProto {
       private java.lang.Object name_ = "";
       /**
        * <code>optional string name = 2;</code>
+       * @return Whether the name field is set.
        */
       public boolean hasName() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional string name = 2;</code>
+       * @return The name.
        */
       public java.lang.String getName() {
         java.lang.Object ref = name_;
@@ -5907,6 +6155,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string name = 2;</code>
+       * @return The bytes for name.
        */
       public com.google.protobuf.ByteString
           getNameBytes() {
@@ -5923,6 +6172,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string name = 2;</code>
+       * @param value The name to set.
+       * @return This builder for chaining.
        */
       public Builder setName(
           java.lang.String value) {
@@ -5936,6 +6187,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string name = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearName() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -5945,6 +6197,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string name = 2;</code>
+       * @param value The bytes for name to set.
+       * @return This builder for chaining.
        */
       public Builder setNameBytes(
           com.google.protobuf.ByteString value) {
@@ -5962,12 +6216,14 @@ public final class AccessProto {
           de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap.Builder, de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMapOrBuilder> propertiesBuilder_;
       /**
        * <code>optional .de.huxhorn.lilith.access.StringMap properties = 3;</code>
+       * @return Whether the properties field is set.
        */
       public boolean hasProperties() {
         return ((bitField0_ & 0x00000004) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.access.StringMap properties = 3;</code>
+       * @return The properties.
        */
       public de.huxhorn.lilith.data.access.protobuf.generated.AccessProto.StringMap getProperties() {
         if (propertiesBuilder_ == null) {
@@ -6932,28 +7188,34 @@ public final class AccessProto {
 
     /**
      * <code>required string key = 1;</code>
+     * @return Whether the key field is set.
      */
     boolean hasKey();
     /**
      * <code>required string key = 1;</code>
+     * @return The key.
      */
     java.lang.String getKey();
     /**
      * <code>required string key = 1;</code>
+     * @return The bytes for key.
      */
     com.google.protobuf.ByteString
         getKeyBytes();
 
     /**
      * <code>optional string value = 2;</code>
+     * @return Whether the value field is set.
      */
     boolean hasValue();
     /**
      * <code>optional string value = 2;</code>
+     * @return The value.
      */
     java.lang.String getValue();
     /**
      * <code>optional string value = 2;</code>
+     * @return The bytes for value.
      */
     com.google.protobuf.ByteString
         getValueBytes();
@@ -7055,12 +7317,14 @@ public final class AccessProto {
     private volatile java.lang.Object key_;
     /**
      * <code>required string key = 1;</code>
+     * @return Whether the key field is set.
      */
     public boolean hasKey() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>required string key = 1;</code>
+     * @return The key.
      */
     public java.lang.String getKey() {
       java.lang.Object ref = key_;
@@ -7078,6 +7342,7 @@ public final class AccessProto {
     }
     /**
      * <code>required string key = 1;</code>
+     * @return The bytes for key.
      */
     public com.google.protobuf.ByteString
         getKeyBytes() {
@@ -7097,12 +7362,14 @@ public final class AccessProto {
     private volatile java.lang.Object value_;
     /**
      * <code>optional string value = 2;</code>
+     * @return Whether the value field is set.
      */
     public boolean hasValue() {
       return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <code>optional string value = 2;</code>
+     * @return The value.
      */
     public java.lang.String getValue() {
       java.lang.Object ref = value_;
@@ -7120,6 +7387,7 @@ public final class AccessProto {
     }
     /**
      * <code>optional string value = 2;</code>
+     * @return The bytes for value.
      */
     public com.google.protobuf.ByteString
         getValueBytes() {
@@ -7486,12 +7754,14 @@ public final class AccessProto {
       private java.lang.Object key_ = "";
       /**
        * <code>required string key = 1;</code>
+       * @return Whether the key field is set.
        */
       public boolean hasKey() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>required string key = 1;</code>
+       * @return The key.
        */
       public java.lang.String getKey() {
         java.lang.Object ref = key_;
@@ -7509,6 +7779,7 @@ public final class AccessProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @return The bytes for key.
        */
       public com.google.protobuf.ByteString
           getKeyBytes() {
@@ -7525,6 +7796,8 @@ public final class AccessProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @param value The key to set.
+       * @return This builder for chaining.
        */
       public Builder setKey(
           java.lang.String value) {
@@ -7538,6 +7811,7 @@ public final class AccessProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearKey() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -7547,6 +7821,8 @@ public final class AccessProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @param value The bytes for key to set.
+       * @return This builder for chaining.
        */
       public Builder setKeyBytes(
           com.google.protobuf.ByteString value) {
@@ -7562,12 +7838,14 @@ public final class AccessProto {
       private java.lang.Object value_ = "";
       /**
        * <code>optional string value = 2;</code>
+       * @return Whether the value field is set.
        */
       public boolean hasValue() {
         return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        * <code>optional string value = 2;</code>
+       * @return The value.
        */
       public java.lang.String getValue() {
         java.lang.Object ref = value_;
@@ -7585,6 +7863,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string value = 2;</code>
+       * @return The bytes for value.
        */
       public com.google.protobuf.ByteString
           getValueBytes() {
@@ -7601,6 +7880,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string value = 2;</code>
+       * @param value The value to set.
+       * @return This builder for chaining.
        */
       public Builder setValue(
           java.lang.String value) {
@@ -7614,6 +7895,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string value = 2;</code>
+       * @return This builder for chaining.
        */
       public Builder clearValue() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -7623,6 +7905,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string value = 2;</code>
+       * @param value The bytes for value to set.
+       * @return This builder for chaining.
        */
       public Builder setValueBytes(
           com.google.protobuf.ByteString value) {
@@ -8492,14 +8776,17 @@ public final class AccessProto {
 
     /**
      * <code>required string key = 1;</code>
+     * @return Whether the key field is set.
      */
     boolean hasKey();
     /**
      * <code>required string key = 1;</code>
+     * @return The key.
      */
     java.lang.String getKey();
     /**
      * <code>required string key = 1;</code>
+     * @return The bytes for key.
      */
     com.google.protobuf.ByteString
         getKeyBytes();
@@ -8631,12 +8918,14 @@ public final class AccessProto {
     private volatile java.lang.Object key_;
     /**
      * <code>required string key = 1;</code>
+     * @return Whether the key field is set.
      */
     public boolean hasKey() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>required string key = 1;</code>
+     * @return The key.
      */
     public java.lang.String getKey() {
       java.lang.Object ref = key_;
@@ -8654,6 +8943,7 @@ public final class AccessProto {
     }
     /**
      * <code>required string key = 1;</code>
+     * @return The bytes for key.
      */
     public com.google.protobuf.ByteString
         getKeyBytes() {
@@ -9084,12 +9374,14 @@ public final class AccessProto {
       private java.lang.Object key_ = "";
       /**
        * <code>required string key = 1;</code>
+       * @return Whether the key field is set.
        */
       public boolean hasKey() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>required string key = 1;</code>
+       * @return The key.
        */
       public java.lang.String getKey() {
         java.lang.Object ref = key_;
@@ -9107,6 +9399,7 @@ public final class AccessProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @return The bytes for key.
        */
       public com.google.protobuf.ByteString
           getKeyBytes() {
@@ -9123,6 +9416,8 @@ public final class AccessProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @param value The key to set.
+       * @return This builder for chaining.
        */
       public Builder setKey(
           java.lang.String value) {
@@ -9136,6 +9431,7 @@ public final class AccessProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearKey() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -9145,6 +9441,8 @@ public final class AccessProto {
       }
       /**
        * <code>required string key = 1;</code>
+       * @param value The bytes for key to set.
+       * @return This builder for chaining.
        */
       public Builder setKeyBytes(
           com.google.protobuf.ByteString value) {
@@ -9455,14 +9753,17 @@ public final class AccessProto {
 
     /**
      * <code>optional string value = 1;</code>
+     * @return Whether the value field is set.
      */
     boolean hasValue();
     /**
      * <code>optional string value = 1;</code>
+     * @return The value.
      */
     java.lang.String getValue();
     /**
      * <code>optional string value = 1;</code>
+     * @return The bytes for value.
      */
     com.google.protobuf.ByteString
         getValueBytes();
@@ -9561,12 +9862,14 @@ public final class AccessProto {
     private volatile java.lang.Object value_;
     /**
      * <code>optional string value = 1;</code>
+     * @return Whether the value field is set.
      */
     public boolean hasValue() {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <code>optional string value = 1;</code>
+     * @return The value.
      */
     public java.lang.String getValue() {
       java.lang.Object ref = value_;
@@ -9584,6 +9887,7 @@ public final class AccessProto {
     }
     /**
      * <code>optional string value = 1;</code>
+     * @return The bytes for value.
      */
     public com.google.protobuf.ByteString
         getValueBytes() {
@@ -9921,12 +10225,14 @@ public final class AccessProto {
       private java.lang.Object value_ = "";
       /**
        * <code>optional string value = 1;</code>
+       * @return Whether the value field is set.
        */
       public boolean hasValue() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        * <code>optional string value = 1;</code>
+       * @return The value.
        */
       public java.lang.String getValue() {
         java.lang.Object ref = value_;
@@ -9944,6 +10250,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string value = 1;</code>
+       * @return The bytes for value.
        */
       public com.google.protobuf.ByteString
           getValueBytes() {
@@ -9960,6 +10267,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string value = 1;</code>
+       * @param value The value to set.
+       * @return This builder for chaining.
        */
       public Builder setValue(
           java.lang.String value) {
@@ -9973,6 +10282,7 @@ public final class AccessProto {
       }
       /**
        * <code>optional string value = 1;</code>
+       * @return This builder for chaining.
        */
       public Builder clearValue() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -9982,6 +10292,8 @@ public final class AccessProto {
       }
       /**
        * <code>optional string value = 1;</code>
+       * @param value The bytes for value to set.
+       * @return This builder for chaining.
        */
       public Builder setValueBytes(
           com.google.protobuf.ByteString value) {
