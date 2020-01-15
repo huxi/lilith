@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 - Demand Java 8 `1.8.0_191`.
 
 ### Fixed
-- SLF4J 1.7.30, log4j2 2.13.0, Groovy 2.5.9, Spring 5.2.2, commons-lang 3.8.1, jackson 2.10.2, commons-text 1.5, commons-lang3 3.9, flying-saucer 9.1.18, aspectj 1.9.5, woodstox 6.0.3, httpcore 4.4.13, httpclient 4.5.10, protobuf 3.11.1
+- SLF4J 1.7.30, log4j2 2.13.0, Groovy 2.5.9, Spring 5.2.3, commons-lang 3.8.1, jackson 2.10.2, commons-text 1.5, commons-lang3 3.9, flying-saucer 9.1.18, aspectj 1.9.5, woodstox 6.0.3, httpcore 4.4.13, httpclient 4.5.10, protobuf 3.11.1
 
 ## [8.2.0] - 2018-08-09
 
