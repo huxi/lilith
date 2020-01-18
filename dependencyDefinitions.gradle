@@ -11,7 +11,7 @@ project.ext.versions = [
 'aspectj':        '1.9.5',
 'bytebuddy':      '1.10.6',
 'groovy':         '2.5.9',
-'httpClient':     '4.5.10',
+'httpClient':     '4.5.11',
 'httpCore':       '4.4.13',
 'jackson':        '2.10.2',
 'jacksonModule':  '2.10.2',
