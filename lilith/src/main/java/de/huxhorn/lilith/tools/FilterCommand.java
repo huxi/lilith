@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2020 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -157,10 +157,7 @@ public final class FilterCommand
 			}
 			if (header.getMagicValue() != FileConstants.MAGIC_VALUE)
 			{
-				if (logger.isWarnEnabled())
-				{
-					logger.warn("Invalid magic value! ", Integer.toHexString(header.getMagicValue()));
-				}
+				if (logger.isWarnEnabled()) logger.warn("Invalid magic value! {}", Integer.toHexString(header.getMagicValue()));
 				return false;
 			}
 			MetaData metaData = header.getMetaData();
