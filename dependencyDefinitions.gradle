@@ -23,7 +23,7 @@ project.ext.versions = [
 'spring':         '5.2.3.RELEASE',
 'sulky':          sulkyVersion,
 'thymeleaf':      '2.1.5.RELEASE',
-'woodstox':       '6.0.3',
+'woodstox':       '6.1.1',
 ]
 
 project.ext.libraries = [
