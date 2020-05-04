@@ -27,7 +27,7 @@ buildscript {
 		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
 		classpath 'gradle.plugin.edu.sc.seis:macAppBundle:2.2.3'
 		classpath 'com.github.jengelman.gradle.plugins:shadow:5.2.0'
-		classpath 'de.thetaphi:forbiddenapis:2.7'
+		classpath 'de.thetaphi:forbiddenapis:3.0'
 		classpath 'org.kordamp.gradle:jdeps-gradle-plugin:0.4.1'
 	}
 }
@@ -43,7 +43,6 @@ wrapper {
 	// TODO:
 	// maven -> maven-publish
 	// MacAppBundle
-	// https://github.com/policeman-tools/forbidden-apis/issues/153
 }
 
 def copyright = "Copyright \u00a9 2007-2017 J\u00f6rn Huxhorn"
