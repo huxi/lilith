@@ -39,13 +39,13 @@ import org.apache.tools.ant.filters.FixCrLfFilter
 import org.gradle.plugins.signing.Sign
 
 wrapper {
-	gradleVersion = '6.4'
+	gradleVersion = '6.4.1'
 	// TODO:
 	// maven -> maven-publish
 	// MacAppBundle
 }
 
-def copyright = "Copyright \u00a9 2007-2017 J\u00f6rn Huxhorn"
+def copyright = "Copyright \u00a9 2007-2020 J\u00f6rn Huxhorn"
 def globalSourceCompatibility = 1.8
 def globalTargetCompatibility = 1.8
 
