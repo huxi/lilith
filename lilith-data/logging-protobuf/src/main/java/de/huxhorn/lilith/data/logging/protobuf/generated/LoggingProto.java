@@ -174,7 +174,7 @@ public final class LoggingProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.logging.EventWrapper}
    */
-  public  static final class EventWrapper extends
+  public static final class EventWrapper extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.EventWrapper)
       EventWrapperOrBuilder {
@@ -282,6 +282,7 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;</code>
      * @return Whether the eventIdentifier field is set.
      */
+    @java.lang.Override
     public boolean hasEventIdentifier() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -289,12 +290,14 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;</code>
      * @return The eventIdentifier.
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier getEventIdentifier() {
       return eventIdentifier_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance() : eventIdentifier_;
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.EventIdentifier event_identifier = 1;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifierOrBuilder getEventIdentifierOrBuilder() {
       return eventIdentifier_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.EventIdentifier.getDefaultInstance() : eventIdentifier_;
     }
@@ -305,6 +308,7 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;</code>
      * @return Whether the event field is set.
      */
+    @java.lang.Override
     public boolean hasEvent() {
       return ((bitField0_ & 0x00000002) != 0);
     }
@@ -312,12 +316,14 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;</code>
      * @return The event.
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent getEvent() {
       return event_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance() : event_;
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.LoggingEvent event = 2;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEventOrBuilder getEventOrBuilder() {
       return event_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggingEvent.getDefaultInstance() : event_;
     }
@@ -1015,7 +1021,7 @@ public final class LoggingProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.logging.EventIdentifier}
    */
-  public  static final class EventIdentifier extends
+  public static final class EventIdentifier extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.EventIdentifier)
       EventIdentifierOrBuilder {
@@ -1115,6 +1121,7 @@ public final class LoggingProto {
      * <code>optional int64 local_id = 1;</code>
      * @return Whether the localId field is set.
      */
+    @java.lang.Override
     public boolean hasLocalId() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -1122,6 +1129,7 @@ public final class LoggingProto {
      * <code>optional int64 local_id = 1;</code>
      * @return The localId.
      */
+    @java.lang.Override
     public long getLocalId() {
       return localId_;
     }
@@ -1132,6 +1140,7 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;</code>
      * @return Whether the sourceIdentifier field is set.
      */
+    @java.lang.Override
     public boolean hasSourceIdentifier() {
       return ((bitField0_ & 0x00000002) != 0);
     }
@@ -1139,12 +1148,14 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;</code>
      * @return The sourceIdentifier.
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier getSourceIdentifier() {
       return sourceIdentifier_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance() : sourceIdentifier_;
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.SourceIdentifier source_identifier = 2;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifierOrBuilder getSourceIdentifierOrBuilder() {
       return sourceIdentifier_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.SourceIdentifier.getDefaultInstance() : sourceIdentifier_;
     }
@@ -1503,6 +1514,7 @@ public final class LoggingProto {
        * <code>optional int64 local_id = 1;</code>
        * @return Whether the localId field is set.
        */
+      @java.lang.Override
       public boolean hasLocalId() {
         return ((bitField0_ & 0x00000001) != 0);
       }
@@ -1510,6 +1522,7 @@ public final class LoggingProto {
        * <code>optional int64 local_id = 1;</code>
        * @return The localId.
        */
+      @java.lang.Override
       public long getLocalId() {
         return localId_;
       }
@@ -1748,7 +1761,7 @@ public final class LoggingProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.logging.SourceIdentifier}
    */
-  public  static final class SourceIdentifier extends
+  public static final class SourceIdentifier extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.SourceIdentifier)
       SourceIdentifierOrBuilder {
@@ -1844,6 +1857,7 @@ public final class LoggingProto {
      * <code>optional string identifier = 1;</code>
      * @return Whether the identifier field is set.
      */
+    @java.lang.Override
     public boolean hasIdentifier() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -1851,6 +1865,7 @@ public final class LoggingProto {
      * <code>optional string identifier = 1;</code>
      * @return The identifier.
      */
+    @java.lang.Override
     public java.lang.String getIdentifier() {
       java.lang.Object ref = identifier_;
       if (ref instanceof java.lang.String) {
@@ -1869,6 +1884,7 @@ public final class LoggingProto {
      * <code>optional string identifier = 1;</code>
      * @return The bytes for identifier.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getIdentifierBytes() {
       java.lang.Object ref = identifier_;
@@ -1889,6 +1905,7 @@ public final class LoggingProto {
      * <code>optional string secondary_identifier = 2;</code>
      * @return Whether the secondaryIdentifier field is set.
      */
+    @java.lang.Override
     public boolean hasSecondaryIdentifier() {
       return ((bitField0_ & 0x00000002) != 0);
     }
@@ -1896,6 +1913,7 @@ public final class LoggingProto {
      * <code>optional string secondary_identifier = 2;</code>
      * @return The secondaryIdentifier.
      */
+    @java.lang.Override
     public java.lang.String getSecondaryIdentifier() {
       java.lang.Object ref = secondaryIdentifier_;
       if (ref instanceof java.lang.String) {
@@ -1914,6 +1932,7 @@ public final class LoggingProto {
      * <code>optional string secondary_identifier = 2;</code>
      * @return The bytes for secondaryIdentifier.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getSecondaryIdentifierBytes() {
       java.lang.Object ref = secondaryIdentifier_;
@@ -2675,7 +2694,7 @@ public final class LoggingProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.logging.LoggingEvent}
    */
-  public  static final class LoggingEvent extends
+  public static final class LoggingEvent extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.LoggingEvent)
       LoggingEventOrBuilder {
@@ -2891,6 +2910,7 @@ public final class LoggingProto {
      * <code>optional int64 time_stamp = 1;</code>
      * @return Whether the timeStamp field is set.
      */
+    @java.lang.Override
     public boolean hasTimeStamp() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -2898,6 +2918,7 @@ public final class LoggingProto {
      * <code>optional int64 time_stamp = 1;</code>
      * @return The timeStamp.
      */
+    @java.lang.Override
     public long getTimeStamp() {
       return timeStamp_;
     }
@@ -2908,6 +2929,7 @@ public final class LoggingProto {
      * <code>optional string logger_name = 2;</code>
      * @return Whether the loggerName field is set.
      */
+    @java.lang.Override
     public boolean hasLoggerName() {
       return ((bitField0_ & 0x00000002) != 0);
     }
@@ -2915,6 +2937,7 @@ public final class LoggingProto {
      * <code>optional string logger_name = 2;</code>
      * @return The loggerName.
      */
+    @java.lang.Override
     public java.lang.String getLoggerName() {
       java.lang.Object ref = loggerName_;
       if (ref instanceof java.lang.String) {
@@ -2933,6 +2956,7 @@ public final class LoggingProto {
      * <code>optional string logger_name = 2;</code>
      * @return The bytes for loggerName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getLoggerNameBytes() {
       java.lang.Object ref = loggerName_;
@@ -2953,14 +2977,14 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.Level level = 3;</code>
      * @return Whether the level field is set.
      */
-    public boolean hasLevel() {
+    @java.lang.Override public boolean hasLevel() {
       return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.Level level = 3;</code>
      * @return The level.
      */
-    public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel() {
+    @java.lang.Override public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel() {
       @SuppressWarnings("deprecation")
       de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level result = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.valueOf(level_);
       return result == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.TRACE : result;
@@ -2972,6 +2996,7 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.Message message = 4;</code>
      * @return Whether the message field is set.
      */
+    @java.lang.Override
     public boolean hasMessage() {
       return ((bitField0_ & 0x00000008) != 0);
     }
@@ -2979,12 +3004,14 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.Message message = 4;</code>
      * @return The message.
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getMessage() {
       return message_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance() : message_;
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.Message message = 4;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder getMessageOrBuilder() {
       return message_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message.getDefaultInstance() : message_;
     }
@@ -2995,6 +3022,7 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;</code>
      * @return Whether the threadInfo field is set.
      */
+    @java.lang.Override
     public boolean hasThreadInfo() {
       return ((bitField0_ & 0x00000010) != 0);
     }
@@ -3002,12 +3030,14 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;</code>
      * @return The threadInfo.
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo getThreadInfo() {
       return threadInfo_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.getDefaultInstance() : threadInfo_;
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.ThreadInfo thread_info = 5;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfoOrBuilder getThreadInfoOrBuilder() {
       return threadInfo_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThreadInfo.getDefaultInstance() : threadInfo_;
     }
@@ -3017,12 +3047,14 @@ public final class LoggingProto {
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StackTraceElement call_stack_element = 6;</code>
      */
+    @java.lang.Override
     public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> getCallStackElementList() {
       return callStackElement_;
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StackTraceElement call_stack_element = 6;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder> 
         getCallStackElementOrBuilderList() {
       return callStackElement_;
@@ -3030,18 +3062,21 @@ public final class LoggingProto {
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StackTraceElement call_stack_element = 6;</code>
      */
+    @java.lang.Override
     public int getCallStackElementCount() {
       return callStackElement_.size();
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StackTraceElement call_stack_element = 6;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getCallStackElement(int index) {
       return callStackElement_.get(index);
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StackTraceElement call_stack_element = 6;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder getCallStackElementOrBuilder(
         int index) {
       return callStackElement_.get(index);
@@ -3053,6 +3088,7 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.Throwable throwable = 7;</code>
      * @return Whether the throwable field is set.
      */
+    @java.lang.Override
     public boolean hasThrowable() {
       return ((bitField0_ & 0x00000020) != 0);
     }
@@ -3060,12 +3096,14 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.Throwable throwable = 7;</code>
      * @return The throwable.
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getThrowable() {
       return throwable_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance() : throwable_;
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.Throwable throwable = 7;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder getThrowableOrBuilder() {
       return throwable_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance() : throwable_;
     }
@@ -3076,6 +3114,7 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.LoggerContext logger_context = 8;</code>
      * @return Whether the loggerContext field is set.
      */
+    @java.lang.Override
     public boolean hasLoggerContext() {
       return ((bitField0_ & 0x00000040) != 0);
     }
@@ -3083,12 +3122,14 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.LoggerContext logger_context = 8;</code>
      * @return The loggerContext.
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext getLoggerContext() {
       return loggerContext_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.getDefaultInstance() : loggerContext_;
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.LoggerContext logger_context = 8;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContextOrBuilder getLoggerContextOrBuilder() {
       return loggerContext_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.LoggerContext.getDefaultInstance() : loggerContext_;
     }
@@ -3099,6 +3140,7 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.StringMap mapped_diagnostic_context = 9;</code>
      * @return Whether the mappedDiagnosticContext field is set.
      */
+    @java.lang.Override
     public boolean hasMappedDiagnosticContext() {
       return ((bitField0_ & 0x00000080) != 0);
     }
@@ -3106,12 +3148,14 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.StringMap mapped_diagnostic_context = 9;</code>
      * @return The mappedDiagnosticContext.
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getMappedDiagnosticContext() {
       return mappedDiagnosticContext_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance() : mappedDiagnosticContext_;
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.StringMap mapped_diagnostic_context = 9;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder getMappedDiagnosticContextOrBuilder() {
       return mappedDiagnosticContext_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance() : mappedDiagnosticContext_;
     }
@@ -3122,6 +3166,7 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;</code>
      * @return Whether the nestedDiagnosticContext field is set.
      */
+    @java.lang.Override
     public boolean hasNestedDiagnosticContext() {
       return ((bitField0_ & 0x00000100) != 0);
     }
@@ -3129,12 +3174,14 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;</code>
      * @return The nestedDiagnosticContext.
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext getNestedDiagnosticContext() {
       return nestedDiagnosticContext_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance() : nestedDiagnosticContext_;
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.NestedDiagnosticContext nested_diagnostic_context = 10;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContextOrBuilder getNestedDiagnosticContextOrBuilder() {
       return nestedDiagnosticContext_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.NestedDiagnosticContext.getDefaultInstance() : nestedDiagnosticContext_;
     }
@@ -3145,6 +3192,7 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.Marker marker = 11;</code>
      * @return Whether the marker field is set.
      */
+    @java.lang.Override
     public boolean hasMarker() {
       return ((bitField0_ & 0x00000200) != 0);
     }
@@ -3152,12 +3200,14 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.Marker marker = 11;</code>
      * @return The marker.
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getMarker() {
       return marker_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance() : marker_;
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.Marker marker = 11;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder getMarkerOrBuilder() {
       return marker_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker.getDefaultInstance() : marker_;
     }
@@ -3168,6 +3218,7 @@ public final class LoggingProto {
      * <code>optional int64 sequence_number = 12;</code>
      * @return Whether the sequenceNumber field is set.
      */
+    @java.lang.Override
     public boolean hasSequenceNumber() {
       return ((bitField0_ & 0x00000400) != 0);
     }
@@ -3175,6 +3226,7 @@ public final class LoggingProto {
      * <code>optional int64 sequence_number = 12;</code>
      * @return The sequenceNumber.
      */
+    @java.lang.Override
     public long getSequenceNumber() {
       return sequenceNumber_;
     }
@@ -3901,6 +3953,7 @@ public final class LoggingProto {
        * <code>optional int64 time_stamp = 1;</code>
        * @return Whether the timeStamp field is set.
        */
+      @java.lang.Override
       public boolean hasTimeStamp() {
         return ((bitField0_ & 0x00000001) != 0);
       }
@@ -3908,6 +3961,7 @@ public final class LoggingProto {
        * <code>optional int64 time_stamp = 1;</code>
        * @return The timeStamp.
        */
+      @java.lang.Override
       public long getTimeStamp() {
         return timeStamp_;
       }
@@ -4022,13 +4076,14 @@ public final class LoggingProto {
        * <code>optional .de.huxhorn.lilith.logging.Level level = 3;</code>
        * @return Whether the level field is set.
        */
-      public boolean hasLevel() {
+      @java.lang.Override public boolean hasLevel() {
         return ((bitField0_ & 0x00000004) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.logging.Level level = 3;</code>
        * @return The level.
        */
+      @java.lang.Override
       public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level getLevel() {
         @SuppressWarnings("deprecation")
         de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level result = de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Level.valueOf(level_);
@@ -5144,6 +5199,7 @@ public final class LoggingProto {
        * <code>optional int64 sequence_number = 12;</code>
        * @return Whether the sequenceNumber field is set.
        */
+      @java.lang.Override
       public boolean hasSequenceNumber() {
         return ((bitField0_ & 0x00000800) != 0);
       }
@@ -5151,6 +5207,7 @@ public final class LoggingProto {
        * <code>optional int64 sequence_number = 12;</code>
        * @return The sequenceNumber.
        */
+      @java.lang.Override
       public long getSequenceNumber() {
         return sequenceNumber_;
       }
@@ -5278,7 +5335,7 @@ public final class LoggingProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.logging.LoggerContext}
    */
-  public  static final class LoggerContext extends
+  public static final class LoggerContext extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.LoggerContext)
       LoggerContextOrBuilder {
@@ -5385,6 +5442,7 @@ public final class LoggingProto {
      * <code>optional int64 birth_time = 1;</code>
      * @return Whether the birthTime field is set.
      */
+    @java.lang.Override
     public boolean hasBirthTime() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -5392,6 +5450,7 @@ public final class LoggingProto {
      * <code>optional int64 birth_time = 1;</code>
      * @return The birthTime.
      */
+    @java.lang.Override
     public long getBirthTime() {
       return birthTime_;
     }
@@ -5402,6 +5461,7 @@ public final class LoggingProto {
      * <code>optional string name = 2;</code>
      * @return Whether the name field is set.
      */
+    @java.lang.Override
     public boolean hasName() {
       return ((bitField0_ & 0x00000002) != 0);
     }
@@ -5409,6 +5469,7 @@ public final class LoggingProto {
      * <code>optional string name = 2;</code>
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
       java.lang.Object ref = name_;
       if (ref instanceof java.lang.String) {
@@ -5427,6 +5488,7 @@ public final class LoggingProto {
      * <code>optional string name = 2;</code>
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getNameBytes() {
       java.lang.Object ref = name_;
@@ -5447,6 +5509,7 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.StringMap properties = 3;</code>
      * @return Whether the properties field is set.
      */
+    @java.lang.Override
     public boolean hasProperties() {
       return ((bitField0_ & 0x00000004) != 0);
     }
@@ -5454,12 +5517,14 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.StringMap properties = 3;</code>
      * @return The properties.
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap getProperties() {
       return properties_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance() : properties_;
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.StringMap properties = 3;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapOrBuilder getPropertiesOrBuilder() {
       return properties_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMap.getDefaultInstance() : properties_;
     }
@@ -5855,6 +5920,7 @@ public final class LoggingProto {
        * <code>optional int64 birth_time = 1;</code>
        * @return Whether the birthTime field is set.
        */
+      @java.lang.Override
       public boolean hasBirthTime() {
         return ((bitField0_ & 0x00000001) != 0);
       }
@@ -5862,6 +5928,7 @@ public final class LoggingProto {
        * <code>optional int64 birth_time = 1;</code>
        * @return The birthTime.
        */
+      @java.lang.Override
       public long getBirthTime() {
         return birthTime_;
       }
@@ -6217,7 +6284,7 @@ public final class LoggingProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.logging.ThreadInfo}
    */
-  public  static final class ThreadInfo extends
+  public static final class ThreadInfo extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.ThreadInfo)
       ThreadInfoOrBuilder {
@@ -6328,6 +6395,7 @@ public final class LoggingProto {
      * <code>optional int64 id = 1;</code>
      * @return Whether the id field is set.
      */
+    @java.lang.Override
     public boolean hasId() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -6335,6 +6403,7 @@ public final class LoggingProto {
      * <code>optional int64 id = 1;</code>
      * @return The id.
      */
+    @java.lang.Override
     public long getId() {
       return id_;
     }
@@ -6345,6 +6414,7 @@ public final class LoggingProto {
      * <code>optional string name = 2;</code>
      * @return Whether the name field is set.
      */
+    @java.lang.Override
     public boolean hasName() {
       return ((bitField0_ & 0x00000002) != 0);
     }
@@ -6352,6 +6422,7 @@ public final class LoggingProto {
      * <code>optional string name = 2;</code>
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
       java.lang.Object ref = name_;
       if (ref instanceof java.lang.String) {
@@ -6370,6 +6441,7 @@ public final class LoggingProto {
      * <code>optional string name = 2;</code>
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getNameBytes() {
       java.lang.Object ref = name_;
@@ -6390,6 +6462,7 @@ public final class LoggingProto {
      * <code>optional int64 group_id = 3;</code>
      * @return Whether the groupId field is set.
      */
+    @java.lang.Override
     public boolean hasGroupId() {
       return ((bitField0_ & 0x00000004) != 0);
     }
@@ -6397,6 +6470,7 @@ public final class LoggingProto {
      * <code>optional int64 group_id = 3;</code>
      * @return The groupId.
      */
+    @java.lang.Override
     public long getGroupId() {
       return groupId_;
     }
@@ -6407,6 +6481,7 @@ public final class LoggingProto {
      * <code>optional string group_name = 4;</code>
      * @return Whether the groupName field is set.
      */
+    @java.lang.Override
     public boolean hasGroupName() {
       return ((bitField0_ & 0x00000008) != 0);
     }
@@ -6414,6 +6489,7 @@ public final class LoggingProto {
      * <code>optional string group_name = 4;</code>
      * @return The groupName.
      */
+    @java.lang.Override
     public java.lang.String getGroupName() {
       java.lang.Object ref = groupName_;
       if (ref instanceof java.lang.String) {
@@ -6432,6 +6508,7 @@ public final class LoggingProto {
      * <code>optional string group_name = 4;</code>
      * @return The bytes for groupName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getGroupNameBytes() {
       java.lang.Object ref = groupName_;
@@ -6452,6 +6529,7 @@ public final class LoggingProto {
      * <code>optional int32 priority = 5;</code>
      * @return Whether the priority field is set.
      */
+    @java.lang.Override
     public boolean hasPriority() {
       return ((bitField0_ & 0x00000010) != 0);
     }
@@ -6459,6 +6537,7 @@ public final class LoggingProto {
      * <code>optional int32 priority = 5;</code>
      * @return The priority.
      */
+    @java.lang.Override
     public int getPriority() {
       return priority_;
     }
@@ -6886,6 +6965,7 @@ public final class LoggingProto {
        * <code>optional int64 id = 1;</code>
        * @return Whether the id field is set.
        */
+      @java.lang.Override
       public boolean hasId() {
         return ((bitField0_ & 0x00000001) != 0);
       }
@@ -6893,6 +6973,7 @@ public final class LoggingProto {
        * <code>optional int64 id = 1;</code>
        * @return The id.
        */
+      @java.lang.Override
       public long getId() {
         return id_;
       }
@@ -7007,6 +7088,7 @@ public final class LoggingProto {
        * <code>optional int64 group_id = 3;</code>
        * @return Whether the groupId field is set.
        */
+      @java.lang.Override
       public boolean hasGroupId() {
         return ((bitField0_ & 0x00000004) != 0);
       }
@@ -7014,6 +7096,7 @@ public final class LoggingProto {
        * <code>optional int64 group_id = 3;</code>
        * @return The groupId.
        */
+      @java.lang.Override
       public long getGroupId() {
         return groupId_;
       }
@@ -7128,6 +7211,7 @@ public final class LoggingProto {
        * <code>optional int32 priority = 5;</code>
        * @return Whether the priority field is set.
        */
+      @java.lang.Override
       public boolean hasPriority() {
         return ((bitField0_ & 0x00000010) != 0);
       }
@@ -7135,6 +7219,7 @@ public final class LoggingProto {
        * <code>optional int32 priority = 5;</code>
        * @return The priority.
        */
+      @java.lang.Override
       public int getPriority() {
         return priority_;
       }
@@ -7260,7 +7345,7 @@ public final class LoggingProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.logging.Message}
    */
-  public  static final class Message extends
+  public static final class Message extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.Message)
       MessageOrBuilder {
@@ -7362,6 +7447,7 @@ public final class LoggingProto {
      * <code>optional string message_pattern = 1;</code>
      * @return Whether the messagePattern field is set.
      */
+    @java.lang.Override
     public boolean hasMessagePattern() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -7369,6 +7455,7 @@ public final class LoggingProto {
      * <code>optional string message_pattern = 1;</code>
      * @return The messagePattern.
      */
+    @java.lang.Override
     public java.lang.String getMessagePattern() {
       java.lang.Object ref = messagePattern_;
       if (ref instanceof java.lang.String) {
@@ -7387,6 +7474,7 @@ public final class LoggingProto {
      * <code>optional string message_pattern = 1;</code>
      * @return The bytes for messagePattern.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getMessagePatternBytes() {
       java.lang.Object ref = messagePattern_;
@@ -7406,12 +7494,14 @@ public final class LoggingProto {
     /**
      * <code>repeated .de.huxhorn.lilith.logging.MessageArgument argument = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument> getArgumentList() {
       return argument_;
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.MessageArgument argument = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgumentOrBuilder> 
         getArgumentOrBuilderList() {
       return argument_;
@@ -7419,18 +7509,21 @@ public final class LoggingProto {
     /**
      * <code>repeated .de.huxhorn.lilith.logging.MessageArgument argument = 2;</code>
      */
+    @java.lang.Override
     public int getArgumentCount() {
       return argument_.size();
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.MessageArgument argument = 2;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgument getArgument(int index) {
       return argument_.get(index);
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.MessageArgument argument = 2;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageArgumentOrBuilder getArgumentOrBuilder(
         int index) {
       return argument_.get(index);
@@ -8210,7 +8303,7 @@ public final class LoggingProto {
    *
    * Protobuf type {@code de.huxhorn.lilith.logging.MessageArgument}
    */
-  public  static final class MessageArgument extends
+  public static final class MessageArgument extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.MessageArgument)
       MessageArgumentOrBuilder {
@@ -8299,6 +8392,7 @@ public final class LoggingProto {
      * <code>optional string value = 1;</code>
      * @return Whether the value field is set.
      */
+    @java.lang.Override
     public boolean hasValue() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -8306,6 +8400,7 @@ public final class LoggingProto {
      * <code>optional string value = 1;</code>
      * @return The value.
      */
+    @java.lang.Override
     public java.lang.String getValue() {
       java.lang.Object ref = value_;
       if (ref instanceof java.lang.String) {
@@ -8324,6 +8419,7 @@ public final class LoggingProto {
      * <code>optional string value = 1;</code>
      * @return The bytes for value.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getValueBytes() {
       java.lang.Object ref = value_;
@@ -8958,7 +9054,7 @@ public final class LoggingProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.logging.StackTraceElement}
    */
-  public  static final class StackTraceElement extends
+  public static final class StackTraceElement extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.StackTraceElement)
       StackTraceElementOrBuilder {
@@ -9106,6 +9202,7 @@ public final class LoggingProto {
      * <code>optional string method_name = 1;</code>
      * @return Whether the methodName field is set.
      */
+    @java.lang.Override
     public boolean hasMethodName() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -9113,6 +9210,7 @@ public final class LoggingProto {
      * <code>optional string method_name = 1;</code>
      * @return The methodName.
      */
+    @java.lang.Override
     public java.lang.String getMethodName() {
       java.lang.Object ref = methodName_;
       if (ref instanceof java.lang.String) {
@@ -9131,6 +9229,7 @@ public final class LoggingProto {
      * <code>optional string method_name = 1;</code>
      * @return The bytes for methodName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getMethodNameBytes() {
       java.lang.Object ref = methodName_;
@@ -9151,6 +9250,7 @@ public final class LoggingProto {
      * <code>optional string class_name = 2;</code>
      * @return Whether the className field is set.
      */
+    @java.lang.Override
     public boolean hasClassName() {
       return ((bitField0_ & 0x00000002) != 0);
     }
@@ -9158,6 +9258,7 @@ public final class LoggingProto {
      * <code>optional string class_name = 2;</code>
      * @return The className.
      */
+    @java.lang.Override
     public java.lang.String getClassName() {
       java.lang.Object ref = className_;
       if (ref instanceof java.lang.String) {
@@ -9176,6 +9277,7 @@ public final class LoggingProto {
      * <code>optional string class_name = 2;</code>
      * @return The bytes for className.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getClassNameBytes() {
       java.lang.Object ref = className_;
@@ -9196,6 +9298,7 @@ public final class LoggingProto {
      * <code>optional string file_name = 3;</code>
      * @return Whether the fileName field is set.
      */
+    @java.lang.Override
     public boolean hasFileName() {
       return ((bitField0_ & 0x00000004) != 0);
     }
@@ -9203,6 +9306,7 @@ public final class LoggingProto {
      * <code>optional string file_name = 3;</code>
      * @return The fileName.
      */
+    @java.lang.Override
     public java.lang.String getFileName() {
       java.lang.Object ref = fileName_;
       if (ref instanceof java.lang.String) {
@@ -9221,6 +9325,7 @@ public final class LoggingProto {
      * <code>optional string file_name = 3;</code>
      * @return The bytes for fileName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getFileNameBytes() {
       java.lang.Object ref = fileName_;
@@ -9241,6 +9346,7 @@ public final class LoggingProto {
      * <code>optional int32 line_number = 4;</code>
      * @return Whether the lineNumber field is set.
      */
+    @java.lang.Override
     public boolean hasLineNumber() {
       return ((bitField0_ & 0x00000008) != 0);
     }
@@ -9248,6 +9354,7 @@ public final class LoggingProto {
      * <code>optional int32 line_number = 4;</code>
      * @return The lineNumber.
      */
+    @java.lang.Override
     public int getLineNumber() {
       return lineNumber_;
     }
@@ -9258,6 +9365,7 @@ public final class LoggingProto {
      * <code>optional string code_location = 5;</code>
      * @return Whether the codeLocation field is set.
      */
+    @java.lang.Override
     public boolean hasCodeLocation() {
       return ((bitField0_ & 0x00000010) != 0);
     }
@@ -9265,6 +9373,7 @@ public final class LoggingProto {
      * <code>optional string code_location = 5;</code>
      * @return The codeLocation.
      */
+    @java.lang.Override
     public java.lang.String getCodeLocation() {
       java.lang.Object ref = codeLocation_;
       if (ref instanceof java.lang.String) {
@@ -9283,6 +9392,7 @@ public final class LoggingProto {
      * <code>optional string code_location = 5;</code>
      * @return The bytes for codeLocation.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getCodeLocationBytes() {
       java.lang.Object ref = codeLocation_;
@@ -9303,6 +9413,7 @@ public final class LoggingProto {
      * <code>optional string version = 6;</code>
      * @return Whether the version field is set.
      */
+    @java.lang.Override
     public boolean hasVersion() {
       return ((bitField0_ & 0x00000020) != 0);
     }
@@ -9310,6 +9421,7 @@ public final class LoggingProto {
      * <code>optional string version = 6;</code>
      * @return The version.
      */
+    @java.lang.Override
     public java.lang.String getVersion() {
       java.lang.Object ref = version_;
       if (ref instanceof java.lang.String) {
@@ -9328,6 +9440,7 @@ public final class LoggingProto {
      * <code>optional string version = 6;</code>
      * @return The bytes for version.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getVersionBytes() {
       java.lang.Object ref = version_;
@@ -9348,6 +9461,7 @@ public final class LoggingProto {
      * <code>optional bool exact = 7;</code>
      * @return Whether the exact field is set.
      */
+    @java.lang.Override
     public boolean hasExact() {
       return ((bitField0_ & 0x00000040) != 0);
     }
@@ -9355,6 +9469,7 @@ public final class LoggingProto {
      * <code>optional bool exact = 7;</code>
      * @return The exact.
      */
+    @java.lang.Override
     public boolean getExact() {
       return exact_;
     }
@@ -9365,6 +9480,7 @@ public final class LoggingProto {
      * <code>optional string class_loader_name = 8;</code>
      * @return Whether the classLoaderName field is set.
      */
+    @java.lang.Override
     public boolean hasClassLoaderName() {
       return ((bitField0_ & 0x00000080) != 0);
     }
@@ -9372,6 +9488,7 @@ public final class LoggingProto {
      * <code>optional string class_loader_name = 8;</code>
      * @return The classLoaderName.
      */
+    @java.lang.Override
     public java.lang.String getClassLoaderName() {
       java.lang.Object ref = classLoaderName_;
       if (ref instanceof java.lang.String) {
@@ -9390,6 +9507,7 @@ public final class LoggingProto {
      * <code>optional string class_loader_name = 8;</code>
      * @return The bytes for classLoaderName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getClassLoaderNameBytes() {
       java.lang.Object ref = classLoaderName_;
@@ -9410,6 +9528,7 @@ public final class LoggingProto {
      * <code>optional string module_name = 9;</code>
      * @return Whether the moduleName field is set.
      */
+    @java.lang.Override
     public boolean hasModuleName() {
       return ((bitField0_ & 0x00000100) != 0);
     }
@@ -9417,6 +9536,7 @@ public final class LoggingProto {
      * <code>optional string module_name = 9;</code>
      * @return The moduleName.
      */
+    @java.lang.Override
     public java.lang.String getModuleName() {
       java.lang.Object ref = moduleName_;
       if (ref instanceof java.lang.String) {
@@ -9435,6 +9555,7 @@ public final class LoggingProto {
      * <code>optional string module_name = 9;</code>
      * @return The bytes for moduleName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getModuleNameBytes() {
       java.lang.Object ref = moduleName_;
@@ -9455,6 +9576,7 @@ public final class LoggingProto {
      * <code>optional string module_version = 10;</code>
      * @return Whether the moduleVersion field is set.
      */
+    @java.lang.Override
     public boolean hasModuleVersion() {
       return ((bitField0_ & 0x00000200) != 0);
     }
@@ -9462,6 +9584,7 @@ public final class LoggingProto {
      * <code>optional string module_version = 10;</code>
      * @return The moduleVersion.
      */
+    @java.lang.Override
     public java.lang.String getModuleVersion() {
       java.lang.Object ref = moduleVersion_;
       if (ref instanceof java.lang.String) {
@@ -9480,6 +9603,7 @@ public final class LoggingProto {
      * <code>optional string module_version = 10;</code>
      * @return The bytes for moduleVersion.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getModuleVersionBytes() {
       java.lang.Object ref = moduleVersion_;
@@ -10299,6 +10423,7 @@ public final class LoggingProto {
        * <code>optional int32 line_number = 4;</code>
        * @return Whether the lineNumber field is set.
        */
+      @java.lang.Override
       public boolean hasLineNumber() {
         return ((bitField0_ & 0x00000008) != 0);
       }
@@ -10306,6 +10431,7 @@ public final class LoggingProto {
        * <code>optional int32 line_number = 4;</code>
        * @return The lineNumber.
        */
+      @java.lang.Override
       public int getLineNumber() {
         return lineNumber_;
       }
@@ -10504,6 +10630,7 @@ public final class LoggingProto {
        * <code>optional bool exact = 7;</code>
        * @return Whether the exact field is set.
        */
+      @java.lang.Override
       public boolean hasExact() {
         return ((bitField0_ & 0x00000040) != 0);
       }
@@ -10511,6 +10638,7 @@ public final class LoggingProto {
        * <code>optional bool exact = 7;</code>
        * @return The exact.
        */
+      @java.lang.Override
       public boolean getExact() {
         return exact_;
       }
@@ -10955,7 +11083,7 @@ public final class LoggingProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.logging.Throwable}
    */
-  public  static final class Throwable extends
+  public static final class Throwable extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.Throwable)
       ThrowableOrBuilder {
@@ -11095,6 +11223,7 @@ public final class LoggingProto {
      * <code>optional string throwable_class = 1;</code>
      * @return Whether the throwableClass field is set.
      */
+    @java.lang.Override
     public boolean hasThrowableClass() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -11102,6 +11231,7 @@ public final class LoggingProto {
      * <code>optional string throwable_class = 1;</code>
      * @return The throwableClass.
      */
+    @java.lang.Override
     public java.lang.String getThrowableClass() {
       java.lang.Object ref = throwableClass_;
       if (ref instanceof java.lang.String) {
@@ -11120,6 +11250,7 @@ public final class LoggingProto {
      * <code>optional string throwable_class = 1;</code>
      * @return The bytes for throwableClass.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getThrowableClassBytes() {
       java.lang.Object ref = throwableClass_;
@@ -11140,6 +11271,7 @@ public final class LoggingProto {
      * <code>optional string message = 2;</code>
      * @return Whether the message field is set.
      */
+    @java.lang.Override
     public boolean hasMessage() {
       return ((bitField0_ & 0x00000002) != 0);
     }
@@ -11147,6 +11279,7 @@ public final class LoggingProto {
      * <code>optional string message = 2;</code>
      * @return The message.
      */
+    @java.lang.Override
     public java.lang.String getMessage() {
       java.lang.Object ref = message_;
       if (ref instanceof java.lang.String) {
@@ -11165,6 +11298,7 @@ public final class LoggingProto {
      * <code>optional string message = 2;</code>
      * @return The bytes for message.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getMessageBytes() {
       java.lang.Object ref = message_;
@@ -11184,12 +11318,14 @@ public final class LoggingProto {
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StackTraceElement stack_trace_element = 3;</code>
      */
+    @java.lang.Override
     public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement> getStackTraceElementList() {
       return stackTraceElement_;
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StackTraceElement stack_trace_element = 3;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder> 
         getStackTraceElementOrBuilderList() {
       return stackTraceElement_;
@@ -11197,18 +11333,21 @@ public final class LoggingProto {
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StackTraceElement stack_trace_element = 3;</code>
      */
+    @java.lang.Override
     public int getStackTraceElementCount() {
       return stackTraceElement_.size();
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StackTraceElement stack_trace_element = 3;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElement getStackTraceElement(int index) {
       return stackTraceElement_.get(index);
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StackTraceElement stack_trace_element = 3;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StackTraceElementOrBuilder getStackTraceElementOrBuilder(
         int index) {
       return stackTraceElement_.get(index);
@@ -11220,6 +11359,7 @@ public final class LoggingProto {
      * <code>optional int32 omitted_elements = 4;</code>
      * @return Whether the omittedElements field is set.
      */
+    @java.lang.Override
     public boolean hasOmittedElements() {
       return ((bitField0_ & 0x00000004) != 0);
     }
@@ -11227,6 +11367,7 @@ public final class LoggingProto {
      * <code>optional int32 omitted_elements = 4;</code>
      * @return The omittedElements.
      */
+    @java.lang.Override
     public int getOmittedElements() {
       return omittedElements_;
     }
@@ -11237,6 +11378,7 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.Throwable cause = 5;</code>
      * @return Whether the cause field is set.
      */
+    @java.lang.Override
     public boolean hasCause() {
       return ((bitField0_ & 0x00000008) != 0);
     }
@@ -11244,12 +11386,14 @@ public final class LoggingProto {
      * <code>optional .de.huxhorn.lilith.logging.Throwable cause = 5;</code>
      * @return The cause.
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getCause() {
       return cause_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance() : cause_;
     }
     /**
      * <code>optional .de.huxhorn.lilith.logging.Throwable cause = 5;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder getCauseOrBuilder() {
       return cause_ == null ? de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable.getDefaultInstance() : cause_;
     }
@@ -11259,12 +11403,14 @@ public final class LoggingProto {
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Throwable suppressed = 6;</code>
      */
+    @java.lang.Override
     public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable> getSuppressedList() {
       return suppressed_;
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Throwable suppressed = 6;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder> 
         getSuppressedOrBuilderList() {
       return suppressed_;
@@ -11272,18 +11418,21 @@ public final class LoggingProto {
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Throwable suppressed = 6;</code>
      */
+    @java.lang.Override
     public int getSuppressedCount() {
       return suppressed_.size();
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Throwable suppressed = 6;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Throwable getSuppressed(int index) {
       return suppressed_.get(index);
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Throwable suppressed = 6;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.ThrowableOrBuilder getSuppressedOrBuilder(
         int index) {
       return suppressed_.get(index);
@@ -12212,6 +12361,7 @@ public final class LoggingProto {
        * <code>optional int32 omitted_elements = 4;</code>
        * @return Whether the omittedElements field is set.
        */
+      @java.lang.Override
       public boolean hasOmittedElements() {
         return ((bitField0_ & 0x00000008) != 0);
       }
@@ -12219,6 +12369,7 @@ public final class LoggingProto {
        * <code>optional int32 omitted_elements = 4;</code>
        * @return The omittedElements.
        */
+      @java.lang.Override
       public int getOmittedElements() {
         return omittedElements_;
       }
@@ -12687,7 +12838,7 @@ public final class LoggingProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.logging.NestedDiagnosticContext}
    */
-  public  static final class NestedDiagnosticContext extends
+  public static final class NestedDiagnosticContext extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.NestedDiagnosticContext)
       NestedDiagnosticContextOrBuilder {
@@ -12780,12 +12931,14 @@ public final class LoggingProto {
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Message entry = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message> getEntryList() {
       return entry_;
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Message entry = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder> 
         getEntryOrBuilderList() {
       return entry_;
@@ -12793,18 +12946,21 @@ public final class LoggingProto {
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Message entry = 1;</code>
      */
+    @java.lang.Override
     public int getEntryCount() {
       return entry_.size();
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Message entry = 1;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Message getEntry(int index) {
       return entry_.get(index);
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Message entry = 1;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MessageOrBuilder getEntryOrBuilder(
         int index) {
       return entry_.get(index);
@@ -13475,7 +13631,7 @@ public final class LoggingProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.logging.StringMap}
    */
-  public  static final class StringMap extends
+  public static final class StringMap extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.StringMap)
       StringMapOrBuilder {
@@ -13568,12 +13724,14 @@ public final class LoggingProto {
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StringMapEntry entry = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry> getEntryList() {
       return entry_;
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StringMapEntry entry = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntryOrBuilder> 
         getEntryOrBuilderList() {
       return entry_;
@@ -13581,18 +13739,21 @@ public final class LoggingProto {
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StringMapEntry entry = 1;</code>
      */
+    @java.lang.Override
     public int getEntryCount() {
       return entry_.size();
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StringMapEntry entry = 1;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntry getEntry(int index) {
       return entry_.get(index);
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.StringMapEntry entry = 1;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.StringMapEntryOrBuilder getEntryOrBuilder(
         int index) {
       return entry_.get(index);
@@ -14284,7 +14445,7 @@ public final class LoggingProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.logging.StringMapEntry}
    */
-  public  static final class StringMapEntry extends
+  public static final class StringMapEntry extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.StringMapEntry)
       StringMapEntryOrBuilder {
@@ -14380,6 +14541,7 @@ public final class LoggingProto {
      * <code>required string key = 1;</code>
      * @return Whether the key field is set.
      */
+    @java.lang.Override
     public boolean hasKey() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -14387,6 +14549,7 @@ public final class LoggingProto {
      * <code>required string key = 1;</code>
      * @return The key.
      */
+    @java.lang.Override
     public java.lang.String getKey() {
       java.lang.Object ref = key_;
       if (ref instanceof java.lang.String) {
@@ -14405,6 +14568,7 @@ public final class LoggingProto {
      * <code>required string key = 1;</code>
      * @return The bytes for key.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getKeyBytes() {
       java.lang.Object ref = key_;
@@ -14425,6 +14589,7 @@ public final class LoggingProto {
      * <code>optional string value = 2;</code>
      * @return Whether the value field is set.
      */
+    @java.lang.Override
     public boolean hasValue() {
       return ((bitField0_ & 0x00000002) != 0);
     }
@@ -14432,6 +14597,7 @@ public final class LoggingProto {
      * <code>optional string value = 2;</code>
      * @return The value.
      */
+    @java.lang.Override
     public java.lang.String getValue() {
       java.lang.Object ref = value_;
       if (ref instanceof java.lang.String) {
@@ -14450,6 +14616,7 @@ public final class LoggingProto {
      * <code>optional string value = 2;</code>
      * @return The bytes for value.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getValueBytes() {
       java.lang.Object ref = value_;
@@ -15080,7 +15247,7 @@ public final class LoggingProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.logging.Marker}
    */
-  public  static final class Marker extends
+  public static final class Marker extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.logging.Marker)
       MarkerOrBuilder {
@@ -15182,6 +15349,7 @@ public final class LoggingProto {
      * <code>required string name = 1;</code>
      * @return Whether the name field is set.
      */
+    @java.lang.Override
     public boolean hasName() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -15189,6 +15357,7 @@ public final class LoggingProto {
      * <code>required string name = 1;</code>
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
       java.lang.Object ref = name_;
       if (ref instanceof java.lang.String) {
@@ -15207,6 +15376,7 @@ public final class LoggingProto {
      * <code>required string name = 1;</code>
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getNameBytes() {
       java.lang.Object ref = name_;
@@ -15226,12 +15396,14 @@ public final class LoggingProto {
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Marker reference = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker> getReferenceList() {
       return reference_;
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Marker reference = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder> 
         getReferenceOrBuilderList() {
       return reference_;
@@ -15239,18 +15411,21 @@ public final class LoggingProto {
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Marker reference = 2;</code>
      */
+    @java.lang.Override
     public int getReferenceCount() {
       return reference_.size();
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Marker reference = 2;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.Marker getReference(int index) {
       return reference_.get(index);
     }
     /**
      * <code>repeated .de.huxhorn.lilith.logging.Marker reference = 2;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.data.logging.protobuf.generated.LoggingProto.MarkerOrBuilder getReferenceOrBuilder(
         int index) {
       return reference_.get(index);

@@ -551,7 +551,7 @@ public final class PrefsProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.prefs.LilithPreferences}
    */
-  public  static final class LilithPreferences extends
+  public static final class LilithPreferences extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.prefs.LilithPreferences)
       LilithPreferencesOrBuilder {
@@ -858,6 +858,7 @@ public final class PrefsProto {
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_conditions = 1;</code>
      * @return Whether the groovyConditions field is set.
      */
+    @java.lang.Override
     public boolean hasGroovyConditions() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -865,12 +866,14 @@ public final class PrefsProto {
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_conditions = 1;</code>
      * @return The groovyConditions.
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getGroovyConditions() {
       return groovyConditions_ == null ? de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance() : groovyConditions_;
     }
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_conditions = 1;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder getGroovyConditionsOrBuilder() {
       return groovyConditions_ == null ? de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance() : groovyConditions_;
     }
@@ -881,6 +884,7 @@ public final class PrefsProto {
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent details_view = 2;</code>
      * @return Whether the detailsView field is set.
      */
+    @java.lang.Override
     public boolean hasDetailsView() {
       return ((bitField0_ & 0x00000002) != 0);
     }
@@ -888,12 +892,14 @@ public final class PrefsProto {
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent details_view = 2;</code>
      * @return The detailsView.
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getDetailsView() {
       return detailsView_ == null ? de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance() : detailsView_;
     }
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent details_view = 2;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder getDetailsViewOrBuilder() {
       return detailsView_ == null ? de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance() : detailsView_;
     }
@@ -904,6 +910,7 @@ public final class PrefsProto {
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent root_files = 3;</code>
      * @return Whether the rootFiles field is set.
      */
+    @java.lang.Override
     public boolean hasRootFiles() {
       return ((bitField0_ & 0x00000004) != 0);
     }
@@ -911,12 +918,14 @@ public final class PrefsProto {
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent root_files = 3;</code>
      * @return The rootFiles.
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getRootFiles() {
       return rootFiles_ == null ? de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance() : rootFiles_;
     }
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent root_files = 3;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder getRootFilesOrBuilder() {
       return rootFiles_ == null ? de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance() : rootFiles_;
     }
@@ -927,6 +936,7 @@ public final class PrefsProto {
      * <code>optional string blacklist_name = 4;</code>
      * @return Whether the blacklistName field is set.
      */
+    @java.lang.Override
     public boolean hasBlacklistName() {
       return ((bitField0_ & 0x00000008) != 0);
     }
@@ -934,6 +944,7 @@ public final class PrefsProto {
      * <code>optional string blacklist_name = 4;</code>
      * @return The blacklistName.
      */
+    @java.lang.Override
     public java.lang.String getBlacklistName() {
       java.lang.Object ref = blacklistName_;
       if (ref instanceof java.lang.String) {
@@ -952,6 +963,7 @@ public final class PrefsProto {
      * <code>optional string blacklist_name = 4;</code>
      * @return The bytes for blacklistName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getBlacklistNameBytes() {
       java.lang.Object ref = blacklistName_;
@@ -972,6 +984,7 @@ public final class PrefsProto {
      * <code>optional string whitelist_name = 5;</code>
      * @return Whether the whitelistName field is set.
      */
+    @java.lang.Override
     public boolean hasWhitelistName() {
       return ((bitField0_ & 0x00000010) != 0);
     }
@@ -979,6 +992,7 @@ public final class PrefsProto {
      * <code>optional string whitelist_name = 5;</code>
      * @return The whitelistName.
      */
+    @java.lang.Override
     public java.lang.String getWhitelistName() {
       java.lang.Object ref = whitelistName_;
       if (ref instanceof java.lang.String) {
@@ -997,6 +1011,7 @@ public final class PrefsProto {
      * <code>optional string whitelist_name = 5;</code>
      * @return The bytes for whitelistName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getWhitelistNameBytes() {
       java.lang.Object ref = whitelistName_;
@@ -1017,6 +1032,7 @@ public final class PrefsProto {
      * <code>optional string look_and_feel = 6;</code>
      * @return Whether the lookAndFeel field is set.
      */
+    @java.lang.Override
     public boolean hasLookAndFeel() {
       return ((bitField0_ & 0x00000020) != 0);
     }
@@ -1024,6 +1040,7 @@ public final class PrefsProto {
      * <code>optional string look_and_feel = 6;</code>
      * @return The lookAndFeel.
      */
+    @java.lang.Override
     public java.lang.String getLookAndFeel() {
       java.lang.Object ref = lookAndFeel_;
       if (ref instanceof java.lang.String) {
@@ -1042,6 +1059,7 @@ public final class PrefsProto {
      * <code>optional string look_and_feel = 6;</code>
      * @return The bytes for lookAndFeel.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getLookAndFeelBytes() {
       java.lang.Object ref = lookAndFeel_;
@@ -1062,6 +1080,7 @@ public final class PrefsProto {
      * <code>optional bool asking_before_quit = 7;</code>
      * @return Whether the askingBeforeQuit field is set.
      */
+    @java.lang.Override
     public boolean hasAskingBeforeQuit() {
       return ((bitField0_ & 0x00000040) != 0);
     }
@@ -1069,6 +1088,7 @@ public final class PrefsProto {
      * <code>optional bool asking_before_quit = 7;</code>
      * @return The askingBeforeQuit.
      */
+    @java.lang.Override
     public boolean getAskingBeforeQuit() {
       return askingBeforeQuit_;
     }
@@ -1079,6 +1099,7 @@ public final class PrefsProto {
      * <code>optional bool auto_closing = 8;</code>
      * @return Whether the autoClosing field is set.
      */
+    @java.lang.Override
     public boolean hasAutoClosing() {
       return ((bitField0_ & 0x00000080) != 0);
     }
@@ -1086,6 +1107,7 @@ public final class PrefsProto {
      * <code>optional bool auto_closing = 8;</code>
      * @return The autoClosing.
      */
+    @java.lang.Override
     public boolean getAutoClosing() {
       return autoClosing_;
     }
@@ -1096,6 +1118,7 @@ public final class PrefsProto {
      * <code>optional bool auto_focusing_window = 9;</code>
      * @return Whether the autoFocusingWindow field is set.
      */
+    @java.lang.Override
     public boolean hasAutoFocusingWindow() {
       return ((bitField0_ & 0x00000100) != 0);
     }
@@ -1103,6 +1126,7 @@ public final class PrefsProto {
      * <code>optional bool auto_focusing_window = 9;</code>
      * @return The autoFocusingWindow.
      */
+    @java.lang.Override
     public boolean getAutoFocusingWindow() {
       return autoFocusingWindow_;
     }
@@ -1113,6 +1137,7 @@ public final class PrefsProto {
      * <code>optional bool auto_opening = 10;</code>
      * @return Whether the autoOpening field is set.
      */
+    @java.lang.Override
     public boolean hasAutoOpening() {
       return ((bitField0_ & 0x00000200) != 0);
     }
@@ -1120,6 +1145,7 @@ public final class PrefsProto {
      * <code>optional bool auto_opening = 10;</code>
      * @return The autoOpening.
      */
+    @java.lang.Override
     public boolean getAutoOpening() {
       return autoOpening_;
     }
@@ -1130,6 +1156,7 @@ public final class PrefsProto {
      * <code>optional bool checking_for_update = 11;</code>
      * @return Whether the checkingForUpdate field is set.
      */
+    @java.lang.Override
     public boolean hasCheckingForUpdate() {
       return ((bitField0_ & 0x00000400) != 0);
     }
@@ -1137,6 +1164,7 @@ public final class PrefsProto {
      * <code>optional bool checking_for_update = 11;</code>
      * @return The checkingForUpdate.
      */
+    @java.lang.Override
     public boolean getCheckingForUpdate() {
       return checkingForUpdate_;
     }
@@ -1147,6 +1175,7 @@ public final class PrefsProto {
      * <code>optional bool cleaning_logs_on_exit = 12;</code>
      * @return Whether the cleaningLogsOnExit field is set.
      */
+    @java.lang.Override
     public boolean hasCleaningLogsOnExit() {
       return ((bitField0_ & 0x00000800) != 0);
     }
@@ -1154,6 +1183,7 @@ public final class PrefsProto {
      * <code>optional bool cleaning_logs_on_exit = 12;</code>
      * @return The cleaningLogsOnExit.
      */
+    @java.lang.Override
     public boolean getCleaningLogsOnExit() {
       return cleaningLogsOnExit_;
     }
@@ -1164,6 +1194,7 @@ public final class PrefsProto {
      * <code>optional bool coloring_whole_row = 13;</code>
      * @return Whether the coloringWholeRow field is set.
      */
+    @java.lang.Override
     public boolean hasColoringWholeRow() {
       return ((bitField0_ & 0x00001000) != 0);
     }
@@ -1171,6 +1202,7 @@ public final class PrefsProto {
      * <code>optional bool coloring_whole_row = 13;</code>
      * @return The coloringWholeRow.
      */
+    @java.lang.Override
     public boolean getColoringWholeRow() {
       return coloringWholeRow_;
     }
@@ -1181,6 +1213,7 @@ public final class PrefsProto {
      * <code>optional bool global_logging_enabled = 14;</code>
      * @return Whether the globalLoggingEnabled field is set.
      */
+    @java.lang.Override
     public boolean hasGlobalLoggingEnabled() {
       return ((bitField0_ & 0x00002000) != 0);
     }
@@ -1188,6 +1221,7 @@ public final class PrefsProto {
      * <code>optional bool global_logging_enabled = 14;</code>
      * @return The globalLoggingEnabled.
      */
+    @java.lang.Override
     public boolean getGlobalLoggingEnabled() {
       return globalLoggingEnabled_;
     }
@@ -1198,6 +1232,7 @@ public final class PrefsProto {
      * <code>optional bool maximizing_internal_frames = 17;</code>
      * @return Whether the maximizingInternalFrames field is set.
      */
+    @java.lang.Override
     public boolean hasMaximizingInternalFrames() {
       return ((bitField0_ & 0x00004000) != 0);
     }
@@ -1205,6 +1240,7 @@ public final class PrefsProto {
      * <code>optional bool maximizing_internal_frames = 17;</code>
      * @return The maximizingInternalFrames.
      */
+    @java.lang.Override
     public boolean getMaximizingInternalFrames() {
       return maximizingInternalFrames_;
     }
@@ -1215,6 +1251,7 @@ public final class PrefsProto {
      * <code>optional bool mute = 18;</code>
      * @return Whether the mute field is set.
      */
+    @java.lang.Override
     public boolean hasMute() {
       return ((bitField0_ & 0x00008000) != 0);
     }
@@ -1222,6 +1259,7 @@ public final class PrefsProto {
      * <code>optional bool mute = 18;</code>
      * @return The mute.
      */
+    @java.lang.Override
     public boolean getMute() {
       return mute_;
     }
@@ -1232,6 +1270,7 @@ public final class PrefsProto {
      * <code>optional bool scrolling_to_bottom = 19;</code>
      * @return Whether the scrollingToBottom field is set.
      */
+    @java.lang.Override
     public boolean hasScrollingToBottom() {
       return ((bitField0_ & 0x00010000) != 0);
     }
@@ -1239,6 +1278,7 @@ public final class PrefsProto {
      * <code>optional bool scrolling_to_bottom = 19;</code>
      * @return The scrollingToBottom.
      */
+    @java.lang.Override
     public boolean getScrollingToBottom() {
       return scrollingToBottom_;
     }
@@ -1249,6 +1289,7 @@ public final class PrefsProto {
      * <code>optional bool showing_full_call_stack = 20;</code>
      * @return Whether the showingFullCallStack field is set.
      */
+    @java.lang.Override
     public boolean hasShowingFullCallStack() {
       return ((bitField0_ & 0x00020000) != 0);
     }
@@ -1256,6 +1297,7 @@ public final class PrefsProto {
      * <code>optional bool showing_full_call_stack = 20;</code>
      * @return The showingFullCallStack.
      */
+    @java.lang.Override
     public boolean getShowingFullCallStack() {
       return showingFullCallStack_;
     }
@@ -1266,6 +1308,7 @@ public final class PrefsProto {
      * <code>optional bool showing_status_bar = 22;</code>
      * @return Whether the showingStatusBar field is set.
      */
+    @java.lang.Override
     public boolean hasShowingStatusBar() {
       return ((bitField0_ & 0x00040000) != 0);
     }
@@ -1273,6 +1316,7 @@ public final class PrefsProto {
      * <code>optional bool showing_status_bar = 22;</code>
      * @return The showingStatusBar.
      */
+    @java.lang.Override
     public boolean getShowingStatusBar() {
       return showingStatusBar_;
     }
@@ -1283,6 +1327,7 @@ public final class PrefsProto {
      * <code>optional bool showing_stacktrace = 23;</code>
      * @return Whether the showingStacktrace field is set.
      */
+    @java.lang.Override
     public boolean hasShowingStacktrace() {
       return ((bitField0_ & 0x00080000) != 0);
     }
@@ -1290,6 +1335,7 @@ public final class PrefsProto {
      * <code>optional bool showing_stacktrace = 23;</code>
      * @return The showingStacktrace.
      */
+    @java.lang.Override
     public boolean getShowingStacktrace() {
       return showingStacktrace_;
     }
@@ -1300,6 +1346,7 @@ public final class PrefsProto {
      * <code>optional bool showing_tip_of_the_day = 24;</code>
      * @return Whether the showingTipOfTheDay field is set.
      */
+    @java.lang.Override
     public boolean hasShowingTipOfTheDay() {
       return ((bitField0_ & 0x00100000) != 0);
     }
@@ -1307,6 +1354,7 @@ public final class PrefsProto {
      * <code>optional bool showing_tip_of_the_day = 24;</code>
      * @return The showingTipOfTheDay.
      */
+    @java.lang.Override
     public boolean getShowingTipOfTheDay() {
       return showingTipOfTheDay_;
     }
@@ -1317,6 +1365,7 @@ public final class PrefsProto {
      * <code>optional bool showing_toolbar = 25;</code>
      * @return Whether the showingToolbar field is set.
      */
+    @java.lang.Override
     public boolean hasShowingToolbar() {
       return ((bitField0_ & 0x00200000) != 0);
     }
@@ -1324,6 +1373,7 @@ public final class PrefsProto {
      * <code>optional bool showing_toolbar = 25;</code>
      * @return The showingToolbar.
      */
+    @java.lang.Override
     public boolean getShowingToolbar() {
       return showingToolbar_;
     }
@@ -1334,6 +1384,7 @@ public final class PrefsProto {
      * <code>optional bool splash_screen_disabled = 26;</code>
      * @return Whether the splashScreenDisabled field is set.
      */
+    @java.lang.Override
     public boolean hasSplashScreenDisabled() {
       return ((bitField0_ & 0x00400000) != 0);
     }
@@ -1341,6 +1392,7 @@ public final class PrefsProto {
      * <code>optional bool splash_screen_disabled = 26;</code>
      * @return The splashScreenDisabled.
      */
+    @java.lang.Override
     public boolean getSplashScreenDisabled() {
       return splashScreenDisabled_;
     }
@@ -1351,6 +1403,7 @@ public final class PrefsProto {
      * <code>optional bool using_internal_frames = 27;</code>
      * @return Whether the usingInternalFrames field is set.
      */
+    @java.lang.Override
     public boolean hasUsingInternalFrames() {
       return ((bitField0_ & 0x00800000) != 0);
     }
@@ -1358,6 +1411,7 @@ public final class PrefsProto {
      * <code>optional bool using_internal_frames = 27;</code>
      * @return The usingInternalFrames.
      */
+    @java.lang.Override
     public boolean getUsingInternalFrames() {
       return usingInternalFrames_;
     }
@@ -1368,14 +1422,14 @@ public final class PrefsProto {
      * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
      * @return Whether the sourceFiltering field is set.
      */
-    public boolean hasSourceFiltering() {
+    @java.lang.Override public boolean hasSourceFiltering() {
       return ((bitField0_ & 0x01000000) != 0);
     }
     /**
      * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
      * @return The sourceFiltering.
      */
-    public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering getSourceFiltering() {
+    @java.lang.Override public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering getSourceFiltering() {
       @SuppressWarnings("deprecation")
       de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering result = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering.valueOf(sourceFiltering_);
       return result == null ? de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering.NONE : result;
@@ -1387,6 +1441,7 @@ public final class PrefsProto {
      * <code>optional string default_condition_name = 29;</code>
      * @return Whether the defaultConditionName field is set.
      */
+    @java.lang.Override
     public boolean hasDefaultConditionName() {
       return ((bitField0_ & 0x02000000) != 0);
     }
@@ -1394,6 +1449,7 @@ public final class PrefsProto {
      * <code>optional string default_condition_name = 29;</code>
      * @return The defaultConditionName.
      */
+    @java.lang.Override
     public java.lang.String getDefaultConditionName() {
       java.lang.Object ref = defaultConditionName_;
       if (ref instanceof java.lang.String) {
@@ -1412,6 +1468,7 @@ public final class PrefsProto {
      * <code>optional string default_condition_name = 29;</code>
      * @return The bytes for defaultConditionName.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getDefaultConditionNameBytes() {
       java.lang.Object ref = defaultConditionName_;
@@ -1432,6 +1489,7 @@ public final class PrefsProto {
      * <code>optional bool checking_for_snapshot = 30;</code>
      * @return Whether the checkingForSnapshot field is set.
      */
+    @java.lang.Override
     public boolean hasCheckingForSnapshot() {
       return ((bitField0_ & 0x04000000) != 0);
     }
@@ -1439,6 +1497,7 @@ public final class PrefsProto {
      * <code>optional bool checking_for_snapshot = 30;</code>
      * @return The checkingForSnapshot.
      */
+    @java.lang.Override
     public boolean getCheckingForSnapshot() {
       return checkingForSnapshot_;
     }
@@ -1449,6 +1508,7 @@ public final class PrefsProto {
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;</code>
      * @return Whether the groovyClipboardFormatters field is set.
      */
+    @java.lang.Override
     public boolean hasGroovyClipboardFormatters() {
       return ((bitField0_ & 0x08000000) != 0);
     }
@@ -1456,12 +1516,14 @@ public final class PrefsProto {
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;</code>
      * @return The groovyClipboardFormatters.
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getGroovyClipboardFormatters() {
       return groovyClipboardFormatters_ == null ? de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance() : groovyClipboardFormatters_;
     }
     /**
      * <code>optional .de.huxhorn.lilith.prefs.DirectoryContent groovy_clipboard_formatters = 31;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder getGroovyClipboardFormattersOrBuilder() {
       return groovyClipboardFormatters_ == null ? de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent.getDefaultInstance() : groovyClipboardFormatters_;
     }
@@ -1472,6 +1534,7 @@ public final class PrefsProto {
      * <code>optional bool tray_active = 32;</code>
      * @return Whether the trayActive field is set.
      */
+    @java.lang.Override
     public boolean hasTrayActive() {
       return ((bitField0_ & 0x10000000) != 0);
     }
@@ -1479,6 +1542,7 @@ public final class PrefsProto {
      * <code>optional bool tray_active = 32;</code>
      * @return The trayActive.
      */
+    @java.lang.Override
     public boolean getTrayActive() {
       return trayActive_;
     }
@@ -1489,6 +1553,7 @@ public final class PrefsProto {
      * <code>optional bool showing_full_recent_path = 33;</code>
      * @return Whether the showingFullRecentPath field is set.
      */
+    @java.lang.Override
     public boolean hasShowingFullRecentPath() {
       return ((bitField0_ & 0x20000000) != 0);
     }
@@ -1496,6 +1561,7 @@ public final class PrefsProto {
      * <code>optional bool showing_full_recent_path = 33;</code>
      * @return The showingFullRecentPath.
      */
+    @java.lang.Override
     public boolean getShowingFullRecentPath() {
       return showingFullRecentPath_;
     }
@@ -1506,6 +1572,7 @@ public final class PrefsProto {
      * <code>optional bool hiding_on_close = 34;</code>
      * @return Whether the hidingOnClose field is set.
      */
+    @java.lang.Override
     public boolean hasHidingOnClose() {
       return ((bitField0_ & 0x40000000) != 0);
     }
@@ -1513,6 +1580,7 @@ public final class PrefsProto {
      * <code>optional bool hiding_on_close = 34;</code>
      * @return The hidingOnClose.
      */
+    @java.lang.Override
     public boolean getHidingOnClose() {
       return hidingOnClose_;
     }
@@ -1523,6 +1591,7 @@ public final class PrefsProto {
      * <code>optional bool using_wrapped_exception_style = 35;</code>
      * @return Whether the usingWrappedExceptionStyle field is set.
      */
+    @java.lang.Override
     public boolean hasUsingWrappedExceptionStyle() {
       return ((bitField0_ & 0x80000000) != 0);
     }
@@ -1530,6 +1599,7 @@ public final class PrefsProto {
      * <code>optional bool using_wrapped_exception_style = 35;</code>
      * @return The usingWrappedExceptionStyle.
      */
+    @java.lang.Override
     public boolean getUsingWrappedExceptionStyle() {
       return usingWrappedExceptionStyle_;
     }
@@ -1540,6 +1610,7 @@ public final class PrefsProto {
      * <code>optional bool showing_primary_identifier = 36;</code>
      * @return Whether the showingPrimaryIdentifier field is set.
      */
+    @java.lang.Override
     public boolean hasShowingPrimaryIdentifier() {
       return ((bitField1_ & 0x00000001) != 0);
     }
@@ -1547,6 +1618,7 @@ public final class PrefsProto {
      * <code>optional bool showing_primary_identifier = 36;</code>
      * @return The showingPrimaryIdentifier.
      */
+    @java.lang.Override
     public boolean getShowingPrimaryIdentifier() {
       return showingPrimaryIdentifier_;
     }
@@ -1557,6 +1629,7 @@ public final class PrefsProto {
      * <code>optional bool showing_secondary_identifier = 37;</code>
      * @return Whether the showingSecondaryIdentifier field is set.
      */
+    @java.lang.Override
     public boolean hasShowingSecondaryIdentifier() {
       return ((bitField1_ & 0x00000002) != 0);
     }
@@ -1564,6 +1637,7 @@ public final class PrefsProto {
      * <code>optional bool showing_secondary_identifier = 37;</code>
      * @return The showingSecondaryIdentifier.
      */
+    @java.lang.Override
     public boolean getShowingSecondaryIdentifier() {
       return showingSecondaryIdentifier_;
     }
@@ -1574,6 +1648,7 @@ public final class PrefsProto {
      * <code>optional bool scrolling_smoothly = 38;</code>
      * @return Whether the scrollingSmoothly field is set.
      */
+    @java.lang.Override
     public boolean hasScrollingSmoothly() {
       return ((bitField1_ & 0x00000004) != 0);
     }
@@ -1581,6 +1656,7 @@ public final class PrefsProto {
      * <code>optional bool scrolling_smoothly = 38;</code>
      * @return The scrollingSmoothly.
      */
+    @java.lang.Override
     public boolean getScrollingSmoothly() {
       return scrollingSmoothly_;
     }
@@ -3479,6 +3555,7 @@ public final class PrefsProto {
        * <code>optional bool asking_before_quit = 7;</code>
        * @return Whether the askingBeforeQuit field is set.
        */
+      @java.lang.Override
       public boolean hasAskingBeforeQuit() {
         return ((bitField0_ & 0x00000040) != 0);
       }
@@ -3486,6 +3563,7 @@ public final class PrefsProto {
        * <code>optional bool asking_before_quit = 7;</code>
        * @return The askingBeforeQuit.
        */
+      @java.lang.Override
       public boolean getAskingBeforeQuit() {
         return askingBeforeQuit_;
       }
@@ -3516,6 +3594,7 @@ public final class PrefsProto {
        * <code>optional bool auto_closing = 8;</code>
        * @return Whether the autoClosing field is set.
        */
+      @java.lang.Override
       public boolean hasAutoClosing() {
         return ((bitField0_ & 0x00000080) != 0);
       }
@@ -3523,6 +3602,7 @@ public final class PrefsProto {
        * <code>optional bool auto_closing = 8;</code>
        * @return The autoClosing.
        */
+      @java.lang.Override
       public boolean getAutoClosing() {
         return autoClosing_;
       }
@@ -3553,6 +3633,7 @@ public final class PrefsProto {
        * <code>optional bool auto_focusing_window = 9;</code>
        * @return Whether the autoFocusingWindow field is set.
        */
+      @java.lang.Override
       public boolean hasAutoFocusingWindow() {
         return ((bitField0_ & 0x00000100) != 0);
       }
@@ -3560,6 +3641,7 @@ public final class PrefsProto {
        * <code>optional bool auto_focusing_window = 9;</code>
        * @return The autoFocusingWindow.
        */
+      @java.lang.Override
       public boolean getAutoFocusingWindow() {
         return autoFocusingWindow_;
       }
@@ -3590,6 +3672,7 @@ public final class PrefsProto {
        * <code>optional bool auto_opening = 10;</code>
        * @return Whether the autoOpening field is set.
        */
+      @java.lang.Override
       public boolean hasAutoOpening() {
         return ((bitField0_ & 0x00000200) != 0);
       }
@@ -3597,6 +3680,7 @@ public final class PrefsProto {
        * <code>optional bool auto_opening = 10;</code>
        * @return The autoOpening.
        */
+      @java.lang.Override
       public boolean getAutoOpening() {
         return autoOpening_;
       }
@@ -3627,6 +3711,7 @@ public final class PrefsProto {
        * <code>optional bool checking_for_update = 11;</code>
        * @return Whether the checkingForUpdate field is set.
        */
+      @java.lang.Override
       public boolean hasCheckingForUpdate() {
         return ((bitField0_ & 0x00000400) != 0);
       }
@@ -3634,6 +3719,7 @@ public final class PrefsProto {
        * <code>optional bool checking_for_update = 11;</code>
        * @return The checkingForUpdate.
        */
+      @java.lang.Override
       public boolean getCheckingForUpdate() {
         return checkingForUpdate_;
       }
@@ -3664,6 +3750,7 @@ public final class PrefsProto {
        * <code>optional bool cleaning_logs_on_exit = 12;</code>
        * @return Whether the cleaningLogsOnExit field is set.
        */
+      @java.lang.Override
       public boolean hasCleaningLogsOnExit() {
         return ((bitField0_ & 0x00000800) != 0);
       }
@@ -3671,6 +3758,7 @@ public final class PrefsProto {
        * <code>optional bool cleaning_logs_on_exit = 12;</code>
        * @return The cleaningLogsOnExit.
        */
+      @java.lang.Override
       public boolean getCleaningLogsOnExit() {
         return cleaningLogsOnExit_;
       }
@@ -3701,6 +3789,7 @@ public final class PrefsProto {
        * <code>optional bool coloring_whole_row = 13;</code>
        * @return Whether the coloringWholeRow field is set.
        */
+      @java.lang.Override
       public boolean hasColoringWholeRow() {
         return ((bitField0_ & 0x00001000) != 0);
       }
@@ -3708,6 +3797,7 @@ public final class PrefsProto {
        * <code>optional bool coloring_whole_row = 13;</code>
        * @return The coloringWholeRow.
        */
+      @java.lang.Override
       public boolean getColoringWholeRow() {
         return coloringWholeRow_;
       }
@@ -3738,6 +3828,7 @@ public final class PrefsProto {
        * <code>optional bool global_logging_enabled = 14;</code>
        * @return Whether the globalLoggingEnabled field is set.
        */
+      @java.lang.Override
       public boolean hasGlobalLoggingEnabled() {
         return ((bitField0_ & 0x00002000) != 0);
       }
@@ -3745,6 +3836,7 @@ public final class PrefsProto {
        * <code>optional bool global_logging_enabled = 14;</code>
        * @return The globalLoggingEnabled.
        */
+      @java.lang.Override
       public boolean getGlobalLoggingEnabled() {
         return globalLoggingEnabled_;
       }
@@ -3775,6 +3867,7 @@ public final class PrefsProto {
        * <code>optional bool maximizing_internal_frames = 17;</code>
        * @return Whether the maximizingInternalFrames field is set.
        */
+      @java.lang.Override
       public boolean hasMaximizingInternalFrames() {
         return ((bitField0_ & 0x00004000) != 0);
       }
@@ -3782,6 +3875,7 @@ public final class PrefsProto {
        * <code>optional bool maximizing_internal_frames = 17;</code>
        * @return The maximizingInternalFrames.
        */
+      @java.lang.Override
       public boolean getMaximizingInternalFrames() {
         return maximizingInternalFrames_;
       }
@@ -3812,6 +3906,7 @@ public final class PrefsProto {
        * <code>optional bool mute = 18;</code>
        * @return Whether the mute field is set.
        */
+      @java.lang.Override
       public boolean hasMute() {
         return ((bitField0_ & 0x00008000) != 0);
       }
@@ -3819,6 +3914,7 @@ public final class PrefsProto {
        * <code>optional bool mute = 18;</code>
        * @return The mute.
        */
+      @java.lang.Override
       public boolean getMute() {
         return mute_;
       }
@@ -3849,6 +3945,7 @@ public final class PrefsProto {
        * <code>optional bool scrolling_to_bottom = 19;</code>
        * @return Whether the scrollingToBottom field is set.
        */
+      @java.lang.Override
       public boolean hasScrollingToBottom() {
         return ((bitField0_ & 0x00010000) != 0);
       }
@@ -3856,6 +3953,7 @@ public final class PrefsProto {
        * <code>optional bool scrolling_to_bottom = 19;</code>
        * @return The scrollingToBottom.
        */
+      @java.lang.Override
       public boolean getScrollingToBottom() {
         return scrollingToBottom_;
       }
@@ -3886,6 +3984,7 @@ public final class PrefsProto {
        * <code>optional bool showing_full_call_stack = 20;</code>
        * @return Whether the showingFullCallStack field is set.
        */
+      @java.lang.Override
       public boolean hasShowingFullCallStack() {
         return ((bitField0_ & 0x00020000) != 0);
       }
@@ -3893,6 +3992,7 @@ public final class PrefsProto {
        * <code>optional bool showing_full_call_stack = 20;</code>
        * @return The showingFullCallStack.
        */
+      @java.lang.Override
       public boolean getShowingFullCallStack() {
         return showingFullCallStack_;
       }
@@ -3923,6 +4023,7 @@ public final class PrefsProto {
        * <code>optional bool showing_status_bar = 22;</code>
        * @return Whether the showingStatusBar field is set.
        */
+      @java.lang.Override
       public boolean hasShowingStatusBar() {
         return ((bitField0_ & 0x00040000) != 0);
       }
@@ -3930,6 +4031,7 @@ public final class PrefsProto {
        * <code>optional bool showing_status_bar = 22;</code>
        * @return The showingStatusBar.
        */
+      @java.lang.Override
       public boolean getShowingStatusBar() {
         return showingStatusBar_;
       }
@@ -3960,6 +4062,7 @@ public final class PrefsProto {
        * <code>optional bool showing_stacktrace = 23;</code>
        * @return Whether the showingStacktrace field is set.
        */
+      @java.lang.Override
       public boolean hasShowingStacktrace() {
         return ((bitField0_ & 0x00080000) != 0);
       }
@@ -3967,6 +4070,7 @@ public final class PrefsProto {
        * <code>optional bool showing_stacktrace = 23;</code>
        * @return The showingStacktrace.
        */
+      @java.lang.Override
       public boolean getShowingStacktrace() {
         return showingStacktrace_;
       }
@@ -3997,6 +4101,7 @@ public final class PrefsProto {
        * <code>optional bool showing_tip_of_the_day = 24;</code>
        * @return Whether the showingTipOfTheDay field is set.
        */
+      @java.lang.Override
       public boolean hasShowingTipOfTheDay() {
         return ((bitField0_ & 0x00100000) != 0);
       }
@@ -4004,6 +4109,7 @@ public final class PrefsProto {
        * <code>optional bool showing_tip_of_the_day = 24;</code>
        * @return The showingTipOfTheDay.
        */
+      @java.lang.Override
       public boolean getShowingTipOfTheDay() {
         return showingTipOfTheDay_;
       }
@@ -4034,6 +4140,7 @@ public final class PrefsProto {
        * <code>optional bool showing_toolbar = 25;</code>
        * @return Whether the showingToolbar field is set.
        */
+      @java.lang.Override
       public boolean hasShowingToolbar() {
         return ((bitField0_ & 0x00200000) != 0);
       }
@@ -4041,6 +4148,7 @@ public final class PrefsProto {
        * <code>optional bool showing_toolbar = 25;</code>
        * @return The showingToolbar.
        */
+      @java.lang.Override
       public boolean getShowingToolbar() {
         return showingToolbar_;
       }
@@ -4071,6 +4179,7 @@ public final class PrefsProto {
        * <code>optional bool splash_screen_disabled = 26;</code>
        * @return Whether the splashScreenDisabled field is set.
        */
+      @java.lang.Override
       public boolean hasSplashScreenDisabled() {
         return ((bitField0_ & 0x00400000) != 0);
       }
@@ -4078,6 +4187,7 @@ public final class PrefsProto {
        * <code>optional bool splash_screen_disabled = 26;</code>
        * @return The splashScreenDisabled.
        */
+      @java.lang.Override
       public boolean getSplashScreenDisabled() {
         return splashScreenDisabled_;
       }
@@ -4108,6 +4218,7 @@ public final class PrefsProto {
        * <code>optional bool using_internal_frames = 27;</code>
        * @return Whether the usingInternalFrames field is set.
        */
+      @java.lang.Override
       public boolean hasUsingInternalFrames() {
         return ((bitField0_ & 0x00800000) != 0);
       }
@@ -4115,6 +4226,7 @@ public final class PrefsProto {
        * <code>optional bool using_internal_frames = 27;</code>
        * @return The usingInternalFrames.
        */
+      @java.lang.Override
       public boolean getUsingInternalFrames() {
         return usingInternalFrames_;
       }
@@ -4145,13 +4257,14 @@ public final class PrefsProto {
        * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
        * @return Whether the sourceFiltering field is set.
        */
-      public boolean hasSourceFiltering() {
+      @java.lang.Override public boolean hasSourceFiltering() {
         return ((bitField0_ & 0x01000000) != 0);
       }
       /**
        * <code>optional .de.huxhorn.lilith.prefs.SourceFiltering source_filtering = 28;</code>
        * @return The sourceFiltering.
        */
+      @java.lang.Override
       public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering getSourceFiltering() {
         @SuppressWarnings("deprecation")
         de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering result = de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.SourceFiltering.valueOf(sourceFiltering_);
@@ -4271,6 +4384,7 @@ public final class PrefsProto {
        * <code>optional bool checking_for_snapshot = 30;</code>
        * @return Whether the checkingForSnapshot field is set.
        */
+      @java.lang.Override
       public boolean hasCheckingForSnapshot() {
         return ((bitField0_ & 0x04000000) != 0);
       }
@@ -4278,6 +4392,7 @@ public final class PrefsProto {
        * <code>optional bool checking_for_snapshot = 30;</code>
        * @return The checkingForSnapshot.
        */
+      @java.lang.Override
       public boolean getCheckingForSnapshot() {
         return checkingForSnapshot_;
       }
@@ -4428,6 +4543,7 @@ public final class PrefsProto {
        * <code>optional bool tray_active = 32;</code>
        * @return Whether the trayActive field is set.
        */
+      @java.lang.Override
       public boolean hasTrayActive() {
         return ((bitField0_ & 0x10000000) != 0);
       }
@@ -4435,6 +4551,7 @@ public final class PrefsProto {
        * <code>optional bool tray_active = 32;</code>
        * @return The trayActive.
        */
+      @java.lang.Override
       public boolean getTrayActive() {
         return trayActive_;
       }
@@ -4465,6 +4582,7 @@ public final class PrefsProto {
        * <code>optional bool showing_full_recent_path = 33;</code>
        * @return Whether the showingFullRecentPath field is set.
        */
+      @java.lang.Override
       public boolean hasShowingFullRecentPath() {
         return ((bitField0_ & 0x20000000) != 0);
       }
@@ -4472,6 +4590,7 @@ public final class PrefsProto {
        * <code>optional bool showing_full_recent_path = 33;</code>
        * @return The showingFullRecentPath.
        */
+      @java.lang.Override
       public boolean getShowingFullRecentPath() {
         return showingFullRecentPath_;
       }
@@ -4502,6 +4621,7 @@ public final class PrefsProto {
        * <code>optional bool hiding_on_close = 34;</code>
        * @return Whether the hidingOnClose field is set.
        */
+      @java.lang.Override
       public boolean hasHidingOnClose() {
         return ((bitField0_ & 0x40000000) != 0);
       }
@@ -4509,6 +4629,7 @@ public final class PrefsProto {
        * <code>optional bool hiding_on_close = 34;</code>
        * @return The hidingOnClose.
        */
+      @java.lang.Override
       public boolean getHidingOnClose() {
         return hidingOnClose_;
       }
@@ -4539,6 +4660,7 @@ public final class PrefsProto {
        * <code>optional bool using_wrapped_exception_style = 35;</code>
        * @return Whether the usingWrappedExceptionStyle field is set.
        */
+      @java.lang.Override
       public boolean hasUsingWrappedExceptionStyle() {
         return ((bitField0_ & 0x80000000) != 0);
       }
@@ -4546,6 +4668,7 @@ public final class PrefsProto {
        * <code>optional bool using_wrapped_exception_style = 35;</code>
        * @return The usingWrappedExceptionStyle.
        */
+      @java.lang.Override
       public boolean getUsingWrappedExceptionStyle() {
         return usingWrappedExceptionStyle_;
       }
@@ -4576,6 +4699,7 @@ public final class PrefsProto {
        * <code>optional bool showing_primary_identifier = 36;</code>
        * @return Whether the showingPrimaryIdentifier field is set.
        */
+      @java.lang.Override
       public boolean hasShowingPrimaryIdentifier() {
         return ((bitField1_ & 0x00000001) != 0);
       }
@@ -4583,6 +4707,7 @@ public final class PrefsProto {
        * <code>optional bool showing_primary_identifier = 36;</code>
        * @return The showingPrimaryIdentifier.
        */
+      @java.lang.Override
       public boolean getShowingPrimaryIdentifier() {
         return showingPrimaryIdentifier_;
       }
@@ -4613,6 +4738,7 @@ public final class PrefsProto {
        * <code>optional bool showing_secondary_identifier = 37;</code>
        * @return Whether the showingSecondaryIdentifier field is set.
        */
+      @java.lang.Override
       public boolean hasShowingSecondaryIdentifier() {
         return ((bitField1_ & 0x00000002) != 0);
       }
@@ -4620,6 +4746,7 @@ public final class PrefsProto {
        * <code>optional bool showing_secondary_identifier = 37;</code>
        * @return The showingSecondaryIdentifier.
        */
+      @java.lang.Override
       public boolean getShowingSecondaryIdentifier() {
         return showingSecondaryIdentifier_;
       }
@@ -4650,6 +4777,7 @@ public final class PrefsProto {
        * <code>optional bool scrolling_smoothly = 38;</code>
        * @return Whether the scrollingSmoothly field is set.
        */
+      @java.lang.Override
       public boolean hasScrollingSmoothly() {
         return ((bitField1_ & 0x00000004) != 0);
       }
@@ -4657,6 +4785,7 @@ public final class PrefsProto {
        * <code>optional bool scrolling_smoothly = 38;</code>
        * @return The scrollingSmoothly.
        */
+      @java.lang.Override
       public boolean getScrollingSmoothly() {
         return scrollingSmoothly_;
       }
@@ -4826,7 +4955,7 @@ public final class PrefsProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.prefs.DirectoryContent}
    */
-  public  static final class DirectoryContent extends
+  public static final class DirectoryContent extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.prefs.DirectoryContent)
       DirectoryContentOrBuilder {
@@ -4941,6 +5070,7 @@ public final class PrefsProto {
      * <code>optional string name = 1;</code>
      * @return Whether the name field is set.
      */
+    @java.lang.Override
     public boolean hasName() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -4948,6 +5078,7 @@ public final class PrefsProto {
      * <code>optional string name = 1;</code>
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
       java.lang.Object ref = name_;
       if (ref instanceof java.lang.String) {
@@ -4966,6 +5097,7 @@ public final class PrefsProto {
      * <code>optional string name = 1;</code>
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getNameBytes() {
       java.lang.Object ref = name_;
@@ -4985,12 +5117,14 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.ByteArrayMapEntry entry = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntry> getEntryList() {
       return entry_;
     }
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.ByteArrayMapEntry entry = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntryOrBuilder> 
         getEntryOrBuilderList() {
       return entry_;
@@ -4998,18 +5132,21 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.ByteArrayMapEntry entry = 2;</code>
      */
+    @java.lang.Override
     public int getEntryCount() {
       return entry_.size();
     }
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.ByteArrayMapEntry entry = 2;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntry getEntry(int index) {
       return entry_.get(index);
     }
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.ByteArrayMapEntry entry = 2;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.ByteArrayMapEntryOrBuilder getEntryOrBuilder(
         int index) {
       return entry_.get(index);
@@ -5024,6 +5161,7 @@ public final class PrefsProto {
      *
      * <code>repeated .de.huxhorn.lilith.prefs.DirectoryContent directory = 3;</code>
      */
+    @java.lang.Override
     public java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent> getDirectoryList() {
       return directory_;
     }
@@ -5034,6 +5172,7 @@ public final class PrefsProto {
      *
      * <code>repeated .de.huxhorn.lilith.prefs.DirectoryContent directory = 3;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder> 
         getDirectoryOrBuilderList() {
       return directory_;
@@ -5045,6 +5184,7 @@ public final class PrefsProto {
      *
      * <code>repeated .de.huxhorn.lilith.prefs.DirectoryContent directory = 3;</code>
      */
+    @java.lang.Override
     public int getDirectoryCount() {
       return directory_.size();
     }
@@ -5055,6 +5195,7 @@ public final class PrefsProto {
      *
      * <code>repeated .de.huxhorn.lilith.prefs.DirectoryContent directory = 3;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContent getDirectory(int index) {
       return directory_.get(index);
     }
@@ -5065,6 +5206,7 @@ public final class PrefsProto {
      *
      * <code>repeated .de.huxhorn.lilith.prefs.DirectoryContent directory = 3;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.DirectoryContentOrBuilder getDirectoryOrBuilder(
         int index) {
       return directory_.get(index);
@@ -6240,7 +6382,7 @@ public final class PrefsProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.prefs.ByteArrayMapEntry}
    */
-  public  static final class ByteArrayMapEntry extends
+  public static final class ByteArrayMapEntry extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.prefs.ByteArrayMapEntry)
       ByteArrayMapEntryOrBuilder {
@@ -6335,6 +6477,7 @@ public final class PrefsProto {
      * <code>required string key = 1;</code>
      * @return Whether the key field is set.
      */
+    @java.lang.Override
     public boolean hasKey() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -6342,6 +6485,7 @@ public final class PrefsProto {
      * <code>required string key = 1;</code>
      * @return The key.
      */
+    @java.lang.Override
     public java.lang.String getKey() {
       java.lang.Object ref = key_;
       if (ref instanceof java.lang.String) {
@@ -6360,6 +6504,7 @@ public final class PrefsProto {
      * <code>required string key = 1;</code>
      * @return The bytes for key.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getKeyBytes() {
       java.lang.Object ref = key_;
@@ -6380,6 +6525,7 @@ public final class PrefsProto {
      * <code>optional bytes value = 2;</code>
      * @return Whether the value field is set.
      */
+    @java.lang.Override
     public boolean hasValue() {
       return ((bitField0_ & 0x00000002) != 0);
     }
@@ -6387,6 +6533,7 @@ public final class PrefsProto {
      * <code>optional bytes value = 2;</code>
      * @return The value.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getValue() {
       return value_;
     }
@@ -6827,6 +6974,7 @@ public final class PrefsProto {
        * <code>optional bytes value = 2;</code>
        * @return Whether the value field is set.
        */
+      @java.lang.Override
       public boolean hasValue() {
         return ((bitField0_ & 0x00000002) != 0);
       }
@@ -6834,6 +6982,7 @@ public final class PrefsProto {
        * <code>optional bytes value = 2;</code>
        * @return The value.
        */
+      @java.lang.Override
       public com.google.protobuf.ByteString getValue() {
         return value_;
       }
@@ -6945,7 +7094,7 @@ public final class PrefsProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.prefs.StringMap}
    */
-  public  static final class StringMap extends
+  public static final class StringMap extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.prefs.StringMap)
       StringMapOrBuilder {
@@ -7038,12 +7187,14 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringMapEntry entry = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntry> getEntryList() {
       return entry_;
     }
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringMapEntry entry = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntryOrBuilder> 
         getEntryOrBuilderList() {
       return entry_;
@@ -7051,18 +7202,21 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringMapEntry entry = 1;</code>
      */
+    @java.lang.Override
     public int getEntryCount() {
       return entry_.size();
     }
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringMapEntry entry = 1;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntry getEntry(int index) {
       return entry_.get(index);
     }
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringMapEntry entry = 1;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringMapEntryOrBuilder getEntryOrBuilder(
         int index) {
       return entry_.get(index);
@@ -7754,7 +7908,7 @@ public final class PrefsProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.prefs.StringMapEntry}
    */
-  public  static final class StringMapEntry extends
+  public static final class StringMapEntry extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.prefs.StringMapEntry)
       StringMapEntryOrBuilder {
@@ -7850,6 +8004,7 @@ public final class PrefsProto {
      * <code>required string key = 1;</code>
      * @return Whether the key field is set.
      */
+    @java.lang.Override
     public boolean hasKey() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -7857,6 +8012,7 @@ public final class PrefsProto {
      * <code>required string key = 1;</code>
      * @return The key.
      */
+    @java.lang.Override
     public java.lang.String getKey() {
       java.lang.Object ref = key_;
       if (ref instanceof java.lang.String) {
@@ -7875,6 +8031,7 @@ public final class PrefsProto {
      * <code>required string key = 1;</code>
      * @return The bytes for key.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getKeyBytes() {
       java.lang.Object ref = key_;
@@ -7895,6 +8052,7 @@ public final class PrefsProto {
      * <code>optional string value = 2;</code>
      * @return Whether the value field is set.
      */
+    @java.lang.Override
     public boolean hasValue() {
       return ((bitField0_ & 0x00000002) != 0);
     }
@@ -7902,6 +8060,7 @@ public final class PrefsProto {
      * <code>optional string value = 2;</code>
      * @return The value.
      */
+    @java.lang.Override
     public java.lang.String getValue() {
       java.lang.Object ref = value_;
       if (ref instanceof java.lang.String) {
@@ -7920,6 +8079,7 @@ public final class PrefsProto {
      * <code>optional string value = 2;</code>
      * @return The bytes for value.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getValueBytes() {
       java.lang.Object ref = value_;
@@ -8533,7 +8693,7 @@ public final class PrefsProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.prefs.StringArrayMap}
    */
-  public  static final class StringArrayMap extends
+  public static final class StringArrayMap extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.prefs.StringArrayMap)
       StringArrayMapOrBuilder {
@@ -8626,12 +8786,14 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayMapEntry entry = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntry> getEntryList() {
       return entry_;
     }
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayMapEntry entry = 1;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntryOrBuilder> 
         getEntryOrBuilderList() {
       return entry_;
@@ -8639,18 +8801,21 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayMapEntry entry = 1;</code>
      */
+    @java.lang.Override
     public int getEntryCount() {
       return entry_.size();
     }
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayMapEntry entry = 1;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntry getEntry(int index) {
       return entry_.get(index);
     }
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayMapEntry entry = 1;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayMapEntryOrBuilder getEntryOrBuilder(
         int index) {
       return entry_.get(index);
@@ -9349,7 +9514,7 @@ public final class PrefsProto {
   /**
    * Protobuf type {@code de.huxhorn.lilith.prefs.StringArrayMapEntry}
    */
-  public  static final class StringArrayMapEntry extends
+  public static final class StringArrayMapEntry extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.prefs.StringArrayMapEntry)
       StringArrayMapEntryOrBuilder {
@@ -9451,6 +9616,7 @@ public final class PrefsProto {
      * <code>required string key = 1;</code>
      * @return Whether the key field is set.
      */
+    @java.lang.Override
     public boolean hasKey() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -9458,6 +9624,7 @@ public final class PrefsProto {
      * <code>required string key = 1;</code>
      * @return The key.
      */
+    @java.lang.Override
     public java.lang.String getKey() {
       java.lang.Object ref = key_;
       if (ref instanceof java.lang.String) {
@@ -9476,6 +9643,7 @@ public final class PrefsProto {
      * <code>required string key = 1;</code>
      * @return The bytes for key.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getKeyBytes() {
       java.lang.Object ref = key_;
@@ -9495,12 +9663,14 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayValue value = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValue> getValueList() {
       return value_;
     }
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayValue value = 2;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValueOrBuilder> 
         getValueOrBuilderList() {
       return value_;
@@ -9508,18 +9678,21 @@ public final class PrefsProto {
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayValue value = 2;</code>
      */
+    @java.lang.Override
     public int getValueCount() {
       return value_.size();
     }
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayValue value = 2;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValue getValue(int index) {
       return value_.get(index);
     }
     /**
      * <code>repeated .de.huxhorn.lilith.prefs.StringArrayValue value = 2;</code>
      */
+    @java.lang.Override
     public de.huxhorn.lilith.prefs.protobuf.generated.PrefsProto.StringArrayValueOrBuilder getValueOrBuilder(
         int index) {
       return value_.get(index);
@@ -10306,7 +10479,7 @@ public final class PrefsProto {
    *
    * Protobuf type {@code de.huxhorn.lilith.prefs.StringArrayValue}
    */
-  public  static final class StringArrayValue extends
+  public static final class StringArrayValue extends
       com.google.protobuf.GeneratedMessageV3 implements
       // @@protoc_insertion_point(message_implements:de.huxhorn.lilith.prefs.StringArrayValue)
       StringArrayValueOrBuilder {
@@ -10395,6 +10568,7 @@ public final class PrefsProto {
      * <code>optional string value = 1;</code>
      * @return Whether the value field is set.
      */
+    @java.lang.Override
     public boolean hasValue() {
       return ((bitField0_ & 0x00000001) != 0);
     }
@@ -10402,6 +10576,7 @@ public final class PrefsProto {
      * <code>optional string value = 1;</code>
      * @return The value.
      */
+    @java.lang.Override
     public java.lang.String getValue() {
       java.lang.Object ref = value_;
       if (ref instanceof java.lang.String) {
@@ -10420,6 +10595,7 @@ public final class PrefsProto {
      * <code>optional string value = 1;</code>
      * @return The bytes for value.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getValueBytes() {
       java.lang.Object ref = value_;
