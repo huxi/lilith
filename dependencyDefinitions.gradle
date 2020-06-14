@@ -21,7 +21,7 @@ project.ext.versions = [
 'protobuf':       '3.12.2',
 'slf4j':          '1.7.30',
 'spock':          '1.3-groovy-2.5',
-'spring':         '5.2.6.RELEASE',
+'spring':         '5.2.7.RELEASE',
 'sulky':          sulkyVersion,
 'thymeleaf':      '2.1.5.RELEASE',
 'woodstox':       '6.2.1',
