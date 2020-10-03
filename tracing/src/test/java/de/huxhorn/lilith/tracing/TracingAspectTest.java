@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2020 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2020 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,6 @@ package de.huxhorn.lilith.tracing;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class TracingAspectTest
@@ -148,55 +147,61 @@ public class TracingAspectTest
 	@Test
 	public void defaultTracing()
 	{
-		ApplicationContext context
-				= new ClassPathXmlApplicationContext(new String[]{"defaultTracing.xml"});
+		try(ClassPathXmlApplicationContext context
+				= new ClassPathXmlApplicationContext(new String[]{"defaultTracing.xml"}))
+		{
+			TracingAspect tracingAspect = (TracingAspect) context.getBean("tracingAspect");
+			if (logger.isInfoEnabled()) logger.info("Using tracingAspect {}", tracingAspect);
 
-		TracingAspect tracingAspect = (TracingAspect) context.getBean("tracingAspect");
-		if(logger.isInfoEnabled()) logger.info("Using tracingAspect {}", tracingAspect);
-
-		ExampleServiceIfc exampleService = (ExampleServiceIfc) context.getBean("exampleService");
-		callExampleService(exampleService);
+			ExampleServiceIfc exampleService = (ExampleServiceIfc) context.getBean("exampleService");
+			callExampleService(exampleService);
+		}
 	}
 
 	@Test
 	public void customName()
 	{
-		ApplicationContext context
-				= new ClassPathXmlApplicationContext(new String[]{"showingParameterValuesFalse.xml"});
+		try(ClassPathXmlApplicationContext context
+				= new ClassPathXmlApplicationContext(new String[]{"showingParameterValuesFalse.xml"}))
+		{
 
-		TracingAspect tracingAspect = (TracingAspect) context.getBean("tracingAspect");
-		if(logger.isInfoEnabled()) logger.info("Using tracingAspect {}", tracingAspect);
+			TracingAspect tracingAspect = (TracingAspect) context.getBean("tracingAspect");
+			if (logger.isInfoEnabled()) logger.info("Using tracingAspect {}", tracingAspect);
 
-		ExampleServiceIfc exampleService = (ExampleServiceIfc) context.getBean("exampleService");
-		callExampleService(exampleService);
+			ExampleServiceIfc exampleService = (ExampleServiceIfc) context.getBean("exampleService");
+			callExampleService(exampleService);
+		}
 	}
 
 	@Test
 	public void defaultTracingClass()
 	{
-		ApplicationContext context
-				= new ClassPathXmlApplicationContext(new String[]{"defaultTracingClass.xml"});
+		try(ClassPathXmlApplicationContext context
+				= new ClassPathXmlApplicationContext(new String[]{"defaultTracingClass.xml"}))
+		{
 
-		TracingAspect tracingAspect = (TracingAspect) context.getBean("tracingAspect");
-		if(logger.isInfoEnabled()) logger.info("Using tracingAspect {}", tracingAspect);
+			TracingAspect tracingAspect = (TracingAspect) context.getBean("tracingAspect");
+			if (logger.isInfoEnabled()) logger.info("Using tracingAspect {}", tracingAspect);
 
-		ExampleServiceIfc exampleService = (ExampleServiceIfc) context.getBean("exampleService");
-		callExampleService(exampleService);
+			ExampleServiceIfc exampleService = (ExampleServiceIfc) context.getBean("exampleService");
+			callExampleService(exampleService);
+		}
 	}
 
 	@Test
 	public void statisticTracing()
 	{
-		ApplicationContext context
-				= new ClassPathXmlApplicationContext(new String[]{"statisticTracing.xml"});
-
-		TracingAspect tracingAspect = (TracingAspect) context.getBean("tracingAspect");
-		if(logger.isInfoEnabled()) logger.info("Using tracingAspect {}", tracingAspect);
-
-		ExampleServiceIfc exampleService = (ExampleServiceIfc) context.getBean("exampleService");
-		for(int i=0;i<3;i++)
+		try(ClassPathXmlApplicationContext context
+				= new ClassPathXmlApplicationContext(new String[]{"statisticTracing.xml"}))
 		{
-			callExampleService(exampleService);
+
+			TracingAspect tracingAspect = (TracingAspect) context.getBean("tracingAspect");
+			if (logger.isInfoEnabled()) logger.info("Using tracingAspect {}", tracingAspect);
+
+			ExampleServiceIfc exampleService = (ExampleServiceIfc) context.getBean("exampleService");
+			for (int i = 0; i < 3; i++) {
+				callExampleService(exampleService);
+			}
 		}
 	}
 
