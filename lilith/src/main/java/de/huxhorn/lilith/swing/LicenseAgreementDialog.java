@@ -64,7 +64,7 @@ public class LicenseAgreementDialog
 		initUI();
 	}
 
-	@SuppressWarnings("PMD.DoNotCallSystemExit")
+	@SuppressWarnings("PMD.DoNotTerminateVM")
 	private void initUI()
 	{
 		JPanel content = new JPanel();

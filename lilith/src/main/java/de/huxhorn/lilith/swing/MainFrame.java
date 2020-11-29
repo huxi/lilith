@@ -2495,7 +2495,7 @@ public class MainFrame
 		}
 	}
 
-	@SuppressWarnings("PMD.DoNotCallSystemExit")
+	@SuppressWarnings("PMD.DoNotTerminateVM")
 	public void exit()
 	{
 		if(applicationPreferences.isAskingBeforeQuit())

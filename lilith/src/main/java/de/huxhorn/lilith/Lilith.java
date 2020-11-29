@@ -81,7 +81,7 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
 
-@SuppressWarnings({"PMD.SystemPrintln", "PMD.DoNotCallSystemExit", "PMD.AvoidPrintStackTrace"})
+@SuppressWarnings({"PMD.SystemPrintln", "PMD.DoNotTerminateVM", "PMD.AvoidPrintStackTrace"})
 public class Lilith
 {
 	static
