@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2013 Joern Huxhorn
+ * Copyright (C) 2007-2020 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,6 @@ import de.huxhorn.lilith.swing.ViewContainer;
 
 public interface ViewContainerRelated
 {
-	void setViewContainer(ViewContainer viewContainer);
-	ViewContainer getViewContainer();
+	void setViewContainer(ViewContainer<?> viewContainer);
+	ViewContainer<?> getViewContainer();
 }

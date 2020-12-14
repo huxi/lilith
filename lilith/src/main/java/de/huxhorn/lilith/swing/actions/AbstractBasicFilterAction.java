@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2016 Joern Huxhorn
+ * Copyright (C) 2007-2020 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ public abstract class AbstractBasicFilterAction
 {
 	private static final long serialVersionUID = 7262183597944496045L;
 
-	protected transient ViewContainer viewContainer;
+	protected transient ViewContainer<?> viewContainer;
 	protected final boolean htmlTooltip;
 
 	protected AbstractBasicFilterAction(String name, boolean htmlTooltip)
@@ -38,7 +38,8 @@ public abstract class AbstractBasicFilterAction
 	}
 
 	@Override
-	public final void setViewContainer(ViewContainer viewContainer) {
+	@SuppressWarnings("PMD.CompareObjectsWithEquals")
+	public final void setViewContainer(ViewContainer<?> viewContainer) {
 		if(this.viewContainer != viewContainer)
 		{
 			this.viewContainer = viewContainer;
@@ -47,7 +48,7 @@ public abstract class AbstractBasicFilterAction
 	}
 
 	@Override
-	public final ViewContainer getViewContainer()
+	public final ViewContainer<?> getViewContainer()
 	{
 		return viewContainer;
 	}

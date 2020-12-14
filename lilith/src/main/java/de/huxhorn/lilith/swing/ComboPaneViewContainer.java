@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2020 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -597,7 +597,7 @@ public abstract class ComboPaneViewContainer<T extends Serializable>
 	{
 
 		@Override
-		@SuppressWarnings({"unchecked"})
+		@SuppressWarnings({"unchecked", "PMD.CompareObjectsWithEquals"})
 		public void propertyChange(PropertyChangeEvent evt)
 		{
 			String propName = evt.getPropertyName();

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2020 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 package de.huxhorn.lilith.swing.preferences;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Source
 	implements Serializable, Comparable<Source>
@@ -56,8 +57,8 @@ public class Source
 
 		final Source source = (Source) o;
 
-		if(identifier != null ? !identifier.equals(source.identifier) : source.identifier != null) return false;
-		return !(name != null ? !name.equals(source.name) : source.name != null);
+		if(!Objects.equals(identifier, source.identifier)) return false;
+		return Objects.equals(name, source.name);
 	}
 
 	@Override
@@ -70,6 +71,7 @@ public class Source
 	}
 
 	@Override
+	@SuppressWarnings({"PMD.CompareObjectsWithEquals", "PMD.UseEqualsToCompareStrings"})
 	public int compareTo(Source other)
 	{
 		//noinspection StringEquality

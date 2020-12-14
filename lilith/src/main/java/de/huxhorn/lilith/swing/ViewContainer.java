@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2020 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -205,6 +205,7 @@ public abstract class ViewContainer<T extends Serializable>
 		taskManager.startTask(callable, "Filtering", createFilteringMessage(metaData), metaData);
 	}
 
+	@SuppressWarnings("PMD.CompareObjectsWithEquals")
 	void replaceFilteredView(EventWrapperViewPanel<T> original, Condition filter)
 	{
 		EventSource<T> eventSource = original.getEventSource();

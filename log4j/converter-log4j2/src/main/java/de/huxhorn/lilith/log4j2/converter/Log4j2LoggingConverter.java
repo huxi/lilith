@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2020 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2018 Joern Huxhorn
+ * Copyright 2007-2020 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,27 +77,27 @@ public class Log4j2LoggingConverter
 		// level
 		{
 			Level log4jLevel = log4jEvent.getLevel();
-			if (log4jLevel == Level.TRACE)
+			if (Level.TRACE.equals(log4jLevel))
 			{
 				result.setLevel(LoggingEvent.Level.TRACE);
 			}
-			else if (log4jLevel == Level.DEBUG)
+			else if (Level.DEBUG.equals(log4jLevel))
 			{
 				result.setLevel(LoggingEvent.Level.DEBUG);
 			}
-			else if (log4jLevel == Level.INFO)
+			else if (Level.INFO.equals(log4jLevel))
 			{
 				result.setLevel(LoggingEvent.Level.INFO);
 			}
-			else if (log4jLevel == Level.WARN)
+			else if (Level.WARN.equals(log4jLevel))
 			{
 				result.setLevel(LoggingEvent.Level.WARN);
 			}
-			else if (log4jLevel == Level.ERROR)
+			else if (Level.ERROR.equals(log4jLevel))
 			{
 				result.setLevel(LoggingEvent.Level.ERROR);
 			}
-			else if (log4jLevel == Level.FATAL)
+			else if (Level.FATAL.equals(log4jLevel))
 			{
 				mdc.put(LOG4J_LEVEL_KEY, LOG4J_LEVEL_VALUE_FATAL);
 				result.setLevel(LoggingEvent.Level.ERROR);

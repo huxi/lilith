@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2019 Joern Huxhorn
+ * Copyright (C) 2007-2020 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -475,7 +475,7 @@ public class TroubleshootingPanel
 		}
 
 		@Override
-		@SuppressWarnings("NullableProblems")
+		@SuppressWarnings({"PMD.CompareObjectsWithEquals"})
 		public int compareTo(ThreadHolder other)
 		{
 			Objects.requireNonNull(other, "other must not be null!");

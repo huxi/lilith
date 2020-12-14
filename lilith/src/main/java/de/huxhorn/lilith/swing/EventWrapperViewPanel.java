@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2019 Joern Huxhorn
+ * Copyright (C) 2007-2020 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -597,6 +597,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 
 		@Override
+		@SuppressWarnings("PMD.CompareObjectsWithEquals")
 		public Component getComponentAfter(Container aContainer, Component aComponent)
 		{
 			if(aComponent.equals(table))
@@ -671,6 +672,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 
 		@Override
+		@SuppressWarnings("PMD.CompareObjectsWithEquals")
 		public Component getComponentBefore(Container aContainer, Component aComponent)
 		{
 			if(aComponent.equals(messagePane))
@@ -1407,6 +1409,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 
 		@Override
+		@SuppressWarnings("PMD.CompareObjectsWithEquals")
 		public void executionFailed(Task<Long> task, ExecutionException exception)
 		{
 			if(logger.isDebugEnabled())
@@ -1421,6 +1424,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 
 		@Override
+		@SuppressWarnings("PMD.CompareObjectsWithEquals")
 		public void executionFinished(Task<Long> task, Long result)
 		{
 			if(logger.isDebugEnabled())
@@ -1440,6 +1444,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 
 		@Override
+		@SuppressWarnings("PMD.CompareObjectsWithEquals")
 		public void executionCanceled(Task<Long> task)
 		{
 			if(logger.isDebugEnabled())
@@ -1454,6 +1459,7 @@ public abstract class EventWrapperViewPanel<T extends Serializable>
 		}
 
 		@Override
+		@SuppressWarnings("PMD.CompareObjectsWithEquals")
 		public void progressUpdated(Task<Long> task, int progress)
 		{
 			if(logger.isDebugEnabled())

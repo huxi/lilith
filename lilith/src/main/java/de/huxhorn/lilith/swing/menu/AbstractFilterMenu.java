@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2020 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ abstract class AbstractFilterMenu
 	extends JMenu implements ViewContainerRelated, EventWrapperRelated
 {
 	private static final long serialVersionUID = -2749976234225574839L;
-	protected transient ViewContainer viewContainer;
+	protected transient ViewContainer<?> viewContainer;
 
 	AbstractFilterMenu(Action action)
 	{
@@ -42,7 +42,8 @@ abstract class AbstractFilterMenu
 	}
 
 	@Override
-	public final void setViewContainer(ViewContainer viewContainer) {
+	@SuppressWarnings("PMD.CompareObjectsWithEquals")
+	public final void setViewContainer(ViewContainer<?> viewContainer) {
 		if(this.viewContainer != viewContainer)
 		{
 			this.viewContainer = viewContainer;
@@ -52,7 +53,7 @@ abstract class AbstractFilterMenu
 
 	protected void viewContainerUpdated()
 	{
-		EventWrapper eventWrapper = null;
+		EventWrapper<?> eventWrapper = null;
 		if(viewContainer != null)
 		{
 			eventWrapper = viewContainer.getSelectedEvent();
@@ -61,7 +62,7 @@ abstract class AbstractFilterMenu
 	}
 
 	@Override
-	public final ViewContainer getViewContainer()
+	public final ViewContainer<?> getViewContainer()
 	{
 		return viewContainer;
 	}
