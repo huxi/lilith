@@ -45,7 +45,7 @@ wrapper {
 	// MacAppBundle
 }
 
-def copyright = "Copyright \u00a9 2007-2020 J\u00f6rn Huxhorn"
+def copyright = "Copyright \u00a9 2007-2021 J\u00f6rn Huxhorn"
 def globalSourceCompatibility = 1.8
 def globalTargetCompatibility = 1.8
 
