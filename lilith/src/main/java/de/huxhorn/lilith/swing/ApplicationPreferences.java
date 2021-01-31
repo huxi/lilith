@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2019 Joern Huxhorn
+ * Copyright (C) 2007-2021 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1374,10 +1374,9 @@ public class ApplicationPreferences
 	{
 		final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
 		List<String> result = new ArrayList<>();
-		BufferedReader reader = null;
-		try
+
+		try(BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8)))
 		{
-			reader = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
 			for(;;)
 			{
 				String currentLine = reader.readLine();
@@ -1395,20 +1394,6 @@ public class ApplicationPreferences
 		catch(IOException e)
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while reading lines from {}!", url, e);
-		}
-		finally
-		{
-			if(reader != null)
-			{
-				try
-				{
-					reader.close();
-				}
-				catch(IOException e)
-				{
-					// ignore
-				}
-			}
 		}
 		return result;
 	}
@@ -2589,14 +2574,14 @@ public class ApplicationPreferences
 		{
 			return null;
 		}
-		MessageDigest messageDigest;
-		try
+
+		try(InputStream inputStream = input)
 		{
-			messageDigest = MessageDigest.getInstance("MD5");
+			MessageDigest messageDigest = MessageDigest.getInstance("MD5");
 			byte[] buffer = new byte[1024];
 			for(;;)
 			{
-				int read = input.read(buffer);
+				int read = inputStream.read(buffer);
 				if(read < 0)
 				{
 					break;
@@ -2610,17 +2595,7 @@ public class ApplicationPreferences
 			final Logger logger = LoggerFactory.getLogger(ApplicationPreferences.class);
 			if(logger.isWarnEnabled()) logger.warn("Exception while calculating checksum!", ex);
 		}
-		finally
-		{
-			try
-			{
-				input.close();
-			}
-			catch(IOException e)
-			{
-				// ignore
-			}
-		}
+
 		return null;
 	}
 

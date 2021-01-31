@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2019 Joern Huxhorn
+ * Copyright (C) 2007-2021 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -332,39 +332,20 @@ public final class ImportExportCommand
 	private static void writePersistence(File file, LilithPreferences p)
 		throws IOException
 	{
-		GZIPOutputStream os = null;
-		try
+		try(GZIPOutputStream os = new GZIPOutputStream(new BufferedOutputStream(Files.newOutputStream(file.toPath()))))
 		{
-			os = new GZIPOutputStream(new BufferedOutputStream(Files.newOutputStream(file.toPath())));
 			LilithPreferencesStreamingEncoder encoder = new LilithPreferencesStreamingEncoder();
 			encoder.encode(p, os);
 		}
-		finally
-		{
-			if(os != null)
-			{
-				os.close();
-			}
-		}
-
 	}
 
 	private static LilithPreferences readPersistence(File file)
 		throws IOException
 	{
-		GZIPInputStream is = null;
-		try
+		try(GZIPInputStream is = new GZIPInputStream(new BufferedInputStream(Files.newInputStream(file.toPath()))))
 		{
-			is = new GZIPInputStream(new BufferedInputStream(Files.newInputStream(file.toPath())));
 			LilithPreferencesStreamingDecoder decoder = new LilithPreferencesStreamingDecoder();
 			return decoder.decode(is);
-		}
-		finally
-		{
-			if(is != null)
-			{
-				is.close();
-			}
 		}
 	}
 }

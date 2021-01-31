@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2020 Joern Huxhorn
+ * Copyright (C) 2007-2021 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1380,23 +1380,27 @@ public class MainFrame
 		JOptionPane.showMessageDialog(this, message, "Unknown file type…", JOptionPane.WARNING_MESSAGE);
 	}
 
-	@SuppressWarnings("PMD.CloseResource")
+	private static BufferedReader createReader(File inputFile)
+			throws IOException
+	{
+		if(inputFile == null)
+		{
+			return null;
+		}
+
+		String fileName=inputFile.getName().toLowerCase(Locale.US);
+		if(fileName.endsWith(".gz"))
+		{
+			return new BufferedReader(new InputStreamReader(new GZIPInputStream(Files.newInputStream(inputFile.toPath())), StandardCharsets.UTF_8));
+		}
+
+		return new BufferedReader(new InputStreamReader(Files.newInputStream(inputFile.toPath()), StandardCharsets.UTF_8));
+	}
+
 	private ImportType resolveType(File inputFile)
 	{
-		BufferedReader br = null;
-		try
+		try(BufferedReader br = createReader(inputFile))
 		{
-			InputStream fis = Files.newInputStream(inputFile.toPath());
-
-			String fileName=inputFile.getName().toLowerCase(Locale.US);
-			if(fileName.endsWith(".gz"))
-			{
-				br = new BufferedReader(new InputStreamReader(new GZIPInputStream(fis), StandardCharsets.UTF_8));
-			}
-			else
-			{
-				br = new BufferedReader(new InputStreamReader(fis, StandardCharsets.UTF_8));
-			}
 			for(int i = 0; i < 5; i++)
 			{
 				String line = br.readLine();
@@ -1418,20 +1422,7 @@ public class MainFrame
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while resolving type of file!", ex);
 		}
-		finally
-		{
-			if(br != null)
-			{
-				try
-				{
-					br.close();
-				}
-				catch(IOException e)
-				{
-					// ignore
-				}
-			}
-		}
+
 		return null;
 	}
 
@@ -3447,11 +3438,10 @@ public class MainFrame
 	{
 		final Logger logger = LoggerFactory.getLogger(MainFrame.class);
 
-		// Create an instance of HttpClient.
-		CloseableHttpClient client = HttpClientBuilder.create().build();
 		HttpContext localContext = new BasicHttpContext();
 		HttpGet httpget = new HttpGet(url);
-		try
+
+		try(CloseableHttpClient client = HttpClientBuilder.create().build())
 		{
 			HttpResponse response = client.execute(httpget, localContext);
 			StatusLine status = response.getStatusLine();
@@ -3475,17 +3465,6 @@ public class MainFrame
 		{
 			if(logger.isWarnEnabled()) logger.warn("Exception while retrieving '{}'!", url, e);
 			return null;
-		}
-		finally
-		{
-			try
-			{
-				client.close();
-			}
-			catch (IOException e)
-			{
-				if(logger.isWarnEnabled()) logger.warn("Exception while closing down HttpClient!", e);
-			}
 		}
 	}
 
