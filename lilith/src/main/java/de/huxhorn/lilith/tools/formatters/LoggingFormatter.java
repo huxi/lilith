@@ -436,6 +436,7 @@ public class LoggingFormatter
 			this.commonFrames = commonFrames;
 		}
 
+		@SuppressWarnings("PMD.UnusedPrivateMethod") // false positive PMD 6.33.0
 		private static ThrowableProxyFoo convert(ThrowableInfo throwableInfo)
 		{
 			ThrowableProxyFoo result=null;
