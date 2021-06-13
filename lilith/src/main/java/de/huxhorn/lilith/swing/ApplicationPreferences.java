@@ -2066,6 +2066,7 @@ public class ApplicationPreferences
 		propertyChangeSupport.firePropertyChange(LICENSED_PREFERENCES_KEY, oldValue, newValue);
 	}
 
+	@SuppressWarnings("PMD.LiteralsFirstInComparisons") // false positive 6.35.0
 	public boolean isLicensed()
 	{
 		return Lilith.APP_VERSION.equals(PREFERENCES.get(LICENSED_PREFERENCES_KEY, null));

@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2021 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2018 Joern Huxhorn
+ * Copyright 2007-2021 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -560,11 +560,11 @@ public class ExtendedStackTraceElement
 		}
 		else
 		{
-			if(source.equals(NATIVE_METHOD_STRING))
+			if(NATIVE_METHOD_STRING.equals(source))
 			{
 				lineNumber = ExtendedStackTraceElement.NATIVE_METHOD_LINE_NUMBER;
 			}
-			else if(!source.equals(UNKNOWN_SOURCE_STRING))
+			else if(!UNKNOWN_SOURCE_STRING.equals(source))
 			{
 				file = source;
 			}

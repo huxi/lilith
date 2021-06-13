@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2019 Joern Huxhorn
+ * Copyright (C) 2007-2021 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,7 +98,7 @@ class HtmlTransferable
 	public Object getTransferData(DataFlavor flavor)
 		throws UnsupportedFlavorException, IOException
 	{
-		if(flavor.equals(XHTML_FLAVOR) || /* flavor.equals(HTML_FLAVOR) || */ flavor.equals(PLAIN_TEXT_FLAVOR))
+		if(XHTML_FLAVOR.equals(flavor) || /* HTML_FLAVOR.equals(flavor) || */ PLAIN_TEXT_FLAVOR.equals(flavor))
 		{
 			return new ByteArrayInputStream(data);
 		}
