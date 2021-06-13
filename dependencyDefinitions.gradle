@@ -31,7 +31,7 @@ project.ext.libraries = [
 'aspectjrt':                "org.aspectj:aspectjrt:${versions.aspectj}",
 'aspectjweaver':            "org.aspectj:aspectjweaver:${versions.aspectj}",
 'byte-buddy':               "net.bytebuddy:byte-buddy:${versions.bytebuddy}",
-'commons-io':               'commons-io:commons-io:2.8.0',
+'commons-io':               'commons-io:commons-io:2.9.0',
 'commons-lang':             'org.apache.commons:commons-lang3:3.12.0',
 'commons-text':             'org.apache.commons:commons-text:1.5',
 'flyingsaucer':             'org.xhtmlrenderer:flying-saucer-core:9.1.18',
