@@ -1,4 +1,4 @@
-# Lilith [![Build Status](https://travis-ci.org/huxi/lilith.png?branch=master)](https://travis-ci.org/huxi/lilith) [![Coverage Status](https://coveralls.io/repos/huxi/lilith/badge.png)](https://coveralls.io/r/huxi/lilith) [![Maven Central](https://img.shields.io/maven-central/v/de.huxhorn.lilith/de.huxhorn.lilith.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22de.huxhorn.lilith%22)
+# Lilith [![Build Status](https://travis-ci.com/huxi/lilith.png?branch=master)](https://travis-ci.com/huxi/lilith) [![Coverage Status](https://coveralls.io/repos/huxi/lilith/badge.png)](https://coveralls.io/r/huxi/lilith) [![Maven Central](https://img.shields.io/maven-central/v/de.huxhorn.lilith/de.huxhorn.lilith.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22de.huxhorn.lilith%22)
 Lilith ([@lilithapp](https://twitter.com/#!/lilithapp)) is a logging and access event viewer for [Logback][], [log4j][]™, [Log4j 2][log4j2]™ and [java.util.logging][jul].
 
 ![Lilith][img-lilith]
