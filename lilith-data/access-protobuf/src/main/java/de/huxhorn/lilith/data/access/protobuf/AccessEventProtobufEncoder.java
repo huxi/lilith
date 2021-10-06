@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2019 Joern Huxhorn
+ * Copyright (C) 2007-2021 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2019 Joern Huxhorn
+ * Copyright 2007-2021 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ public class AccessEventProtobufEncoder
 	}
 
 	@Override
-	@SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
+	@SuppressWarnings("PMD.ReturnEmptyCollectionRatherThanNull")
 	public byte[] encode(AccessEvent event)
 	{
 		AccessProto.AccessEvent converted = convert(event);

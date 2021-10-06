@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2011 Joern Huxhorn
+ * Copyright (C) 2007-2021 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,7 +17,7 @@
  */
 
 /*
- * Copyright 2007-2011 Joern Huxhorn
+ * Copyright 2007-2021 Joern Huxhorn
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ import org.junit.Test;
 import static de.huxhorn.sulky.junit.JUnitTools.testSerialization;
 import static de.huxhorn.sulky.junit.JUnitTools.testXmlSerialization;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 
 public class MarkerTest
 {
@@ -77,12 +77,12 @@ public class MarkerTest
 		{
 			Marker obj = testSerialization(instance);
 			assertEquals(value, obj.getName());
-			assertFalse(fresh.equals(obj));
+			assertNotEquals(fresh, obj);
 		}
 		{
 			Marker obj = testXmlSerialization(instance);
 			assertEquals(value, obj.getName());
-			assertFalse(fresh.equals(obj));
+			assertNotEquals(fresh, obj);
 		}
 	}
 

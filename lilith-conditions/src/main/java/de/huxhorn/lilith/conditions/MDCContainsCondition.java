@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2017 Joern Huxhorn
+ * Copyright (C) 2007-2021 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,11 +41,12 @@ public class MDCContainsCondition
 	}
 
 	@Override
+	@SuppressWarnings("PMD.ReturnEmptyCollectionRatherThanNull")
 	protected Map<String, String> resolveMap(Object element)
 	{
 		if (element instanceof EventWrapper)
 		{
-			EventWrapper wrapper = (EventWrapper) element;
+			EventWrapper<?> wrapper = (EventWrapper<?>) element;
 			Object eventObj = wrapper.getEvent();
 			if (eventObj instanceof LoggingEvent)
 			{

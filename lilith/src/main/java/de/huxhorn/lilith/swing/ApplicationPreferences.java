@@ -2389,6 +2389,7 @@ public class ApplicationPreferences
 	 * @return the resulting map
 	 * @noinspection MismatchedQueryAndUpdateOfCollection
 	 */
+	@SuppressWarnings("PMD.ReturnEmptyCollectionRatherThanNull")
 	private Map<String, String> loadPropertiesXml(File file)
 	{
 		try(InputStream is = new BufferedInputStream(Files.newInputStream(file.toPath())))
@@ -2455,7 +2456,7 @@ public class ApplicationPreferences
 		}
 	}
 
-
+	@SuppressWarnings("PMD.ReturnEmptyCollectionRatherThanNull")
 	private Map<String, String> loadProperties(File file)
 	{
 		try(InputStream is = new BufferedInputStream(Files.newInputStream(file.toPath())))
@@ -2547,6 +2548,7 @@ public class ApplicationPreferences
 		return true;
 	}
 
+	@SuppressWarnings("PMD.ReturnEmptyCollectionRatherThanNull")
 	private List<PersistentTableColumnModel.TableColumnLayoutInfo> readColumnLayout(File file)
 	{
 		try(XMLDecoder d = new XMLDecoder(new BufferedInputStream(Files.newInputStream(file.toPath()))))
@@ -2568,7 +2570,7 @@ public class ApplicationPreferences
 	 * @param input the input
 	 * @return the checksum
 	 */
-	@SuppressWarnings("PMD.ReturnEmptyArrayRatherThanNull")
+	@SuppressWarnings("PMD.ReturnEmptyCollectionRatherThanNull")
 	public static byte[] getMD5(InputStream input)
 	{
 		if(input == null)

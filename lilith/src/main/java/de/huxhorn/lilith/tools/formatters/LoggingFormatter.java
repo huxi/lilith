@@ -1,6 +1,6 @@
 /*
  * Lilith - a log event viewer.
- * Copyright (C) 2007-2018 Joern Huxhorn
+ * Copyright (C) 2007-2021 Joern Huxhorn
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -285,6 +285,7 @@ public class LoggingFormatter
 		}
 
 		@Override
+		@SuppressWarnings("PMD.ReturnEmptyCollectionRatherThanNull")
 		public Map<String, String> getMDCPropertyMap()
 		{
 			if(event != null)
@@ -295,6 +296,7 @@ public class LoggingFormatter
 		}
 
 		@Override
+		@SuppressWarnings("PMD.ReturnEmptyCollectionRatherThanNull")
 		public Map<String, String> getMdc()
 		{
 			if(event != null)
