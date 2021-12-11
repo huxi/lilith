@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [8.3.0][unreleased] - TBD
 
 ### Changed
-- Demand Java 8 `1.8.0_282`.
+- Demand Java 8 `1.8.0_312`.
 
 ### Fixed
 - SLF4J 1.7.32, logback 1.2.7, log4j2 2.15.0, Groovy 2.5.15, Spring 5.3.13, jackson 2.13.0, commons-io 2.11.0, commons-text 1.5, commons-lang3 3.12.0, flying-saucer 9.1.18, aspectj 1.9.7, woodstox 6.2.7, httpcore 4.4.14, httpclient 4.5.13, protobuf 3.19.1
@@ -12,7 +12,7 @@ All notable changes to this project will be documented in this file.
 ## [8.2.0] - 2018-08-09
 
 ### Added
-- Added "Find previous active" and "Find next active" buttons to toolbar. 
+- Added "Find previous active" and "Find next active" buttons to toolbar.
 - Added "Find previous" and "Find next" buttons to toolbar.
 - Added lots of missing mnemonics.
 - If the connection is lost then Message/RequestURI in table will now show "Connection closed." instead of nothing.
@@ -49,7 +49,7 @@ All notable changes to this project will be documented in this file.
 - Fixed java executable detection in Windows bat file. Thanks, [tha2015](https://github.com/tha2015)!
 - Logback 1.2.3, log4j2 2.11.1, Groovy 2.5.1, jackson 2.9.6, spring 5.0.8, protobuf 3.6.1, junique 1.0.4, jcommander 1.72, commons-lang 3.7, commons-text 1.4, commons-io 2.6, flying-saucer 9.1.14, glazedlists 1.10.0, aspectj 1.9.1, httpcore 4.4.10, httpclient 4.5.6, woodstox 5.1.0
 - Fixed several split package issues. Because of this, some classes have changed package names:
-  - the two most commonly used classes `de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender` and `de.huxhorn.lilith.logback.encoder.ClassicLilithEncoder` have not been moved. 
+  - the two most commonly used classes `de.huxhorn.lilith.logback.appender.ClassicMultiplexSocketAppender` and `de.huxhorn.lilith.logback.encoder.ClassicLilithEncoder` have not been moved.
   - `de.huxhorn.lilith.logback.encoder.AccessLilithEncoder` changed to `de.huxhorn.lilith.logback.encoder.access.AccessLilithEncoder`.
   - `de.huxhorn.lilith.logback.appender.AccessMultiplexSocketAppender` changed to `de.huxhorn.lilith.logback.appender.access.AccessMultiplexSocketAppender`.
   - `de.huxhorn.lilith.logback.appender.ClassicJsonMultiplexSocketAppender` changed to `de.huxhorn.lilith.logback.appender.json.ClassicJsonMultiplexSocketAppender`.
