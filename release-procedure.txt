@@ -26,9 +26,8 @@ Change into sulky root.
 
 gradlew clean
 
-gradlew --no-daemon -Drelease=true --recompile-scripts
+gradlew -Drelease=true -DpgpPassword=xxx
 
-http://forums.gradle.org/gradle/topics/standard_in_when_using_the_daemon
 http://issues.gradle.org//browse/GRADLE-2310
 
 #####
@@ -37,7 +36,7 @@ Change into lilith root.
 
 gradlew clean
 
-gradlew --no-daemon -Drelease=true --recompile-scripts
+gradlew -Drelease=true -DpgpPassword=xxx
 
 gradlew -PremoteUsername=huxi -PremotePassword=... syncStaging
 
