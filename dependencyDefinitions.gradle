@@ -1,4 +1,4 @@
-def sulkyVersion = '8.3.0'
+def sulkyVersion = '8.4.0'
 
 def prereleaseIdentifier = System.properties.'prerelease'
 if(prereleaseIdentifier) {
