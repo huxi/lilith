@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
-- log4j2 2.16.0
+- log4j2 2.16.0, logback 1.2.8
 
 ## [8.3.0] - 2021-12-11
 
