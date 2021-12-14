@@ -16,7 +16,7 @@ project.ext.versions = [
 'jackson':        '2.13.0',
 'jacksonModule':  '2.13.0',
 'log4j':          '1.2.17',
-'log4j2':         '2.15.0',
+'log4j2':         '2.16.0',
 'logback':        '1.2.7',
 'protobuf':       '3.19.1',
 'slf4j':          '1.7.32',

@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [8.4.0][unreleased] - TBD
 
+### Fixed
+
+- log4j2 2.16.0
+
 ## [8.3.0] - 2021-12-11
 
 ### Changed
